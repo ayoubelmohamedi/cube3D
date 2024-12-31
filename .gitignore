@@ -9,6 +9,8 @@ mlx/libmlx.a
 mlx/libmlx_Linux.a
 mlx/test/mlx-test
 
+#executables
+cube3d
 
 # User-specific files
 *.rsuser
