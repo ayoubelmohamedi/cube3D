@@ -3,11 +3,13 @@
 #include "../includes/cub3d.h"
 
 
-int main(int ac, char **av)
+int main(int ac, char *av[])
 {
 
     void    *mlx;        
     void    *win;
+    (void)ac;
+    (void)av;
 
     mlx = mlx_init();
     if (!mlx)
@@ -27,4 +29,4 @@ int main(int ac, char **av)
     mlx_loop(mlx);
 
     return (0);
-}
+}   
