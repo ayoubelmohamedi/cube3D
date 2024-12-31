@@ -84,7 +84,7 @@ C 225,30,0
 ## Project Structure
 
 ```
-cube4D/
+cube3D/
 ├── src/
 │   ├── main.c            # Entry point
 │   ├── raycasting.c      # Raycasting implementation
