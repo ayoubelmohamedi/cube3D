@@ -124,6 +124,6 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 <ul>
   <li><a href="https://github.com/ayoubelmohamedi" style="font-size: 24px;">Ayoub Elmohamedi</a></li>
-  <li><a href="https://github.com/ahmedez-zouine" style="font-size: 24px;">Ahmed Zouine (his last name is handsome)</a></li>
+  <li><a href="https://github.com/ahmedez-zouine" style="font-size: 24px;">AHMED EZ-ZOUINE (his last name is handsome)</a></li>
 </ul>
 
