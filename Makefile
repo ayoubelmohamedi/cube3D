@@ -8,7 +8,7 @@ MLX_DIR = ./mlx
 all: $(NAME)
 
 # to be changed later
-SRCS = $(wildcard src/*.c)
+SRCS = $(wildcard src/*.c) $(wildcard src/parsing/*.c) 
 
 OBJS = ${SRCS:.c=.o}
 
