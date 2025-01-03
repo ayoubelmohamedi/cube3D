@@ -12,9 +12,9 @@
 
 # define WIDTH 800 
 # define HEIGHT 600 
+# define MAX_WIDTH 20 - 1
 # define MAX_HEIGHT 10
-# define MAX_WIDTH 10
-#define TILE_SIZE 80
+#define TILE_SIZE 40
 
 typedef struct {
     float x, y, z;
@@ -34,6 +34,15 @@ typedef struct {
     Vector3 position;
     Vector3 direction;
 } Ray;
+
+typedef struct 
+{
+    int **map;
+    int player_x;
+    int player_y;
+    void *mlx;
+    void *win;
+} Game;
 
 
 #endif /* CUB3D_H */
