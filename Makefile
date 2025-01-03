@@ -1,5 +1,4 @@
 
-
 NAME = cube3d
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -9,6 +8,7 @@ all: $(NAME)
 
 # to be changed later
 SRCS = $(wildcard src/*.c) $(wildcard src/parsing/*.c) 
+
 
 OBJS = ${SRCS:.c=.o}
 
@@ -23,6 +23,8 @@ else
 	X11_FLAGS = -L/usr/X11/lib -lXext -lX11
 endif
 
+%.o : %.c
+	$(CC) -Imlx -c $< -o $@
 
 $(NAME): $(MLX_LIB) $(OBJS)
 	$(CC) $(OBJS) $(MLXFLAGS) $(X11_FLAGS) -o $(NAME)
@@ -30,7 +32,10 @@ $(NAME): $(MLX_LIB) $(OBJS)
 $(MLX_LIB):
 	@make -C $(MLX_DIR)
 
-clean :
+clean:
 	rm -f $(OBJS)
 
-re : clean all
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
