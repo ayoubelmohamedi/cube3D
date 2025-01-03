@@ -32,3 +32,5 @@ $(MLX_LIB):
 
 clean :
 	rm -f $(OBJS)
+
+re : clean all
