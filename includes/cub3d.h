@@ -12,8 +12,8 @@
 
 # define WIDTH 800 
 # define HEIGHT 600 
-# define MAX_WIDTH 20
-# define MAX_HEIGHT 10
+# define MAP_WIDTH 20
+# define MAP_HEIGHT 10
 #define TILE_SIZE 30
 
 typedef struct {
