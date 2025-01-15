@@ -18,13 +18,13 @@ void draw_sphere(void *mlx, void *win, Vector3 center, int radius, Color color) 
         }
     }
 }
-void parse_map(const char *filename, int map[MAX_HEIGHT][MAX_WIDTH], int *width, int *height) {
+void parse_map(const char *filename, int map[MAP_HEIGHT][MAP_WIDTH], int *width, int *height) {
     FILE *file = fopen(filename, "r");
     if (!file) {
         perror("Error opening file");
         exit(EXIT_FAILURE);
     }
-    char line[MAX_WIDTH + 1]; // +2 for newline and null terminator
+    char line[MAP_WIDTH + 1]; // +2 for newline and null terminator
     int row = 0;
     int col = 0;
     while (fgets(line, sizeof(line), file)) {
@@ -37,8 +37,8 @@ void parse_map(const char *filename, int map[MAX_HEIGHT][MAX_WIDTH], int *width,
         col = 0;
         row++;
     }
-    *width = MAX_WIDTH;
-    *height = MAX_HEIGHT;
+    *width = MAP_WIDTH;
+    *height = MAP_HEIGHT;
     fclose(file);
 }
 void draw_square(void *mlx, void *win, int x, int y, int color) {
@@ -49,10 +49,10 @@ void draw_square(void *mlx, void *win, int x, int y, int color) {
         }
     }
 }
-void draw_map(int map[MAX_HEIGHT][MAX_WIDTH], void *mlx, void *win)
+void draw_map(int map[MAP_HEIGHT][MAP_WIDTH], void *mlx, void *win)
 {
-  for (int y = 0; y < MAX_HEIGHT; y++) {
-        for (int x = 0; x < MAX_WIDTH; x++) {
+  for (int y = 0; y < MAP_HEIGHT; y++) {
+        for (int x = 0; x < MAP_WIDTH; x++) {
             int color = (map[y][x] == 1) ? 0xFFFFFF : 0x000000; // Wall: white, Floor: black
             draw_square(mlx, win, x * TILE_SIZE, y * TILE_SIZE, color);
         }
@@ -60,14 +60,14 @@ void draw_map(int map[MAX_HEIGHT][MAX_WIDTH], void *mlx, void *win)
 }
 
 
-void print_map(int map[MAX_HEIGHT][MAX_WIDTH])
+void print_map(int map[MAP_HEIGHT][MAP_WIDTH])
 {
     size_t j = -1;
     size_t i = -1;
 
-    while (++j < MAX_HEIGHT)
+    while (++j < MAP_HEIGHT)
     {
-        while (++i < MAX_WIDTH) 
+        while (++i < MAP_WIDTH) 
             printf("%d ", map[j][i]);
         i = -1;
         printf("\n");
@@ -98,7 +98,7 @@ int main(int ac, char *av[])
     // Color sphere_color = {255, 77, 0}; // Red color
     // draw_sphere(mlx, win, sphere_center, sphere_radius, sphere_color);
     // Wait for events (close window with any key press)
-    int map[MAX_HEIGHT][MAX_WIDTH];
+    int map[MAP_HEIGHT][MAP_WIDTH];
     int width, height;
     parse_map("./maps/good/map_only.cub",map, &width, &height);
     // print_map(map);
