@@ -32,20 +32,31 @@ void check_extension(char *file)
 		ft_msg_exit("Error Extension\n");
 }
 
+void ft_printdata(char **substr)
+{
+	int i = 0;
+	while (substr[i])
+	{
+		printf("%s",substr);
+		i++;
+	}
+}
+
 void save_check_elements(int fd, t_textures_data *elem_dt)
 {
 	char *line;
 	int len_elmet;
 	char **subline;
 
+	len_elmet = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
 		//printf("%s\n",line);
-		subline = ft_split(line);
-		//if(len_elmet == 6)
-		//{
-		//}
+		subline = ft_split(line, ' ');
+		if(len_elmet == 6 && subline[0][0] == '1')
+		{
+		}
 
 		// int  type = get_type_data(subline[0]);
 		// 	type == 1;
