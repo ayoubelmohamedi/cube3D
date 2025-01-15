@@ -18,7 +18,7 @@ void draw_sphere(void *mlx, void *win, Vector3 center, int radius, Color color) 
         }
     }
 }
-void parse_map(const char *filename, int map[MAP_HEIGHT][MAP_WIDTH], int *width, int *height) {
+void parse_map(const char *filename, Game *game) {
     FILE *file = fopen(filename, "r");
     if (!file) {
         perror("Error opening file");
@@ -31,14 +31,19 @@ void parse_map(const char *filename, int map[MAP_HEIGHT][MAP_WIDTH], int *width,
         col = 0;
         for (int i = 0; line[i] != '\0' && line[i] != '\n'; i++)
         {
-            if (line[i] == 'S' || line[i] == '1' || line[i] == '0')
-                map[row][col++] = line[i] - 48;
+            if (line[i] == 'S')
+            {
+                game->player_x = col;
+                game->player_y = row;
+            }
+            else if (line[i] == '1' || line[i] == '0')
+                game->map[row][col++] = line[i] - 48;
         }
         col = 0;
         row++;
     }
-    *width = MAP_WIDTH;
-    *height = MAP_HEIGHT;
+    game->map_width = MAP_WIDTH;
+    game->map_height = MAP_HEIGHT;
     fclose(file);
 }
 void draw_square(void *mlx, void *win, int x, int y, int color) {
@@ -49,12 +54,23 @@ void draw_square(void *mlx, void *win, int x, int y, int color) {
         }
     }
 }
-void draw_map(int map[MAP_HEIGHT][MAP_WIDTH], void *mlx, void *win)
+
+void draw_player(Game *game) {
+    int px = game->player_x * TILE_SIZE + TILE_SIZE / 4; 
+    int py = game->player_y * TILE_SIZE + TILE_SIZE / 4; 
+    for (int i = 0; i < TILE_SIZE / 2; i++) {
+        for (int j = 0; j < TILE_SIZE / 2; j++) {
+            mlx_pixel_put(game->mlx, game->win, px + i, py + j, 0xFF0000); // Player is red
+        }
+    }
+}
+
+void draw_map(Game *game)
 {
   for (int y = 0; y < MAP_HEIGHT; y++) {
         for (int x = 0; x < MAP_WIDTH - 1; x++) {
-            int color = (map[y][x] == 1) ? 0xFFFFFF : 0x000000; // Wall: white, Floor: black
-            draw_square(mlx, win, x * TILE_SIZE, y * TILE_SIZE, color);
+            int color = (game->map[y][x] == 1) ? 0xFFFFFF : 0x000000; // Wall: white, Floor: black
+            draw_square(game->mlx, game->win, x * TILE_SIZE, y * TILE_SIZE, color);
         }
     }
 }
@@ -74,12 +90,35 @@ void print_map(int map[MAP_HEIGHT][MAP_WIDTH])
     }
 }
 
+
+int key_hook(int keycode, Game *game) {
+    // Clear window to redraw map
+    mlx_clear_window(game->mlx, game->win);
+
+    // Move player based on key press
+    if (keycode == 13 && game->map[game->player_y - 1][game->player_x] == 0) // W (move up)
+        game->player_y--;
+    else if (keycode == 1 && game->map[game->player_y + 1][game->player_x] == 0) // S (move down)
+        game->player_y++;
+    else if (keycode == 0 && game->map[game->player_y][game->player_x - 1] == 0) // A (move left)
+        game->player_x--;
+    else if (keycode == 2 && game->map[game->player_y][game->player_x + 1] == 0) // D (move right)
+        game->player_x++;
+
+    // Redraw map and player
+    draw_map(game);
+    draw_player(game);
+    return 0;
+}
+
 int main(int ac, char *av[])
 {
     void    *mlx;        
     void    *win;
+    Game    game;
     (void)ac;
     (void)av;
+
     mlx = mlx_init();
     if (!mlx)
     {
@@ -98,11 +137,11 @@ int main(int ac, char *av[])
     // Color sphere_color = {255, 77, 0}; // Red color
     // draw_sphere(mlx, win, sphere_center, sphere_radius, sphere_color);
     // Wait for events (close window with any key press)
-    int map[MAP_HEIGHT][MAP_WIDTH];
-    int width, height;
-    parse_map("./maps/good/map_only.cub",map, &width, &height);
-    print_map(map);
-    draw_map(map, mlx, win);
+    game.mlx = mlx;
+    parse_map("./maps/good/map_only.cub", &game);
+    print_map(game.map);
+
+    mlx_key_hook(game.win, key_hook, &game);
     mlx_loop(mlx);
     return (0);
 }
