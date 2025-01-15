@@ -24,17 +24,17 @@ void parse_map(const char *filename, int map[MAX_HEIGHT][MAX_WIDTH], int *width,
         perror("Error opening file");
         exit(EXIT_FAILURE);
     }
-    char line[MAX_WIDTH + 2]; // +2 for newline and null terminator
+    char line[MAX_WIDTH + 1]; // +2 for newline and null terminator
     int row = 0;
     int col = 0;
     while (fgets(line, sizeof(line), file)) {
         col = 0;
-        for (int i = 0; line[i] != '\0' && line[i] != '\n'; i++) {
-            if (line[i] == '1' || line[i] == '0' || line[i] == 'S') {
-                map[row][col++] = line[i];
-                col = 0;
-            }
+        for (int i = 0; line[i] != '\0' && line[i] != '\n'; i++)
+        {
+            if (line[i] == 'S' || line[i] == '1' || line[i] == '0')
+                map[row][col++] = line[i] - 48;
         }
+        col = 0;
         row++;
     }
     *width = MAX_WIDTH;
@@ -42,7 +42,7 @@ void parse_map(const char *filename, int map[MAX_HEIGHT][MAX_WIDTH], int *width,
     fclose(file);
 }
 void draw_square(void *mlx, void *win, int x, int y, int color) {
-    printf("drawing a square\n");
+    printf("drawing a square in (%d, %d), color = %d\n", x, y, color);
     for (int i = 0; i < TILE_SIZE; i++) {
         for (int j = 0; j < TILE_SIZE; j++) {
             mlx_pixel_put(mlx, win, x + i, y + j, color);
@@ -58,6 +58,22 @@ void draw_map(int map[MAX_HEIGHT][MAX_WIDTH], void *mlx, void *win)
         }
     }
 }
+
+
+void print_map(int map[MAX_HEIGHT][MAX_WIDTH])
+{
+    size_t j = -1;
+    size_t i = -1;
+
+    while (++j < MAX_HEIGHT)
+    {
+        while (++i < MAX_WIDTH) 
+            printf("%d ", map[j][i]);
+        i = -1;
+        printf("\n");
+    }
+}
+
 int main(int ac, char *av[])
 {
     void    *mlx;        
@@ -85,7 +101,8 @@ int main(int ac, char *av[])
     int map[MAX_HEIGHT][MAX_WIDTH];
     int width, height;
     parse_map("./maps/good/map_only.cub",map, &width, &height);
+    // print_map(map);
     draw_map(map, mlx, win);
     mlx_loop(mlx);
     return (0);
-}   
+}
