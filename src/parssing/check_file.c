@@ -1,13 +1,13 @@
 
 #include "cub3d.h"
 
-int ft_strlen(char *str)
-{
-	int i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
-}
+// int ft_strlen(char *str)
+// {
+// 	int i = 0;
+// 	while (str && str[i])
+// 		i++;
+// 	return (i);
+// }
 
 void	ft_msg_exit(char *msg)
 {
@@ -37,7 +37,7 @@ void ft_printdata(char **substr)
 	int i = 0;
 	while (substr[i])
 	{
-		printf("%s",substr);
+		printf("%s",substr[i]);
 		i++;
 	}
 }

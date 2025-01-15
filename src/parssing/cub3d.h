@@ -1,13 +1,13 @@
 #ifndef CUB3D_H
 #define CUB3D_H
 
-# include "mlx.h"
+//# include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "./../get_next_line/get_next_line.h"
+# include "./../../get_next_line/get_next_line.h"
 
 /*
  * parsing textures and save data 
@@ -46,10 +46,9 @@ void	check_file_map(char *file,t_textures_data *elementes_data);
 void 	save_check_elements(int fd, t_textures_data *elem_dt);
 void 	check_extension(char *file);
 void	ft_msg_exit(char *msg);
-int 	ft_strlen(char *str);
 char	**ft_split(char const *s, char c);
 void	free_split(char **split);
-
+//size_t	ft_strlen(char *str);
 
 
 #endif /* CUB3D_H */
