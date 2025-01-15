@@ -7,26 +7,29 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "./../get_next_line/get_next_line.h""
+# include "./../get_next_line/get_next_line.h"
 
 /*
  * parsing textures and save data 
- * 	F 31,99,112
- *  	C 17,16,38
+ * 	
+ * F 31,99,112
+ * C 17,16,38
+ * 
  *	NO textures/7itlkhr.xpm
  *	SO textures/zombie.xpm
  *	WE textures/hdskulls.xpm
  *	EA textures/flame.xpm
+ *
  **/
 
-struct		s_rgb
+typedef struct		s_rgb
 {
 	int	r;
 	int	g;
 	int	b;
 }	t_rgb;
 
-struct		s_textures_data
+typedef struct		s_textures_data
 {
 	t_rgb	*ceil_color;
 	t_rgb	*floor_color;
