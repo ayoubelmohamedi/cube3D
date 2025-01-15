@@ -30,11 +30,7 @@ all: $(NAME)
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-# $(info objs are $(OBJS))
-$(info Objects: $(OBJS))
-
-
-$(NAME): $(OBJS)
+$(NAME): $(MLX_LIB) $(OBJS)
 	$(CC) $(OBJS) $(MLX_LIB) $(MLX_FLAGS) $(FRAMEWORKS) $(X11_FLAGS) -o $(NAME) 
 
 $(MLX_LIB):
