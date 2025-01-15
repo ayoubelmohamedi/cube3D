@@ -4,10 +4,10 @@
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
 
-#mlx related libraries
-mlx/libmlx.a
-mlx/libmlx_Linux.a
-mlx/test/mlx-test
+# #mlx related libraries
+# mlx/libmlx.a
+# mlx/libmlx_Linux.a
+# mlx/test/mlx-test
 
 #executables
 cube3d
