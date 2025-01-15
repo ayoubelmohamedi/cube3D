@@ -12,9 +12,9 @@
 
 # define WIDTH 800 
 # define HEIGHT 600 
-# define MAX_WIDTH 20 - 1
+# define MAX_WIDTH 20
 # define MAX_HEIGHT 10
-#define TILE_SIZE 40
+#define TILE_SIZE 30
 
 typedef struct {
     float x, y, z;
