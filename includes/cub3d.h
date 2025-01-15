@@ -37,12 +37,13 @@ typedef struct {
 
 typedef struct 
 {
-    int **map;
-    int player_x;
-    int player_y;
+    int map[MAP_HEIGHT][MAP_WIDTH];
     void *mlx;
     void *win;
+    int player_x;
+    int player_y;
+    int map_height;
+    int map_width;
 } Game;
-
 
 #endif /* CUB3D_H */
