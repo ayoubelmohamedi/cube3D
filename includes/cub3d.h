@@ -38,6 +38,7 @@ typedef struct {
 typedef struct 
 {
     int map[MAP_HEIGHT][MAP_WIDTH];
+    Color color;
     void *mlx;
     void *win;
     int player_x;
