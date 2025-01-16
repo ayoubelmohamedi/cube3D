@@ -4,6 +4,7 @@
 void my_put_pixel(void *mlx, void *win, int x, int y, Color color) {
     if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
         int rgb = (color.r << 16) | (color.g << 8) | color.b;
+        printf("in my_put_pixel\n");
         mlx_pixel_put(mlx, win, x, y, rgb);
     }
 }
