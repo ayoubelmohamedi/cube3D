@@ -4,7 +4,7 @@ MLX_DIR = mlx
 
 # Compiler flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror -O3 -Wno-unused-result 
 
 SRCS = src/main.c
 OBJS = $(SRCS:.c=.o)
