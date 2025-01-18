@@ -1,146 +1,124 @@
+
+
 #include "cub3d.h"
 
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 600
+#define TILE_SIZE 40
+#define ROWS 10
+#define COLS 19
 
-void my_put_pixel(void *mlx, void *win, int x, int y, Color color) {
-    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
-        int rgb = (color.r << 16) | (color.g << 8) | color.b;
-        printf("in my_put_pixel\n");
-        mlx_pixel_put(mlx, win, x, y, rgb);
-    }
-}
+// Define colors
+#define COLOR_WALL 0xFFFFFF  // White
+#define COLOR_PATH 0x000000  // Black
+#define COLOR_START 0xFF0000 // Red
+#define COLOR_PLAYER 0x00FF00 // Green
 
-// (x−cx)^2+(y−cy)^2+(z−cz)^2=r^2
-void draw_sphere(void *mlx, void *win, Vector3 center, int radius, Color color) {
-    for (int y = center.y - radius; y <= center.y + radius; y++) {
-        for (int x = center.x - radius; x <= center.x + radius; x++) {
-            int dx = x - center.x;
-            int dy = y - center.y;
-            if (dx * dx + dy * dy <= radius * radius) {
-                my_put_pixel(mlx, win, x, y, color);
-                // usleep(100);
-            }
-        }
-    }
-}
+// Define key codes (may vary by system)
+#define KEY_W 13 // Move up
+#define KEY_A 0  // Move left
+#define KEY_S 1  // Move down
+#define KEY_D 2  // Move right
+#define KEY_ESC 53 // Exit
 
-void parse_map(const char *filename, Game *game) {
-    FILE *file = fopen(filename, "r");
-    if (!file) {
-        perror("Error opening file");
-        exit(EXIT_FAILURE);
-    }
-    char line[MAP_WIDTH + 2]; // +2 for newline and null terminator
-    int row = 0;
-    int col = 0;
-    while (fgets(line, sizeof(line), file)) {
-        col = 0;
-        for (int i = 0; line[i] != '\0' && line[i] != '\n'; i++)
-        {
-            if (line[i] == 'S')
-            {
-                game->player_x = col;
-                game->player_y = row;
-            }
-            else if (line[i] == '1' || line[i] == '0')
-                game->map[row][col++] = line[i] - 48;
-        }
-        col = 0;
-        row++;
-    }
-    game->map_width = MAP_WIDTH;
-    game->map_height = MAP_HEIGHT;
-    fclose(file);
-}
-void draw_square(void *mlx, void *win, int x, int y, Game *game) {
+
+typedef struct s_game {
+    void *mlx;
+    void *win;
+    char map[ROWS][COLS + 1];
+    int player_x;
+    int player_y;
+} t_game;
+
+// Function to draw a square at (x, y) with a specific color
+void draw_square(t_game *game, int x, int y, int color) {
+    int start_x = x * TILE_SIZE;
+    int start_y = y * TILE_SIZE;
+
     for (int i = 0; i < TILE_SIZE; i++) {
         for (int j = 0; j < TILE_SIZE; j++) {
-            my_put_pixel(mlx, win, x + i, y + j, game->color);
+            mlx_pixel_put(game->mlx, game->win, start_x + i, start_y + j, color);
         }
     }
 }
 
-void draw_player(Game *game) {
-    int px = game->player_x * TILE_SIZE + TILE_SIZE / 4; 
-    int py = game->player_y * TILE_SIZE + TILE_SIZE / 4; 
-    for (int i = 0; i < TILE_SIZE / 2; i++) {
-        for (int j = 0; j < TILE_SIZE / 2; j++) {
-            mlx_pixel_put(game->mlx, game->win, px + i, py + j, 0xFF0000); // Player is red
+// Function to render the map and the player
+void render_map(t_game *game) {
+    for (int y = 0; y < ROWS; y++) {
+        for (int x = 0; x < COLS; x++) {
+            if (game->map[y][x] == '1') {
+                draw_square(game, x, y, COLOR_WALL);
+            } else if (game->map[y][x] == '0') {
+                draw_square(game, x, y, COLOR_PATH);
+            } else if (game->map[y][x] == 'S') {
+                draw_square(game, x, y, COLOR_START);
+                game->player_x = x;
+                game->player_y = y;
+            }
         }
     }
-}
-void draw_map(Game *game)
-{
-  for (int y = 0; y < MAP_HEIGHT; y++) {
-        for (int x = 0; x < MAP_WIDTH - 1; x++) {
-            game->color = (game->map[y][x] == 1) ? (Color){255,255,255} : (Color){0, 0, 0}; // Wall: white, Floor: black
-            draw_square(game->mlx, game->win, x * TILE_SIZE, y * TILE_SIZE, game);
-        }
-    }
+    // Draw the player
+    draw_square(game, game->player_x, game->player_y, COLOR_PLAYER);
 }
 
-void print_map(int map[MAP_HEIGHT][MAP_WIDTH])
-{
-    size_t j = -1;
-    size_t i = -1;
-    while (++j < MAP_HEIGHT)
-    {
-        while (++i < MAP_WIDTH - 1) 
-            printf("%d ", map[j][i]);
-        i = -1;
-        printf("\n");
+// Function to handle player movement
+int handle_keypress(int keycode, t_game *game) {
+    int new_x = game->player_x;
+    int new_y = game->player_y;
+
+    if (keycode == KEY_W) new_y--; // Move up
+    if (keycode == KEY_A) new_x--; // Move left
+    if (keycode == KEY_S) new_y++; // Move down
+    if (keycode == KEY_D) new_x++; // Move right
+
+    // Check for valid movement (not walking into walls)
+    if (new_x >= 0 && new_x < COLS && new_y >= 0 && new_y < ROWS && game->map[new_y][new_x] != '1') {
+        game->player_x = new_x;
+        game->player_y = new_y;
     }
-}
-int key_hook(int keycode, Game *game) {
-    // Clear window to redraw map
+
+    // Redraw the map and player
     mlx_clear_window(game->mlx, game->win);
-    // Move player based on key press
-    if (keycode == 13 && game->map[game->player_y - 1][game->player_x] == 0) // W (move up)
-        game->player_y--;
-    else if (keycode == 1 && game->map[game->player_y + 1][game->player_x] == 0) // S (move down)
-        game->player_y++;
-    else if (keycode == 0 && game->map[game->player_y][game->player_x - 1] == 0) // A (move left)
-        game->player_x--;
-    else if (keycode == 2 && game->map[game->player_y][game->player_x + 1] == 0) // D (move right)
-        game->player_x++;
-    // Redraw map and player
-    draw_map(game);
-    draw_player(game);
+    render_map(game);
+
+    // Exit if ESC is pressed
+    if (keycode == KEY_ESC) {
+        mlx_destroy_window(game->mlx, game->win);
+        exit(0);
+    }
+
     return 0;
 }
 
-int main(int ac, char *av[])
-{
-    void    *mlx;        
-    void    *win;
-    Game    game;
-    (void)ac;
-    (void)av;
-    mlx = mlx_init();
-    if (!mlx)
-    {
-        write(2, "Error: Unable to initialize MinilibX\n", 37);
-        return (1);
-    }
-    win = mlx_new_window(mlx, WIDTH, HEIGHT, "2D Sphere in MLX");
-    if (!win)
-    {
-        write(2, "Error: Unable to create window\n", 31);
-        return (1);
-    }
-  
-    // Vector3 sphere_center = {WIDTH / 2, HEIGHT / 2, 0};
-    // int sphere_radius = 300;
-    // Color sphere_color = {255, 77, 0}; // Red color
-    // draw_sphere(mlx, win, sphere_center, sphere_radius, sphere_color);
-    // Wait for events (close window with any key press)
-    game.mlx = mlx;
-    parse_map("./maps/good/map_only.cub", &game);
-    print_map(game.map);
+int main() {
+    // Initialize game structure
+    t_game game = {
+        .map = {
+            "1111111111111111111",
+            "1001001001001001001",
+            "1001001001001001001",
+            "1001001001001001001",
+            "1001001000001001001",
+            "100000000S000000001",
+            "1000011111111000001",
+            "1111000000000001111",
+            "1000000101010000001",
+            "1111111111111111111"
+        }
+    };
 
-    draw_map(&game);
-    draw_player(&game);
+    // Initialize MiniLibX
+    game.mlx = mlx_init();
+    game.win = mlx_new_window(game.mlx, WIN_WIDTH, WIN_HEIGHT, "Map with Moving Player");
 
-    mlx_key_hook(game.win, key_hook, &game);
-    mlx_loop(mlx);
-    return (0);
+    // Initial rendering of the map and player
+    render_map(&game);
+
+    // Set key press hook
+    mlx_key_hook(game.win, handle_keypress, &game);
+
+    // Run the event loop
+    mlx_loop(game.mlx);
+
+    return 0;
 }
