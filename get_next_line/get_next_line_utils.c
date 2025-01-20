@@ -30,17 +30,6 @@ char	*ft_strdup(char	*str)
 	return (dest);
 }
 
-size_t	ft_strlen(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
 
 char	*ft_strjoin(char *str, char *buffer)
 {
@@ -97,4 +86,16 @@ char	*ft_substr(char *string, int start, int len)
 	}
 	line[i] = '\0';
 	return (line);
+}
+
+size_t	ft_strlen(char *str)
+{
+	size_t	i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+		i++;
+	return (i);
 }
