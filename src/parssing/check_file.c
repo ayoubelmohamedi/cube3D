@@ -148,17 +148,16 @@ void ft_printf_data_maps(t_textures_data *map)
 }
 
 
-void save_map(t_textures_data *ma)
-{
-	int i;
-	int j;
+ void save_map(t_textures_data *ma)
+ {
+// 	int i;
+// 	int j;
 
-	i = 0;
-	while (i < get_line(ma))
-	{
-		while (j < get_line(ma))
-	}
-
+// 	i = 0;
+// 	while (i < get_line(ma))
+// 	{
+// 		while (j < get_line(ma))
+// 	}
 }
 
 void save_check_elements(int fd, t_textures_data *elem_dt)
