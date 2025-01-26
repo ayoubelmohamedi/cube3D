@@ -150,6 +150,14 @@ void ft_printf_data_maps(t_textures_data *map)
 
 void save_map(t_textures_data *ma)
 {
+	int i;
+	int j;
+
+	i = 0;
+	while (i < get_line(ma))
+	{
+		while (j < get_line(ma))
+	}
 
 }
 
