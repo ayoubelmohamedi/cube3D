@@ -2,35 +2,6 @@
 
 #include "cub3d.h"
 
-#define WIN_WIDTH 800
-#define WIN_HEIGHT 600
-#define TILE_SIZE 40
-#define ROWS 10
-#define COLS 19
-
-// Define colors
-#define COLOR_WALL 0xFFFFFF  // White
-#define COLOR_PATH 0x000000  // Black
-#define COLOR_START 0xFF0000 // Red
-#define COLOR_PLAYER 0x00FF00 // Green
-
-// Define key codes (may vary by system)
-#define KEY_W 119 // Move up
-#define KEY_A 97  // Move left
-#define KEY_S 115  // Move down
-#define KEY_D 100  // Move right
-#define KEY_ESC 65307 // Exit
-
-
-typedef struct s_game {
-    void *mlx;
-    void *win;
-    int changed;
-    char map[ROWS][COLS + 1];
-    int player_x;
-    int player_y;
-} t_game;
-
 // Function to draw a square at (x, y) with a specific color
 void draw_square(t_game *game, int x, int y, int color) {
     int start_x = x * TILE_SIZE;
@@ -106,7 +77,7 @@ int handle_keypress(int keycode, t_game *game) {
         pressed = 1;
     }
 
-    // // Check for valid movement (not walking into walls)
+    // Check for valid movement (not walking into walls)
     if (pressed && new_x >= 0 && new_x < 720 && new_y >= 0 && new_y < 720) {
         game->player_x = new_x;
         game->player_y = new_y;
@@ -114,7 +85,8 @@ int handle_keypress(int keycode, t_game *game) {
 
         // Redraw the map and player
         mlx_clear_window(game->mlx, game->win);
-        render_map(game);
+        // render_map(game);
+        raycast(game);
         pressed = 0;
     }
     // Exit if ESC is pressed
@@ -123,6 +95,63 @@ int handle_keypress(int keycode, t_game *game) {
         exit(0);
     }
     return 0;
+}
+
+void draw_wall(int x, int wall_height, int color, t_game *game)
+{
+    int start = WIN_HEIGHT / 2 - wall_height / 2;
+    int end = WIN_HEIGHT / 2 + wall_height / 2;
+
+    for (int y = start; y < end; y++)
+    {
+        if (y >= 0 && y < WIN_HEIGHT)
+        {
+            printf("drawing wall (%d, %d)\n", x, y);
+            mlx_pixel_put(game->mlx, game->win, x, y, color);
+        }
+    }
+}
+
+void raycast(t_game *game)
+{
+    int FOV = PI / 3;  // 60 degrees
+    int ray = 1;
+    int MAX_DEPTH = 800;
+    int depth = 0;
+    int ray_x, ray_y;
+    int ray_angle;
+    int map_x, map_y;
+    int distance;
+    int wall_height;
+    int color, color_intensity;
+
+
+    while (ray < game->NUM_RAY)
+    {
+        ray_angle = game->player_angle - FOV / 2 + (ray / game->NUM_RAY) * FOV;
+        depth = 1;
+        while (depth < MAX_DEPTH)
+        {
+            ray_x = game->player_x  + depth * cos(ray_angle);
+            ray_y = game->player_y + depth * sin(ray_angle);
+
+            map_x = (int)(ray_x / TILE_SIZE);
+            map_y =  (int)(ray_y / TILE_SIZE);
+            //wall collision check 
+            if (game->map[map_x][map_y])
+            {
+                // calc dist & wall height 
+                distance = depth * cos(ray_angle - game->player_angle);
+                wall_height = WIN_HEIGHT / (distance + 0.0001);
+                color_intensity = 255 - fmin(distance, 255);
+                color = (color_intensity << 16);
+                draw_wall(ray * (WIN_WIDTH / game->NUM_RAY), wall_height, color, game);
+                break;
+            }
+            depth++;
+        }
+        ray++;
+    }
 }
 
 int main() {
@@ -147,11 +176,12 @@ int main() {
     game.win = mlx_new_window(game.mlx, WIN_WIDTH, WIN_HEIGHT, "Map with Moving Player");
 
     // Initial rendering of the map and player
-    render_map(&game);
+    // render_map(&game);
+    raycast(&game);
 
     // Set key press hook
     mlx_key_hook(game.win, handle_keypress, &game);
-
+    
     // Run the event loop
     mlx_loop(game.mlx);
 
