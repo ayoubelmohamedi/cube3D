@@ -36,8 +36,8 @@
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 600
 #define TILE_SIZE 40
-#define ROWS 10
-#define COLS 19
+#define MAP_HEIGHT 10
+#define MAP_WIDTH 19
 
 // Define colors
 #define COLOR_WALL 0xFFFFFF  // White
@@ -56,7 +56,7 @@ typedef struct s_game {
     void *mlx;
     void *win;
     int changed;
-    char map[ROWS][COLS + 1];
+    char map[MAP_HEIGHT][MAP_WIDTH + 1];
     int NUM_RAY;
     int player_angle;
     int player_x;

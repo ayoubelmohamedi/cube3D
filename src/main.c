@@ -29,8 +29,8 @@ void draw_player(t_game *game, int color) {
 
 // Function to render the map and the player
 void render_map(t_game *game) {
-    for (int y = 0; y < ROWS; y++) {
-        for (int x = 0; x < COLS; x++) {
+    for (int y = 0; y < MAP_HEIGHT; y++) {
+        for (int x = 0; x < MAP_WIDTH; x++) {
             if (game->map[y][x] == '1') {
                 draw_square(game, x, y, COLOR_WALL);
             } else if (game->map[y][x] == '0') {
@@ -138,7 +138,7 @@ void raycast(t_game *game)
             map_x = (int)(ray_x / TILE_SIZE);
             map_y =  (int)(ray_y / TILE_SIZE);
             //wall collision check 
-            if (game->map[map_x][map_y])
+            if (map_x >= 0 && map_x < MAP_WIDTH && map_y >= 0 && map_y < MAP_HEIGHT && game->map[map_x][map_y] == 1)
             {
                 // calc dist & wall height 
                 distance = depth * cos(ray_angle - game->player_angle);
@@ -156,6 +156,15 @@ void raycast(t_game *game)
 
 int main() {
     // Initialize game structure
+
+    // int MAP[MAP_HEIGHT][MAP_WIDTH] = {
+    // {1, 1, 1, 1, 1},
+    // {1, 0, 0, 0, 1},
+    // {1, 0, 0, 0, 1},
+    // {1, 0, 0, 0, 1},
+    // {1, 1, 1, 1, 1},
+    // };
+
     t_game game = {
         .map = {
             "1111111111111111111",
@@ -174,6 +183,7 @@ int main() {
     // Initialize MiniLibX
     game.mlx = mlx_init();
     game.win = mlx_new_window(game.mlx, WIN_WIDTH, WIN_HEIGHT, "Map with Moving Player");
+    game.NUM_RAY = 120;
 
     // Initial rendering of the map and player
     // render_map(&game);
