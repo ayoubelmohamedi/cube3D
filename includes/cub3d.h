@@ -11,6 +11,8 @@
 # include <unistd.h>
 #include <stdbool.h>
 
+#include <string.h>
+
 // # define WIN_WIDTH 800 
 // # define WIN_HEIGHT 600 
 // # define MAP_WIDTH 20
@@ -56,7 +58,8 @@ typedef struct s_game {
     void *mlx;
     void *win;
     int changed;
-    char map[MAP_HEIGHT][MAP_WIDTH + 1];
+    // char map[MAP_HEIGHT][MAP_WIDTH + 1];
+    int map[MAP_HEIGHT][MAP_WIDTH];
     int NUM_RAY;
     int player_angle;
     int player_x;

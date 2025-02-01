@@ -27,27 +27,27 @@ void draw_player(t_game *game, int color) {
     }
 }
 
-// Function to render the map and the player
-void render_map(t_game *game) {
-    for (int y = 0; y < MAP_HEIGHT; y++) {
-        for (int x = 0; x < MAP_WIDTH; x++) {
-            if (game->map[y][x] == '1') {
-                draw_square(game, x, y, COLOR_WALL);
-            } else if (game->map[y][x] == '0') {
-                draw_square(game, x, y, COLOR_PATH);
-            } else if (game->map[y][x] == 'S') {    
-                // draw_square(game, x, y, COLOR_START);
-                if (game->changed == 0) {
-                    game->player_x = x;
-                    game->player_y = y;
-                    game->changed = 1;
-                }
-            }
-        }
-    }
-    // Draw the player
-    draw_player(game, COLOR_PLAYER);
-}
+// // Function to render the map and the player
+// void render_map(t_game *game) {
+//     for (int y = 0; y < MAP_HEIGHT; y++) {
+//         for (int x = 0; x < MAP_WIDTH; x++) {
+//             if (game->map[y][x] == '1') {
+//                 draw_square(game, x, y, COLOR_WALL);
+//             } else if (game->map[y][x] == '0') {
+//                 draw_square(game, x, y, COLOR_PATH);
+//             } else if (game->map[y][x] == 'S') {    
+//                 // draw_square(game, x, y, COLOR_START);
+//                 if (game->changed == 0) {
+//                     game->player_x = x;
+//                     game->player_y = y;
+//                     game->changed = 1;
+//                 }
+//             }
+//         }
+//     }
+//     // Draw the player
+//     draw_player(game, COLOR_PLAYER);
+// }
 
 // Function to handle player movement
 int handle_keypress(int keycode, t_game *game) {
@@ -125,7 +125,7 @@ void raycast(t_game *game)
     int wall_height;
     int color, color_intensity;
 
-
+    printf("inside\n");
     while (ray < game->NUM_RAY)
     {
         ray_angle = game->player_angle - FOV / 2 + (ray / game->NUM_RAY) * FOV;
@@ -157,33 +157,25 @@ void raycast(t_game *game)
 int main() {
     // Initialize game structure
 
-    // int MAP[MAP_HEIGHT][MAP_WIDTH] = {
-    // {1, 1, 1, 1, 1},
-    // {1, 0, 0, 0, 1},
-    // {1, 0, 0, 0, 1},
-    // {1, 0, 0, 0, 1},
-    // {1, 1, 1, 1, 1},
-    // };
-
-    t_game game = {
-        .map = {
-            "1111111111111111111",
-            "1001001001001001001",
-            "1001001001001001001",
-            "1001001001001001001",
-            "1001001000001001001",
-            "100000000S000000001",
-            "1000011111111000001",
-            "1111000000000001111",
-            "1000000101010000001",
-            "1111111111111111111"
-        }
+    int my_MAP[MAP_HEIGHT][MAP_WIDTH] = {
+    {1, 1, 1, 1, 1},
+    {1, 0, 0, 0, 1},
+    {1, 0, 0, 0, 1},
+    {1, 0, 0, 0, 1},
+    {1, 1, 1, 1, 1},
     };
+
+    t_game game; 
+    memcpy(game.map, my_MAP, sizeof(my_MAP));
+
     game.changed = 0;
     // Initialize MiniLibX
     game.mlx = mlx_init();
     game.win = mlx_new_window(game.mlx, WIN_WIDTH, WIN_HEIGHT, "Map with Moving Player");
     game.NUM_RAY = 120;
+    game.player_x = 2.5 * TILE_SIZE;
+    game.player_y = 2.5 * TILE_SIZE;
+    game.player_angle = PI / 4;
 
     // Initial rendering of the map and player
     // render_map(&game);

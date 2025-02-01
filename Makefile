@@ -6,7 +6,7 @@ MLX_DIR = mlx
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -O3 -Wno-unused-result 
 
-SRCS = src/main.c
+SRCS = src/test.c
 OBJS = $(SRCS:.c=.o)
 
 UNAME_S := $(shell uname -s)

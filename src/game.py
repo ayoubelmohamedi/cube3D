@@ -27,7 +27,7 @@ MAP = [
 # Player
 player_x, player_y = 2.5 * TILE_SIZE, 2.5 * TILE_SIZE
 player_angle = math.pi / 4
-SPEED = 2
+SPEED = 4
 
 # Initialize Pygame
 pygame.init()
