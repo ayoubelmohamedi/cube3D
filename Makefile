@@ -11,18 +11,19 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -O3
 
 # Add MLX include path
-INCLUDES = -I./includes -Imlx
+INCLUDES = -I/usr/include -Imlx_linux 
 
 SRCS = src/main.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
+
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(MLX_LIB) $(OBJS)
-	$(CC) $(OBJS) $(MLX_LIB) $(MLX_FLAGS) $(FRAMEWORKS) $(X11_FLAGS) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz  -o $(NAME)
 
 $(MLX_LIB):
 	@make -C $(MLX_DIR)
