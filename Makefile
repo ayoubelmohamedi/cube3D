@@ -11,7 +11,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -O3
 
 # Add MLX include path
-INCLUDES = -I/usr/include -Imlx_linux 
+INCLUDES = -I/usr/include -Imlx_linux  -Iincludes
 
 SRCS = src/main.c
 OBJS = $(SRCS:.c=.o)
