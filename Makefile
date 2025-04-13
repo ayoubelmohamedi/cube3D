@@ -32,11 +32,11 @@ endif
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(MLX_LIB) $(OBJS)
+$(NAME):  $(MLX_LIB) $(OBJS)
 	$(CC) $(OBJS) $(MLX_LIB) $(X11_FLAGS) -o $(NAME)
 
 $(MLX_LIB):
-	@make -C $(MLX_DIR)
+	# @make -C $(MLX_DIR)
 
 clean:
 	# @make -C $(MLX_DIR) clean
