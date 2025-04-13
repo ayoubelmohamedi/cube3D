@@ -9,6 +9,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+#include <stdbool.h>
 
 # define WIDTH 800 
 # define HEIGHT 600
@@ -16,7 +17,7 @@
 # define PROJ_PLANE_H 200
 # define MAX_WIDTH 20 - 1
 # define MAX_HEIGHT 10
-#define TILE_SIZE 64
+#define TILE_SIZE 32
 
 typedef struct {
     float x, y, z;
@@ -39,12 +40,15 @@ typedef struct {
 
 typedef struct 
 {
-    int **map;
+    int map[MAX_WIDTH][MAX_WIDTH];
     int player_x;
     int player_y;
+    int fov;
+    int dir;
     void *mlx;
     void *win;
-} Game;
+    void *img;
+} t_game;
 
 
 #endif /* CUB3D_H */
