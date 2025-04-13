@@ -38,6 +38,7 @@ typedef struct {
     Vector3 direction;
 } Ray;
 
+
 typedef struct 
 {
     int map[MAX_WIDTH][MAX_WIDTH];
@@ -48,6 +49,9 @@ typedef struct
     void *mlx;
     void *win;
     void *img;
+    void *addr;
+    int line_length;
+    int bits_per_pixel; 
 } t_game;
 
 
