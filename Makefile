@@ -1,29 +1,39 @@
 # MLX Configuration
 NAME = cube3d
-MLX_DIR = mlx/
-MLX_LIB =  $(MLX_DIR)libmlx_Darwin.a
-MLX_FLAGS = -L$(MLX_DIR) -lmlx
-FRAMEWORKS = -framework OpenGL -framework AppKit
-X11_FLAGS = -L/usr/X11/lib -lXext -lX11
+
+# mlx dir for linux
+MLX_DIR = ./mlx
+# MLX VARS FOR LINUX
+MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux
+MLX_LIB = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux
+INCLUDES = -I/usr/include -Imlx_linux -Iincludes
+X11_FLAGS = -lXext -lX11 -lm -lz 
+
 
 # Compiler flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -O3
 
-# Add MLX include path
-INCLUDES = -I/usr/include -Imlx_linux  -Iincludes
-
 SRCS = src/main.c
 OBJS = $(SRCS:.c=.o)
 
-all: $(NAME)
+OS := $(shell uname)
 
+all: $(NAME)
+# $(info OS : $(OS))
+ifeq ($(OS),Darwin)
+MLX_LIB = $(MLX_DIR)/libmlx_Darwin.a
+FRAMEWORKS = -framework OpenGL -framework AppKit
+INCLUDES = -I$(MLX_DIR) -Iincludes
+MLX_FLAGS = -L$(MLX_DIR) -lmlx $(FRAMEWORKS)
+X11_FLAGS = -L/usr/X11/lib -lXext -lX11
+endif
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJS)
-	$(CC) $(OBJS) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz  -o $(NAME)
+$(NAME): $(MLX_LIB) $(OBJS)
+	$(CC) $(OBJS) $(MLX_LIB) $(X11_FLAGS) -o $(NAME)
 
 $(MLX_LIB):
 	@make -C $(MLX_DIR)
