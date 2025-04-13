@@ -73,12 +73,44 @@ void draw_map(int map[MAX_HEIGHT][MAX_WIDTH], void *mlx, void *win)
         }
     }
 }
+
+void render_scene(t_game *game)
+{
+    for (int x = 0; x < WIDTH; x++)
+    {
+        cast_ray(game, x);
+    }
+    mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+}
+
+int	key_hook(int keycode, t_game *game);
+{
+	printf("Hello from key_hook!\n");
+	return (0);
+}
+
 int main(int ac, char *av[])
 {
     void    *mlx;        
     void    *win;
     (void)ac;
     (void)av;
+
+    // int fplayer_x = 100;
+    // int fplayer_y = 160;
+    // int distance_to_plane = 277;
+    // int player_h = player_h / 2;
+    // int player_speed = 16;
+    // int plane_center_y = PROJ_PLANE_H / 2;
+    // int fplayerMapX, fplayerMapY, fMiniMapWidth;
+
+    // // movements flags
+    // bool fKeyUp=false;
+    // bool fKeyDown=false;
+    // bool fKeyLeft=false;
+    // bool fKeyRight=false;
+
+
     mlx = mlx_init();
     if (!mlx)
     {
@@ -111,6 +143,7 @@ int main(int ac, char *av[])
     }
 
     draw_map(map, mlx, win);
+
     mlx_loop(mlx);
     return (0);
 }
