@@ -52,6 +52,7 @@ typedef struct
     void *addr;
     int line_length;
     int bits_per_pixel; 
+    int endian;
 } t_game;
 
 

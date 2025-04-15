@@ -158,21 +158,21 @@ int main(int ac, char *av[])
     if (!img)
     {
         mlx_destroy_window(mlx, win);
-        return (1);
+        return (1); 
+    // draw_sphere(mlx, win, sphere_center, sphe
     }
-    game->addr = mlx_get_data_addr(game->img, &game->bits_per_pixel,
-        &game->line_length, &game->endian);
 
     // Vector3 sphere_center = {WIDTH / 2, HEIGHT / 2, 0};
     // int sphere_radius = 300;
-    // Color sphere_color = {255, 77, 0}; // Red color
-    // draw_sphere(mlx, win, sphere_center, sphere_radius, sphere_color);
+    // Color sphere_color = {255, 77, 0}; // Redre_radius, sphere_color);
     // Wait for events (close window with any key press)
     int map[MAX_HEIGHT][MAX_WIDTH];
     int width, height;
     parse_map("./maps/good/map_only.cub",map, &width, &height);
      
     t_game game = {map, fplayer_x, fplayer_y, fov, dir, mlx, win, NULL};
+    game.addr = mlx_get_data_addr(game.img, &game.bits_per_pixel,
+        &game.line_length, &game.endian);
     size_t i = 0, j = 0;
     while (i < MAX_HEIGHT) {
         for (j = 0; j < MAX_WIDTH; j++) { 
