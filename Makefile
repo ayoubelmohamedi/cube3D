@@ -12,9 +12,9 @@ X11_FLAGS = -lXext -lX11 -lm -lz
 
 # Compiler flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror  -g  #-O3
 
-SRCS = src/main.c
+SRCS = src/raycasting.c
 OBJS = $(SRCS:.c=.o)
 
 OS := $(shell uname)
