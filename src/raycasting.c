@@ -154,16 +154,30 @@ void cast_ray(t_env *env, t_player player, double ray_angle, int screen_x) {
     {
         // fix bowelfish effect
         double correct_dist = dist * cos(ray_angle - player.dir);
-
         if (correct_dist < 0.01) correct_dist = 0.01;
 
-        // printf("corrected dist => %f\n", correct_dist);
         int wall_type = map[mapY][mapX];
         int wall_height = (int)(HEIGHT / correct_dist);
         if (wall_height < 0) wall_height = 0;
         if (wall_height > HEIGHT) wall_height = HEIGHT;
         int color = get_color(wall_type);
-        color = darken_color(color, dist);
+        color = darken_color(color, correct_dist);
+
+
+        // 2. Apply screen-edge darkening (vignette)
+        double vignette_strength = 0.4; // Adjust 0.0 (none) to 1.0 (black edges)
+        // Calculate distance from center screen (0.0 center, 1.0 edges)
+        double dist_from_center = fabs((double)screen_x - WIDTH / 2.0) / (WIDTH / 2.0);
+        // Calculate darkening factor (closer to 0 means darker)
+        double vignette_factor = 1.0 - dist_from_center * vignette_strength;
+        if (vignette_factor < 0.0) vignette_factor = 0.0; // Clamp
+
+        // Apply vignette factor to the color components
+        int r = ((color >> 16) & 0xFF) * vignette_factor;
+        int g = ((color >> 8) & 0xFF) * vignette_factor;
+        int b = (color & 0xFF) * vignette_factor;
+        color = (r << 16) | (g << 8) | b;
+
         draw_vertical_line(env, screen_x, wall_height, color);
     }
     // for else, i could draw ceiling and wall ?
