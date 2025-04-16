@@ -149,7 +149,7 @@ void cast_ray(t_env *env, t_player player, double ray_angle, int screen_x) {
     if (mapX < 0 || mapX >= MAP_WIDTH || mapY < 0 || mapY >= MAP_HEIGHT)
         return ;  
         
-    int dist = dda_algo(rayDirX, rayDirY, &rayX, &rayY, &mapX, &mapY);
+    double dist = dda_algo(rayDirX, rayDirY, &rayX, &rayY, &mapX, &mapY);
     if (dist >= 0)
     {
         // fix bowelfish effect
