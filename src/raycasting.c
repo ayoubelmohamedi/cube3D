@@ -4,6 +4,7 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -23,6 +24,31 @@
 #define KEY_D 100
 #define KEY_ESC 65307
 
+
+typedef struct 
+{
+    bool has_floor;
+    void *floor_img;
+    char *floor_addr;
+    int floor_bpp;
+    int floor_line_len;
+    int floor_endian;
+    int floor_width;
+    int floor_height;
+
+    bool has_ceiling;
+    void *ceil_img;
+    char *ceil_addr;
+    int ceil_bpp;
+    int ceil_line_len;
+    int ceil_endian;
+    int ceil_width;
+    int ceil_height;
+
+} t_texture;
+
+
+
 typedef struct {
     void *mlx;
     void *win;
@@ -31,7 +57,8 @@ typedef struct {
     int endian;
     int line_lenght;
     int bits_per_pixel; 
-    
+    bool has_texture;
+    t_texture *texture; 
 } t_env;
 
 typedef struct {
@@ -187,8 +214,6 @@ void cast_ray(t_env *env, t_player player, double ray_angle, int screen_x) {
 
         draw_vertical_line(env, screen_x, wall_height, color);
     }
-    // for else, i could draw ceiling and wall ?
-   
 }
 
 // Main render function
@@ -264,6 +289,22 @@ int handle_keypress(int keypress, t_player *player)
 
 int main() {
     t_env env;
+    t_texture texture;
+
+    const char *sky[] =  {"assets/sky/minecraft.xpm",
+                    "assets/sky/minecraft.xpm",
+                    "assets/sky/minecraft2.xpm",
+                    "assets/sky/sunset.xpm",
+                    "assets/sky/zenith.xpm",
+                     NULL};
+        
+    
+    // adaptive part 
+    texture.has_ceiling = true;
+    texture.has_floor = false;
+    env.has_texture = true;
+    env.texture = &texture;
+
     env.mlx = mlx_init();
     env.win = mlx_new_window(env.mlx, WIDTH, HEIGHT, "Raycasting Demo");
     
@@ -271,11 +312,29 @@ int main() {
 
     env.addr =  mlx_get_data_addr(env.img, &env.bits_per_pixel,
         &env.line_lenght, &env.endian);
-     
+    
+    
+    texture.ceil_img = mlx_xpm_file_to_image(env.mlx, sky[0], &env.texture->ceil_width, &env.texture->ceil_height);
+    if (!env.texture->ceil_img)
+    {
+        //exit
+        //ft_destory();
+        // print_error();
+        mlx_destroy_image(env.mlx, env.img);
+        mlx_destroy_window(env.mlx, env.win);
+        perror("celiling image error");
+        return (1);
+    }
+    env.texture->ceil_addr = mlx_get_data_addr(env.texture->ceil_img,&env.texture->ceil_bpp, &env.texture->ceil_line_len, &env.texture->ceil_endian);
+    
+
+
     double player_x = 3.5;
     double player_y = 3.5;
 
     t_player player = {player_x, player_y, M_PI / 2, &env}; // center of map, facing down
+    
+    player.env = &env;
 
     render_scene(&env, player);
 
