@@ -132,7 +132,7 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
 
     double planeX = -playerDirY * tan(fov_rad / 2.0);
     double planeY = playerDirX * tan(fov_rad / 2.0);
-    for (int y = -1; y < y_start; y++)
+    for (int y = 0; y < y_start; y++)
     {
         // distance from camera to ceiling pixel
         float rowDistance = (-1.5 * HEIGHT) / (HEIGHT / 2.0 - y);
@@ -388,7 +388,7 @@ int main()
     env.addr = mlx_get_data_addr(env.img, &env.bits_per_pixel,
                                  &env.line_lenght, &env.endian);
 
-    texture.ceil_img = mlx_xpm_file_to_image(env.mlx, sky[0], &env.texture->ceil_width, &env.texture->ceil_height);
+    texture.ceil_img = mlx_xpm_file_to_image(env.mlx, sky[3], &env.texture->ceil_width, &env.texture->ceil_height);
     if (!env.texture->ceil_img)
     {
         // exit
