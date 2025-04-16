@@ -109,17 +109,38 @@ int darken_color(int color, double dist) {
     return (r << 16) | (g << 8) | b;
 }
 
+void render_floor(t_env * env, int screen_x, int y_start, int y_end , int height)
+{
+
+}
+
+void render_ceiling(t_env * env, int screen_x, int y_start, int y_end , int height)
+{
+
+
+}
+
 void draw_vertical_line(t_env *env, int x, int height, int color) {
     int y_start = (HEIGHT - height) / 2;
     int y_end = y_start + height;
 
-    // draw ceiling & foor 
-    for (int y = 0; y < y_start; y++)
-        my_mlx_pixel_put(env,x, y, CEILING_COLOR);
+    // draw ceiling 
+    if (env->has_texture && env->texture->has_ceiling)
+        render_ceiling(env, x, y_start, y_end, height);
+    else
+        for (int y = 0; y < y_start; y++)
+            my_mlx_pixel_put(env,x, y, CEILING_COLOR);
+
+    // draw walls 
     for (int y = y_start; y < y_end; y++)
         my_mlx_pixel_put(env,x, y, color); 
-    for (int y = y_end; y < HEIGHT; y++)
-        my_mlx_pixel_put(env,x, y, FLOOR_COLOR); 
+
+    // draw floor 
+    if (env->has_texture && env->texture->has_floor)
+        render_floor(env, x, y_start, y_end, height);
+    else 
+        for (int y = y_end; y < HEIGHT; y++)
+            my_mlx_pixel_put(env,x, y, FLOOR_COLOR); 
 }
 
 
