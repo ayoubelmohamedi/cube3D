@@ -14,6 +14,9 @@
 #define MOVE_SPEED 0.1
 #define M_PI 3.14159265358979323846
 
+#define CEILING_COLOR 0x87CEEB // Light Sky Blue
+#define FLOOR_COLOR   0x8B4513 
+
 #define KEY_W 119
 #define KEY_A 97
 #define KEY_S 115
@@ -82,12 +85,16 @@ int darken_color(int color, double dist) {
 void draw_vertical_line(t_env *env, int x, int height, int color) {
     int y_start = (HEIGHT - height) / 2;
     int y_end = y_start + height;
+
+    // draw ceiling
+    for (int y = 0; y < y_start; y++)
+        my_mlx_pixel_put(env,x, y, CEILING_COLOR);
     for (int y = y_start; y < y_end; y++)
-    {
-        my_mlx_pixel_put(env,x, y, color);
-        // mlx_pixel_put(env->mlx, env->win, x, y, color);
-    } 
+        my_mlx_pixel_put(env,x, y, color); 
+    for (int y = y_end; y < HEIGHT; y++)
+        my_mlx_pixel_put(env,x, y, FLOOR_COLOR); 
 }
+
 
 double dda_algo(double rayDirX, double rayDirY, double *rayX, double *rayY, int *mapX, int *mapY) {
 
