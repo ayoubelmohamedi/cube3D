@@ -86,7 +86,7 @@ void draw_vertical_line(t_env *env, int x, int height, int color) {
     int y_start = (HEIGHT - height) / 2;
     int y_end = y_start + height;
 
-    // draw ceiling
+    // draw ceiling & foor 
     for (int y = 0; y < y_start; y++)
         my_mlx_pixel_put(env,x, y, CEILING_COLOR);
     for (int y = y_start; y < y_end; y++)
