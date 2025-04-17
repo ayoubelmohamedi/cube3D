@@ -18,6 +18,10 @@
 #define CEILING_COLOR 0x87CEEB // Light Sky Blue
 #define FLOOR_COLOR 0x8B4513
 
+// fog 
+#define FOG_COLOR 0xAAAAAA //Light Gray Fog
+#define FOG_DENSITY 0.15
+
 #define KEY_W 119
 #define KEY_A 97
 #define KEY_S 115
@@ -112,6 +116,27 @@ int darken_color(int color, double dist)
     return (r << 16) | (g << 8) | b;
 }
 
+int ceil_fog_color(int ceil_color, int rowDistance)
+{
+    double fog_factor = 1.0 - exp(-rowDistance * FOG_DENSITY);
+    if (fog_factor < 0.0) fog_factor = 0.0;
+    if (fog_factor > 1.0) fog_factor = 1.0;
+
+    int ceil_r = (ceil_color >> 16) & 0xFF;
+    int ceil_g = (ceil_color >> 8) & 0xFF;
+    int ceil_b = ceil_color & 0xFF;
+
+    int fog_r = (FOG_COLOR >> 16) & 0xFF;
+    int fog_g = (FOG_COLOR >> 8) & 0xFF;
+    int fog_b = FOG_COLOR & 0xFF;
+
+    int final_r = (int)(ceil_r * (1.0 - fog_factor) + fog_r * fog_factor);
+    int final_g = (int)(ceil_g * (1.0 - fog_factor) + fog_g * fog_factor);
+    int final_b = (int)(ceil_b * (1.0 - fog_factor) + fog_b * fog_factor);
+
+    return ((final_r << 16) | (final_g << 8) | final_b);
+}
+
 void render_floor(t_player *player, int screen_x, int y_start, int y_end, int height)
 {
     (void) y_start;
@@ -150,13 +175,10 @@ void render_floor(t_player *player, int screen_x, int y_start, int y_end, int he
             my_mlx_pixel_put(player->env, screen_x, y, floor_color);
         }
     }
-
-
 } 
 
 void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int height)
 {
-
     (void) y_end;
     (void) height;
 
@@ -170,7 +192,7 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
     for (int y = 0; y < y_start; y++)
     {
         // distance from camera to ceiling pixel
-        float rowDistance = (-1.5 * HEIGHT) / (HEIGHT / 2.0 - y);
+        float rowDistance = (0.5 * HEIGHT) / (HEIGHT / 2.0 - y);
 
         // Calculate the real world step vector for this row (same as floor)
         float floorStepX = rowDistance * (playerDirX + planeX - (playerDirX - planeX)) / WIDTH;
@@ -195,7 +217,7 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
             ceil_color = *(unsigned int *)tex_pixel_ptr;
             // to apply distance darkning based on distance ?
         }
-        my_mlx_pixel_put(player->env, screen_x, y, ceil_color);
+        my_mlx_pixel_put(player->env, screen_x, y, ceil_fog_color(ceil_color , rowDistance));
     }
 }
 
