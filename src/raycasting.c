@@ -14,7 +14,7 @@
 #define FOV 60
 #define MOVE_SPEED 0.1
 #define M_PI 3.14159265358979323846
-
+#define ROTATE_SPEED 0.05
 #define CEILING_COLOR 0x87CEEB // Light Sky Blue
 #define FLOOR_COLOR 0x8B4513
 
@@ -23,6 +23,9 @@
 #define KEY_S 115
 #define KEY_D 100
 #define KEY_ESC 65307
+
+#define KEY_LEFT 65361
+#define KEY_RIGHT 65363 
 
 typedef struct
 {
@@ -310,6 +313,8 @@ void render_scene(t_env *env, t_player *player)
 
 int handle_keypress(int keypress, t_player *player)
 {
+    bool need_render = false;
+
     if (keypress == KEY_ESC)
     {
         mlx_destroy_image(player->env->mlx, player->env->img);
@@ -325,6 +330,7 @@ int handle_keypress(int keypress, t_player *player)
             player->x = new_x;
             player->y = new_y;
         }
+        need_render = true;
     }
     if (keypress == KEY_S)
     {
@@ -335,6 +341,7 @@ int handle_keypress(int keypress, t_player *player)
             player->x = new_x;
             player->y = new_y;
         }
+        need_render = true;
     }
     if (keypress == KEY_A)
     {
@@ -345,6 +352,7 @@ int handle_keypress(int keypress, t_player *player)
             player->x = new_x;
             player->y = new_y;
         }
+        need_render = true;
     }
     if (keypress == KEY_D)
     {
@@ -355,10 +363,24 @@ int handle_keypress(int keypress, t_player *player)
             player->x = new_x;
             player->y = new_y;
         }
+        need_render = true;
     }
-    mlx_clear_window(player->env->mlx, player->env->win);
-    render_scene(player->env, player);
-
+    if (keypress == KEY_LEFT)
+    {
+        player->dir -= ROTATE_SPEED;
+        if (player->dir < 0)
+            player->dir += 2 * M_PI;
+        need_render = true;
+    }
+    if (keypress == KEY_RIGHT)
+    {
+        player->dir += ROTATE_SPEED;
+        if (player->dir >= 2 * M_PI)
+            player->dir -= 2 * M_PI;
+        need_render = true; 
+    }
+    if (need_render)
+        render_scene(player->env, player);
     return (0);
 }
 
