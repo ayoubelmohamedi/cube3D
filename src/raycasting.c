@@ -32,10 +32,10 @@
 #define KEY_RIGHT 65363 
 
 // sides
-#define SIDE_WEST 0
-#define SIDE_EAST 1
-#define SIDE_NORTH 2
-#define SIDE_SOUTH 3
+#define SIDE_NORTH 0
+#define SIDE_SOUTH 1
+#define SIDE_EAST 2
+#define SIDE_WEST 3
 
 
 typedef struct
@@ -54,7 +54,7 @@ typedef struct
     int south_line_len;
     int south_endian;
     int south_width;
-    int south_height;
+    int south_heght;
 
     void *east_img;
     char *east_addr;
@@ -265,10 +265,17 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
     }
 }
 
-void draw_vertical_line(t_player *player, int x, int height, int color)
+void draw_vertical_line(t_player *player, int x, int height, int color, double corrected_dist, int side)
 {
     int y_start = (HEIGHT - height) / 2;
+    if (y_start < 0) y_start = 0;
     int y_end = y_start + height;
+    if (y_end  > height ) y_end = height;
+
+    // todo : fix this;
+    // double rayDirX = cos(ray_angle);
+    // double rayDirY = sin(ray_angle);
+
 
     // draw ceiling
     if (player->env->has_texture && player->env->texture->has_ceiling)
@@ -276,10 +283,46 @@ void draw_vertical_line(t_player *player, int x, int height, int color)
     else
         for (int y = 0; y < y_start; y++)
             my_mlx_pixel_put(player->env, x, y, CEILING_COLOR);
+    
+    char *texture_addr = NULL;
+    int texture_width = 0;
+    int texture_height = 0;
+    int texture_bpp = 0;
+    int texture_line_len = 0;
+    
+    switch (side) {
+       case SIDE_NORTH:
+           texture_addr = player->env->walls->north_addr; texture_width = player->env->walls->north_width; texture_height = player->env->walls->north_height;
+           texture_bpp = player->env->walls->north_bpp; texture_line_len = player->env->walls->north_line_len; break;
+       case SIDE_SOUTH:
+           texture_addr = player->env->walls->south_addr; texture_width = player->env->walls->south_width; texture_height = player->env->walls->south_height;
+           texture_bpp = player->env->walls->south_bpp; texture_line_len = player->env->walls->south_line_len; break;
+       case SIDE_EAST:
+           texture_addr = player->env->walls->east_addr; texture_width = player->env->walls->east_width; texture_height = player->env->walls->east_height;
+           texture_bpp = player->env->walls->east_bpp; texture_line_len = player->env->walls->east_line_len; break;
+       case SIDE_WEST:
+           texture_addr = player->env->walls->west_addr; texture_width = player->env->walls->west_width; texture_height = player->env->walls->west_height;
+           texture_bpp = player->env->walls->west_bpp; texture_line_len = player->env->walls->west_line_len; break;
+    }
+
+    double wallX;
+
+    if (side == SIDE_EAST || side == SIDE_WEST)
+        wallX = player->y + corrected_dist * rayDirY;
+
+    wallX -= floor(wallX);
+    int texX = (int) (wall)
+
+
+    double step = 1.0 * texture_height / height;
+    double texPos = (y_start - HEIGHT / 2.0 + height / 2.0) * step;
 
     // draw walls
     for (int y = y_start; y < y_end; y++)
+    {
+
         my_mlx_pixel_put(player->env, x, y, color);
+    }
 
     // draw floor
     if (player->env->has_texture && player->env->texture->has_floor)
@@ -356,10 +399,12 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
 
     int mapX = (int)rayX;
     int mapY = (int)rayY;
+    int side;
+
     if (mapX < 0 || mapX >= MAP_WIDTH || mapY < 0 || mapY >= MAP_HEIGHT)
         return;
 
-    double dist = dda_algo(rayDirX, rayDirY, &rayX, &rayY, &mapX, &mapY);
+    double dist = dda_algo(rayDirX, rayDirY, &rayX, &rayY, &mapX, &mapY, &side);
     if (dist >= 0)
     {
         // fix bowelfish effect
@@ -391,7 +436,7 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
         int b = (color & 0xFF) * vignette_factor;
         color = (r << 16) | (g << 8) | b;
 
-        draw_vertical_line(player, screen_x, wall_height, color);
+        draw_vertical_line(player, screen_x, wall_height, color,correct_dist, side);
     }
 }
 
