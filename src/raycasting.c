@@ -33,6 +33,41 @@
 
 typedef struct
 {
+    void *north_img;
+    char *north_addr;
+    int north_bpp;
+    int north_line_len;
+    int north_endian;
+    int north_width;
+    int north_height;
+
+    void *south_img;
+    char *south_addr;
+    int south_bpp;
+    int south_line_len;
+    int south_endian;
+    int south_width;
+    int south_height;
+
+    void *east_img;
+    char *east_addr;
+    int east_bpp;
+    int east_line_len;
+    int east_endian;
+    int east_width;
+    int east_height;
+
+    void *west_img;
+    char *west_addr;
+    int west_bpp;
+    int west_line_len;
+    int west_endian;
+    int west_width;
+    int west_height;
+}   t_wall_text;
+
+typedef struct
+{
     bool has_floor;
     void *floor_img;
     char *floor_addr;
@@ -63,7 +98,9 @@ typedef struct
     int line_lenght;
     int bits_per_pixel;
     bool has_texture;
+    bool has_wall_texture;
     t_texture *texture;
+    t_wall_text *walls;
 } t_env;
 
 typedef struct
@@ -442,6 +479,7 @@ int main()
 {
     t_env env;
     t_texture texture;
+    t_wall_text wall_tex;
 
     char *sky[] = {"assets/sky/minecraft.xpm",
                    "assets/sky/minecraft.xpm",
@@ -458,11 +496,19 @@ int main()
         NULL
     };
 
+
+    char *walls_no[] = {"assets/walls/stone_bricks/1.xpm", NULL};
+    char *walls_so[] = {"assets/walls/stone_bricks/2.xpm", NULL};
+    char *walls_ea[] = {"assets/walls/stone_bricks/3.xpm", NULL}; 
+    char *walls_we[] = {"assets/walls/stone_bricks/4.xpm", NULL};
+
     // adaptive part
     texture.has_ceiling = true;
     texture.has_floor = true;
     env.has_texture = true;
+    env.has_wall_texture = true;
     env.texture = &texture;
+    env.walls = &wall_tex;
 
     env.mlx = mlx_init();
     env.win = mlx_new_window(env.mlx, WIDTH, HEIGHT, "Raycasting Demo");
@@ -474,10 +520,7 @@ int main()
 
     texture.ceil_img = mlx_xpm_file_to_image(env.mlx, sky[3], &env.texture->ceil_width, &env.texture->ceil_height);
     if (!env.texture->ceil_img)
-    {
-        // exit
-        // ft_destory();
-        //  print_error();
+    { 
         mlx_destroy_image(env.mlx, env.img);
         mlx_destroy_window(env.mlx, env.win);
         perror("celiling image error");
@@ -496,6 +539,25 @@ int main()
         return (1);
     }
 
+
+    // load wall textures
+    wall_tex.north_img = mlx_xpm_file_to_image(env.mlx, walls_no[0], &env.walls->north_width, &env.walls->north_height);
+    if (!wall_tex.north_img) { return (1); }
+    wall_tex.north_addr = mlx_get_data_addr(env.walls->north_img, &env.walls->north_bpp, &env.walls->north_line_len, &env.walls->north_endian);
+
+    wall_tex.south_img = mlx_xpm_file_to_image(env.mlx, walls_so[0], &env.walls->south_width, &env.walls->south_height);
+    if (!wall_tex.south_img) { return (1); }
+    wall_tex.south_addr = mlx_get_data_addr(env.walls->south_img, &env.walls->south_bpp, &env.walls->south_line_len, &env.walls->south_endian);
+
+    wall_tex.east_img = mlx_xpm_file_to_image(env.mlx, walls_ea[0], &env.walls->east_width, &env.walls->east_height);
+    if (!wall_tex.east_img) { return (1); }
+    wall_tex.east_addr = mlx_get_data_addr(env.walls->east_img, &env.walls->east_bpp, &env.walls->east_line_len, &env.walls->east_endian);
+
+    wall_tex.west_img = mlx_xpm_file_to_image(env.mlx, walls_we[0], &env.walls->west_width, &env.walls->west_height);
+    if (!wall_tex.west_img) { return (1); }
+    wall_tex.west_addr = mlx_get_data_addr(env.walls->west_img, &env.walls->west_bpp, &env.walls->west_line_len, &env.walls->west_endian);  
+
+    // load addrs of floor and ceiling
     env.texture->floor_addr = mlx_get_data_addr(env.texture->floor_img, &env.texture->floor_bpp, &env.texture->floor_line_len, &env.texture->floor_endian);
     env.texture->ceil_addr = mlx_get_data_addr(env.texture->ceil_img, &env.texture->ceil_bpp, &env.texture->ceil_line_len, &env.texture->ceil_endian);
 
