@@ -31,6 +31,13 @@
 #define KEY_LEFT 65361
 #define KEY_RIGHT 65363 
 
+// sides
+#define SIDE_WEST 0
+#define SIDE_EAST 1
+#define SIDE_NORTH 2
+#define SIDE_SOUTH 3
+
+
 typedef struct
 {
     void *north_img;
@@ -282,7 +289,7 @@ void draw_vertical_line(t_player *player, int x, int height, int color)
             my_mlx_pixel_put(player->env, x, y, FLOOR_COLOR);
 }
 
-double dda_algo(double rayDirX, double rayDirY, double *rayX, double *rayY, int *mapX, int *mapY)
+double dda_algo(double rayDirX, double rayDirY, double *rayX, double *rayY, int *mapX, int *mapY, int *side)
 {
 
     int side_hit = 0;
@@ -309,13 +316,13 @@ double dda_algo(double rayDirX, double rayDirY, double *rayX, double *rayY, int 
         {
             sideDistX += deltaDistX;
             *mapX += stepX;
-            side_hit = 0;
+            side_hit = 0; // hit vertical line  (East or West)
         }
         else
         {
             sideDistY += deltaDistY;
             *mapY += stepY;
-            side_hit = 1; // hit a horizontal wall
+            side_hit = 1; // hit a horizontal wall (NORTH or SOUTH)
         }
 
         // check bound before check
@@ -324,15 +331,19 @@ double dda_algo(double rayDirX, double rayDirY, double *rayX, double *rayY, int 
 
         // Check if a wall is hit
         if (map[*mapY][*mapX] > 0)
-        {
             break;
-        }
     }
     // (wallX - playerX + (1 - stepX) / 2) / rayDirX
     if (side_hit == 0)
-        return (sideDistX - deltaDistX); // simplified
+    {
+        *side = (rayDirX > 0) ? SIDE_WEST : SIDE_EAST;
+        return (sideDistX - deltaDistX);
+    }
     else
+    {
+        *side = (rayDirY > 0) ? SIDE_NORTH : SIDE_SOUTH;
         return (sideDistY - deltaDistY);
+    }
 }
 
 void cast_ray(t_player *player, double ray_angle, int screen_x)
