@@ -181,10 +181,10 @@ int ceil_fog_color(int ceil_color, int rowDistance)
     return ((final_r << 16) | (final_g << 8) | final_b);
 }
 
-void render_floor(t_player *player, int screen_x, int y_start, int y_end, int height)
+void render_floor(t_player *player, int screen_x, int y_start, int y_end, int wall_height)
 {
     (void) y_start;
-    (void) height;
+    (void) wall_height;
 
     double playerDirX = cos(player->dir);
     double playerDirY = sin(player->dir);
@@ -221,10 +221,10 @@ void render_floor(t_player *player, int screen_x, int y_start, int y_end, int he
     }
 } 
 
-void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int height)
+void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int wall_height)
 {
     (void) y_end;
-    (void) height;
+    (void) wall_height;
 
     double playerDirX = cos(player->dir);
     double playerDirY = sin(player->dir);
@@ -265,11 +265,11 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
     }
 }
 
-void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int height, double corrected_dist, int side)
+void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int wall_height, double corrected_dist, int side)
 {
-    int y_start = (HEIGHT - height) / 2;
+    int y_start = (HEIGHT - wall_height) / 2;
     if (y_start < 0) y_start = 0;
-    int y_end = y_start + height;
+    int y_end = y_start + wall_height;
     if (y_end  > HEIGHT ) y_end = HEIGHT;
 
     // todo : fix this;
@@ -279,7 +279,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int h
 
     // draw ceiling
     if (player->env->has_texture && player->env->texture->has_ceiling)
-        render_ceiling(player, x, y_start, y_end, height);
+        render_ceiling(player, x, y_start, y_end, wall_height);
     else
         for (int y = 0; y < y_start; y++)
             my_mlx_pixel_put(player->env, x, y, CEILING_COLOR);
@@ -320,9 +320,9 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int h
     if ((side == SIDE_NORTH || side == SIDE_SOUTH) && rayDirY < 0) // Facing South wall
         texX = texture_width - texX - 1;
 
-    double step = 1.0 * texture_height / height;
+    double step = 1.0 * texture_height / wall_height;
     // texY = (int)texPos % texture_height; // Alternative using modulo
-    double texPos = (y_start - HEIGHT / 2.0 + height / 2.0) * step;
+    double texPos = (y_start - HEIGHT / 2.0 + wall_height / 2.0) * step;
 
     // draw walls
     int color = 0;
@@ -353,7 +353,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int h
 
     // draw floor
     if (player->env->has_texture && player->env->texture->has_floor)
-        render_floor(player, x, y_start, y_end, height);
+        render_floor(player, x, y_start, y_end, wall_height);
     else
         for (int y = y_end; y < HEIGHT; y++)
             my_mlx_pixel_put(player->env, x, y, FLOOR_COLOR);
@@ -439,7 +439,7 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
         if (correct_dist < 0.01)
             correct_dist = 0.01;
 
-        int wall_type = map[mapY][mapX];
+        // int wall_type = map[mapY][mapX];
         int wall_height = (int)(HEIGHT / correct_dist);
         if (wall_height < 0)
             wall_height = 0;
