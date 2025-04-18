@@ -8,6 +8,7 @@
 
 #define WIDTH 640
 #define HEIGHT 480
+
 #define MAP_WIDTH 8
 #define MAP_HEIGHT 8
 #define TILE_SIZE 64
@@ -328,7 +329,9 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
     int color = 0;
     for (int y = y_start; y < y_end; y++)
     {
-        int texY = (int)texPos & (texture_height - 1);
+        // int texY = (int)texPos & (texture_height - 1);
+        int texY = (int)texPos % texture_height;
+        if (texY < 0) texX += texture_height;
         texPos += step;
 
         // int color = 0;
