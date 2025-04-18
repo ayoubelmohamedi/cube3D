@@ -265,12 +265,12 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
     }
 }
 
-void draw_vertical_line(t_player *player, int x, int height, int color, double corrected_dist, int side)
+void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int height, int color, double corrected_dist, int side)
 {
     int y_start = (HEIGHT - height) / 2;
     if (y_start < 0) y_start = 0;
     int y_end = y_start + height;
-    if (y_end  > height ) y_end = height;
+    if (y_end  > HEIGHT ) y_end = HEIGHT;
 
     // todo : fix this;
     // double rayDirX = cos(ray_angle);
@@ -295,7 +295,7 @@ void draw_vertical_line(t_player *player, int x, int height, int color, double c
            texture_addr = player->env->walls->north_addr; texture_width = player->env->walls->north_width; texture_height = player->env->walls->north_height;
            texture_bpp = player->env->walls->north_bpp; texture_line_len = player->env->walls->north_line_len; break;
        case SIDE_SOUTH:
-           texture_addr = player->env->walls->south_addr; texture_width = player->env->walls->south_width; texture_height = player->env->walls->south_height;
+           texture_addr = player->env->walls->south_addr; texture_width = player->env->walls->south_width; texture_height = player->env->walls->south_heght;
            texture_bpp = player->env->walls->south_bpp; texture_line_len = player->env->walls->south_line_len; break;
        case SIDE_EAST:
            texture_addr = player->env->walls->east_addr; texture_width = player->env->walls->east_width; texture_height = player->env->walls->east_height;
@@ -309,17 +309,43 @@ void draw_vertical_line(t_player *player, int x, int height, int color, double c
 
     if (side == SIDE_EAST || side == SIDE_WEST)
         wallX = player->y + corrected_dist * rayDirY;
+    else
+        wallX = player->x + corrected_dist * rayDirX; 
 
     wallX -= floor(wallX);
-    int texX = (int) (wall)
+    int texX = (int) (wallX * (double) texture_width);
 
+    if ((side == SIDE_EAST || side == SIDE_WEST) && rayDirX > 0) // Facing West wall
+        texX = texture_width - texX - 1;
+    if ((side == SIDE_NORTH || side == SIDE_SOUTH) && rayDirY < 0) // Facing South wall
+        texX = texture_width - texX - 1;
 
     double step = 1.0 * texture_height / height;
+    // texY = (int)texPos % texture_height; // Alternative using modulo
     double texPos = (y_start - HEIGHT / 2.0 + height / 2.0) * step;
 
     // draw walls
     for (int y = y_start; y < y_end; y++)
     {
+        int texY = (int)texPos & (texture_height - 1);
+        texPos += step;
+
+        // int color = 0;
+        if (texture_addr && texX >= 0 && texX < texture_width && texY >= 0 && texY < texture_height) {
+            char *dst = texture_addr + (texY * texture_line_len + texX * (texture_bpp / 8));
+            color = *(unsigned int *)dst;
+        }
+        // color = darken_color(color, corrected_dist);
+
+        // // Apply vignette (optional)
+        // double vignette_strength = 0.4;
+        // double dist_from_center = fabs((double)x - WIDTH / 2.0) / (WIDTH / 2.0);
+        // double vignette_factor = 1.0 - dist_from_center * vignette_strength;
+        // if (vignette_factor < 0.0) vignette_factor = 0.0;
+        // int r = ((color >> 16) & 0xFF) * vignette_factor;
+        // int g = ((color >> 8) & 0xFF) * vignette_factor;
+        // int b = (color & 0xFF) * vignette_factor;
+        // color = (r << 16) | (g << 8) | b;
 
         my_mlx_pixel_put(player->env, x, y, color);
     }
@@ -436,7 +462,7 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
         int b = (color & 0xFF) * vignette_factor;
         color = (r << 16) | (g << 8) | b;
 
-        draw_vertical_line(player, screen_x, wall_height, color,correct_dist, side);
+        draw_vertical_line(player, rayDirX, rayDirY,screen_x, wall_height, color,correct_dist, side);
     }
 }
 
@@ -601,7 +627,7 @@ int main()
     if (!wall_tex.north_img) { return (1); }
     wall_tex.north_addr = mlx_get_data_addr(env.walls->north_img, &env.walls->north_bpp, &env.walls->north_line_len, &env.walls->north_endian);
 
-    wall_tex.south_img = mlx_xpm_file_to_image(env.mlx, walls_so[0], &env.walls->south_width, &env.walls->south_height);
+    wall_tex.south_img = mlx_xpm_file_to_image(env.mlx, walls_so[0], &env.walls->south_width, &env.walls->south_heght);
     if (!wall_tex.south_img) { return (1); }
     wall_tex.south_addr = mlx_get_data_addr(env.walls->south_img, &env.walls->south_bpp, &env.walls->south_line_len, &env.walls->south_endian);
 
