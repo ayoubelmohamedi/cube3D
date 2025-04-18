@@ -336,17 +336,17 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
             char *dst = texture_addr + (texY * texture_line_len + texX * (texture_bpp / 8));
             color = *(unsigned int *)dst;
         }
-        // color = darken_color(color, corrected_dist);
+        color = darken_color(color, corrected_dist);
 
-        // // Apply vignette (optional)
-        // double vignette_strength = 0.4;
-        // double dist_from_center = fabs((double)x - WIDTH / 2.0) / (WIDTH / 2.0);
-        // double vignette_factor = 1.0 - dist_from_center * vignette_strength;
-        // if (vignette_factor < 0.0) vignette_factor = 0.0;
-        // int r = ((color >> 16) & 0xFF) * vignette_factor;
-        // int g = ((color >> 8) & 0xFF) * vignette_factor;
-        // int b = (color & 0xFF) * vignette_factor;
-        // color = (r << 16) | (g << 8) | b;
+        // Apply vignette (optional)
+        double vignette_strength = 0.4;
+        double dist_from_center = fabs((double)x - WIDTH / 2.0) / (WIDTH / 2.0);
+        double vignette_factor = 1.0 - dist_from_center * vignette_strength;
+        if (vignette_factor < 0.0) vignette_factor = 0.0;
+        int r = ((color >> 16) & 0xFF) * vignette_factor;
+        int g = ((color >> 8) & 0xFF) * vignette_factor;
+        int b = (color & 0xFF) * vignette_factor;
+        color = (r << 16) | (g << 8) | b;
 
         my_mlx_pixel_put(player->env, x, y, color);
     }
