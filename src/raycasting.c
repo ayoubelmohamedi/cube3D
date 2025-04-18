@@ -265,7 +265,7 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
     }
 }
 
-void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int height, int color, double corrected_dist, int side)
+void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int height, double corrected_dist, int side)
 {
     int y_start = (HEIGHT - height) / 2;
     if (y_start < 0) y_start = 0;
@@ -325,6 +325,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int h
     double texPos = (y_start - HEIGHT / 2.0 + height / 2.0) * step;
 
     // draw walls
+    int color = 0;
     for (int y = y_start; y < y_end; y++)
     {
         int texY = (int)texPos & (texture_height - 1);
@@ -444,25 +445,25 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
             wall_height = 0;
         if (wall_height > HEIGHT)
             wall_height = HEIGHT;
-        int color = get_color(wall_type);
-        color = darken_color(color, correct_dist);
+        // int color = get_color(wall_type);
+        // color = darken_color(color, correct_dist);
 
-        // 2. Apply screen-edge darkening (vignette)
-        double vignette_strength = 0.4; // Adjust 0.0 (none) to 1.0 (black edges)
-        // Calculate distance from center screen (0.0 center, 1.0 edges)
-        double dist_from_center = fabs((double)screen_x - WIDTH / 2.0) / (WIDTH / 2.0);
-        // Calculate darkening factor (closer to 0 means darker)
-        double vignette_factor = 1.0 - dist_from_center * vignette_strength;
-        if (vignette_factor < 0.0)
-            vignette_factor = 0.0; // Clamp
+        // // 2. Apply screen-edge darkening (vignette)
+        // double vignette_strength = 0.4; // Adjust 0.0 (none) to 1.0 (black edges)
+        // // Calculate distance from center screen (0.0 center, 1.0 edges)
+        // double dist_from_center = fabs((double)screen_x - WIDTH / 2.0) / (WIDTH / 2.0);
+        // // Calculate darkening factor (closer to 0 means darker)
+        // double vignette_factor = 1.0 - dist_from_center * vignette_strength;
+        // if (vignette_factor < 0.0)
+        //     vignette_factor = 0.0; // Clamp
 
-        // Apply vignette factor to the color components
-        int r = ((color >> 16) & 0xFF) * vignette_factor;
-        int g = ((color >> 8) & 0xFF) * vignette_factor;
-        int b = (color & 0xFF) * vignette_factor;
-        color = (r << 16) | (g << 8) | b;
+        // // Apply vignette factor to the color components
+        // int r = ((color >> 16) & 0xFF) * vignette_factor;
+        // int g = ((color >> 8) & 0xFF) * vignette_factor;
+        // int b = (color & 0xFF) * vignette_factor;
+        // color = (r << 16) | (g << 8) | b;
 
-        draw_vertical_line(player, rayDirX, rayDirY,screen_x, wall_height, color,correct_dist, side);
+        draw_vertical_line(player, rayDirX, rayDirY,screen_x, wall_height,correct_dist, side);
     }
 }
 
