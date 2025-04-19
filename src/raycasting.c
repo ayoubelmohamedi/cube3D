@@ -320,15 +320,14 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
     double step = 1.0 * texture_height / wall_height;
     // texY = (int)texPos % texture_height; // Alternative using modulo
     double texPos = (y_start - HEIGHT / 2.0 + wall_height / 2.0) * step;
-
-    int texY = (int)texPos % texture_height;
+ 
     // draw walls
-    int color = 0;
+    int color = WALL_COLOR;
     for (int y = y_start; y < y_end; y++)
     {
-        // int texY = (int)texPos & (texture_height - 1);
-        texY = (int)texPos % texture_height;
-        if (texY < 0) texX += texture_height;
+        // int texY = (int)texPos & (texture_height - 1); //  optimized but works for even numbers only,  
+        int texY = (int)texPos % texture_height;
+        if (texY < 0) texY += texture_height;
         texPos += step;
 
         // int color = 0;
@@ -336,7 +335,6 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
             char *dst = texture_addr + (texY * texture_line_len + texX * (texture_bpp / 8));
             color = *(unsigned int *)dst;
         }
-
         // Apply vignette (optional)
         color = darken_color(color, corrected_dist);
         color  = vignette_effect(curr_x, color);
@@ -361,7 +359,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
     if (player->env->has_wall_texture)
         render_wall_tex(player, y_start, y_end,x,  corrected_dist, rayDirX, rayDirY, side, wall_height);
     else
-        for (int y = 0; y < y_start; y++)
+        for (int y = y_start; y < y_end; y++)
             my_mlx_pixel_put(player->env, x, y, vignette_effect(x, WALL_COLOR));
 
     // draw floor
