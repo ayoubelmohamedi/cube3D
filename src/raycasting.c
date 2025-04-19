@@ -273,11 +273,6 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
     int y_end = y_start + wall_height;
     if (y_end  > HEIGHT ) y_end = HEIGHT;
 
-    // todo : fix this;
-    // double rayDirX = cos(ray_angle);
-    // double rayDirY = sin(ray_angle);
-
-
     // draw ceiling
     if (player->env->has_texture && player->env->texture->has_ceiling)
         render_ceiling(player, x, y_start, y_end, wall_height);
