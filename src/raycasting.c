@@ -17,6 +17,7 @@
 #define M_PI 3.14159265358979323846
 #define ROTATE_SPEED 0.05
 #define CEILING_COLOR 0x87CEEB // Light Sky Blue
+#define WALL_COLOR  0x696969 // DimGray (darker stone)
 #define FLOOR_COLOR 0x8B4513
 
 // fog 
@@ -182,6 +183,18 @@ int ceil_fog_color(int ceil_color, int rowDistance)
     return ((final_r << 16) | (final_g << 8) | final_b);
 }
 
+int vignette_effect(int curr_x, int color)
+{
+    double vignette_strength = 0.4;
+    double dist_from_center = fabs((double)curr_x - WIDTH / 2.0) / (WIDTH / 2.0);
+    double vignette_factor = 1.0 - dist_from_center * vignette_strength;
+    if (vignette_factor < 0.0) vignette_factor = 0.0;
+    int r = ((color >> 16) & 0xFF) * vignette_factor;
+    int g = ((color >> 8) & 0xFF) * vignette_factor;
+    int b = (color & 0xFF) * vignette_factor;
+    color = (r << 16) | (g << 8) | b;
+}
+
 void render_floor(t_player *player, int screen_x, int y_start, int y_end, int wall_height)
 {
     (void) y_start;
@@ -266,20 +279,8 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
     }
 }
 
-void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int wall_height, double corrected_dist, int side)
+void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int corrected_dist, int rayDirX, int rayDirY, int side, int wall_height)
 {
-    int y_start = (HEIGHT - wall_height) / 2;
-    if (y_start < 0) y_start = 0;
-    int y_end = y_start + wall_height;
-    if (y_end  > HEIGHT ) y_end = HEIGHT;
-
-    // draw ceiling
-    if (player->env->has_texture && player->env->texture->has_ceiling)
-        render_ceiling(player, x, y_start, y_end, wall_height);
-    else
-        for (int y = 0; y < y_start; y++)
-            my_mlx_pixel_put(player->env, x, y, CEILING_COLOR);
-    
     char *texture_addr = NULL;
     int texture_width = 0;
     int texture_height = 0;
@@ -320,12 +321,13 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
     // texY = (int)texPos % texture_height; // Alternative using modulo
     double texPos = (y_start - HEIGHT / 2.0 + wall_height / 2.0) * step;
 
+    int texY = (int)texPos % texture_height;
     // draw walls
     int color = 0;
     for (int y = y_start; y < y_end; y++)
     {
         // int texY = (int)texPos & (texture_height - 1);
-        int texY = (int)texPos % texture_height;
+        texY = (int)texPos % texture_height;
         if (texY < 0) texX += texture_height;
         texPos += step;
 
@@ -334,20 +336,34 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
             char *dst = texture_addr + (texY * texture_line_len + texX * (texture_bpp / 8));
             color = *(unsigned int *)dst;
         }
-        color = darken_color(color, corrected_dist);
+        // color = darken_color(color, corrected_dist);
 
         // Apply vignette (optional)
-        double vignette_strength = 0.4;
-        double dist_from_center = fabs((double)x - WIDTH / 2.0) / (WIDTH / 2.0);
-        double vignette_factor = 1.0 - dist_from_center * vignette_strength;
-        if (vignette_factor < 0.0) vignette_factor = 0.0;
-        int r = ((color >> 16) & 0xFF) * vignette_factor;
-        int g = ((color >> 8) & 0xFF) * vignette_factor;
-        int b = (color & 0xFF) * vignette_factor;
-        color = (r << 16) | (g << 8) | b;
-
-        my_mlx_pixel_put(player->env, x, y, color);
+        color  = vignette_effect(curr_x, color);
+        my_mlx_pixel_put(player->env, curr_x, y, color);
     }
+}
+
+void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int wall_height, double corrected_dist, int side)
+{
+    int y_start = (HEIGHT - wall_height) / 2;
+    if (y_start < 0) y_start = 0;
+    int y_end = y_start + wall_height;
+    if (y_end  > HEIGHT ) y_end = HEIGHT;
+
+    // draw ceiling
+    if (player->env->has_texture && player->env->texture->has_ceiling)
+        render_ceiling(player, x, y_start, y_end, wall_height);
+    else
+        for (int y = 0; y < y_start; y++)
+            my_mlx_pixel_put(player->env, x, y, CEILING_COLOR);
+    
+    if (player->env->has_wall_texture)
+        render_wall_tex(player, y_start, y_end,x,  corrected_dist, rayDirX, rayDirY, side, wall_height);
+    else
+        for (int y = 0; y < y_start; y++)
+            my_mlx_pixel_put(player->env, x, y, WALL_COLOR);
+
 
     // draw floor
     if (player->env->has_texture && player->env->texture->has_floor)
@@ -446,20 +462,6 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
         // int color = get_color(wall_type);
         // color = darken_color(color, correct_dist);
 
-        // // 2. Apply screen-edge darkening (vignette)
-        // double vignette_strength = 0.4; // Adjust 0.0 (none) to 1.0 (black edges)
-        // // Calculate distance from center screen (0.0 center, 1.0 edges)
-        // double dist_from_center = fabs((double)screen_x - WIDTH / 2.0) / (WIDTH / 2.0);
-        // // Calculate darkening factor (closer to 0 means darker)
-        // double vignette_factor = 1.0 - dist_from_center * vignette_strength;
-        // if (vignette_factor < 0.0)
-        //     vignette_factor = 0.0; // Clamp
-
-        // // Apply vignette factor to the color components
-        // int r = ((color >> 16) & 0xFF) * vignette_factor;
-        // int g = ((color >> 8) & 0xFF) * vignette_factor;
-        // int b = (color & 0xFF) * vignette_factor;
-        // color = (r << 16) | (g << 8) | b;
 
         draw_vertical_line(player, rayDirX, rayDirY,screen_x, wall_height,correct_dist, side);
     }
