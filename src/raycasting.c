@@ -192,7 +192,7 @@ int vignette_effect(int curr_x, int color)
     int r = ((color >> 16) & 0xFF) * vignette_factor;
     int g = ((color >> 8) & 0xFF) * vignette_factor;
     int b = (color & 0xFF) * vignette_factor;
-    color = (r << 16) | (g << 8) | b;
+    return ((r << 16) | (g << 8) | b);
 }
 
 void render_floor(t_player *player, int screen_x, int y_start, int y_end, int wall_height)
@@ -286,7 +286,7 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
     int texture_height = 0;
     int texture_bpp = 0;
     int texture_line_len = 0;
-    
+
     switch (side) {
        case SIDE_NORTH:
            texture_addr = player->env->walls->north_addr; texture_width = player->env->walls->north_width; texture_height = player->env->walls->north_height;
@@ -309,7 +309,7 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
     else
         wallX = player->x + corrected_dist * rayDirX; 
 
-    wallX -= floor(wallX);
+    wallX = -floor(wallX);
     int texX = (int) (wallX * (double) texture_width);
 
     if ((side == SIDE_EAST || side == SIDE_WEST) && rayDirX > 0) // Facing West wall
@@ -336,9 +336,9 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
             char *dst = texture_addr + (texY * texture_line_len + texX * (texture_bpp / 8));
             color = *(unsigned int *)dst;
         }
-        // color = darken_color(color, corrected_dist);
 
         // Apply vignette (optional)
+        color = darken_color(color, corrected_dist);
         color  = vignette_effect(curr_x, color);
         my_mlx_pixel_put(player->env, curr_x, y, color);
     }
@@ -362,8 +362,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
         render_wall_tex(player, y_start, y_end,x,  corrected_dist, rayDirX, rayDirY, side, wall_height);
     else
         for (int y = 0; y < y_start; y++)
-            my_mlx_pixel_put(player->env, x, y, WALL_COLOR);
-
+            my_mlx_pixel_put(player->env, x, y, vignette_effect(x, WALL_COLOR));
 
     // draw floor
     if (player->env->has_texture && player->env->texture->has_floor)
@@ -461,7 +460,6 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
             wall_height = HEIGHT;
         // int color = get_color(wall_type);
         // color = darken_color(color, correct_dist);
-
 
         draw_vertical_line(player, rayDirX, rayDirY,screen_x, wall_height,correct_dist, side);
     }
