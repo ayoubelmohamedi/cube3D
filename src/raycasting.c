@@ -309,7 +309,7 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
     else
         wallX = player->x + corrected_dist * rayDirX; 
 
-    wallX = -floor(wallX);
+    wallX -= floor(wallX);
     int texX = (int) (wallX * (double) texture_width);
 
     if ((side == SIDE_EAST || side == SIDE_WEST) && rayDirX > 0) // Facing West wall
