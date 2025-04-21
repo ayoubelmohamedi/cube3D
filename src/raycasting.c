@@ -40,6 +40,22 @@
 #define SIDE_WEST 3
 
 
+// map configs 
+#define MINIMAP_SIZE 150
+#define MINIMAP_SCALE 12     //  cell = MINIMAP_SCALE x MINIMAP_SCALE pixels
+#define MINIMAP_X 10      
+#define MINIMAP_Y 10
+#define MINIMAP_OPACITY 0.7
+
+#define PLAYER_DOT_SIZE 4
+#define PLAYER_DOT_COLOR 0xFF0000
+#define PLAYER_DIR_LENGTH 12
+#define PLAYER_DIR_COLOR 0xFF0000 // red
+
+#define MINIMAP_WALL_COLOR 0x404040   // Dark gray
+#define MINIMAP_FLOOR_COLOR 0x808080  // Light gray
+#define MINIMAP_BORDER_COLOR 0x000000 // BLACK
+
 typedef struct
 {
     void *north_img;
