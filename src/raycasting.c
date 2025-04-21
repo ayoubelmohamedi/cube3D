@@ -304,7 +304,7 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
 
     double wallX;
 
-    if (side == SIDE_EAST || side == SIDE_WEST)
+    if (side == SIDE_EAST || side == SIDE_WEST) // Hit on X-oriented wall
         wallX = player->y + corrected_dist * rayDirY;
     else
         wallX = player->x + corrected_dist * rayDirX; 
