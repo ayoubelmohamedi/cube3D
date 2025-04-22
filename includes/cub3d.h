@@ -3,57 +3,93 @@
 #ifndef CUB3D_H
 #define CUB3D_H
 
-# include "mlx.h"
-# include <fcntl.h>
-# include <math.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
+#include "game_macros.h"
+#include "mlx.h"
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 
-# define WIDTH 800 
-# define HEIGHT 600
-# define PROJ_PLANE_W 320
-# define PROJ_PLANE_H 200
-# define MAX_WIDTH 20 - 1
-# define MAX_HEIGHT 10
-#define TILE_SIZE 32
 
-typedef struct {
-    float x, y, z;
-} Vector3;
-
-typedef struct {
-    int r, g, b;
-} Color;
-
-typedef struct {
-    Vector3 center;
-    float radius;
-    Vector3 color;
-} Sphere;
-
-typedef struct {
-    Vector3 position;
-    Vector3 direction;
-} Ray;
-
-
-typedef struct 
+typedef struct
 {
-    int map[MAX_WIDTH][MAX_WIDTH];
-    int player_x;
-    int player_y;
-    int fov;
-    int dir;
+    void *north_img;
+    char *north_addr;
+    int north_bpp;
+    int north_line_len;
+    int north_endian;
+    int north_width;
+    int north_height;
+
+    void *south_img;
+    char *south_addr;
+    int south_bpp;
+    int south_line_len;
+    int south_endian;
+    int south_width;
+    int south_heght;
+
+    void *east_img;
+    char *east_addr;
+    int east_bpp;
+    int east_line_len;
+    int east_endian;
+    int east_width;
+    int east_height;
+
+    void *west_img;
+    char *west_addr;
+    int west_bpp;
+    int west_line_len;
+    int west_endian;
+    int west_width;
+    int west_height;
+}   t_wall_text;
+
+typedef struct
+{
+    bool has_floor;
+    void *floor_img;
+    char *floor_addr;
+    int floor_bpp;
+    int floor_line_len;
+    int floor_endian;
+    int floor_width;
+    int floor_height;
+
+    bool has_ceiling;
+    void *ceil_img;
+    char *ceil_addr;
+    int ceil_bpp;
+    int ceil_line_len;
+    int ceil_endian;
+    int ceil_width;
+    int ceil_height;
+
+} t_texture;
+
+typedef struct
+{
     void *mlx;
     void *win;
-    void *img;
     void *addr;
-    int line_length;
-    int bits_per_pixel; 
+    void *img;
     int endian;
-} t_game;
+    int line_lenght;
+    int bits_per_pixel;
+    bool has_texture;
+    bool has_wall_texture;
+    bool has_minimap; 
+    t_texture *texture;
+    t_wall_text *walls;
+} t_env;
+
+typedef struct
+{
+    double x, y;
+    double dir;
+    t_env *env;
+} t_player;
 
 
-#endif /* CUB3D_H */
+#endif 
