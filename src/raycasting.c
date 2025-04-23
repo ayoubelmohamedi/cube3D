@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:07 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 11:22:04 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:27:46 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,47 +34,6 @@ void my_mlx_pixel_put(t_env *env, int x, int y, int color)
         *(unsigned int *)dst = color;
     }
 }
-
-
-void render_floor(t_player *player, int screen_x, int y_start, int y_end, int wall_height)
-{
-    (void) y_start;
-    (void) wall_height;
-
-    double playerDirX = cos(player->dir);
-    double playerDirY = sin(player->dir);
-
-    double fov_rad = FOV * (M_PI / 180); 
-
-    double planeX = -playerDirY * tan(FOV / 2.0);
-    double planeY = playerDirX * tan(fov_rad / 2.0);
-
-    for (int y = y_end; y < HEIGHT; y++)
-    {
-        double rowDistance = (0.5 * HEIGHT) / (y - HEIGHT / 2.0);
-
-        float floorStepX = rowDistance * (playerDirX + planeX - (playerDirX - planeX)) / WIDTH;
-        float floorStepY = rowDistance * (playerDirY + planeY - (playerDirY - planeY)) / WIDTH;
-
-        float currentFloorX = player->x + rowDistance * (playerDirX - planeX);
-        float currentFloorY = player->y + rowDistance * (playerDirY - planeY);
-        
-        currentFloorX += floorStepX * screen_x;
-        currentFloorY += floorStepY * screen_x;
-
-        int texX = (int)(player->env->texture->floor_width * (currentFloorX - floor(currentFloorX))) & (player->env->texture->floor_width - 2);
-        int texY = (int)(player->env->texture->floor_height * (currentFloorY - floor(currentFloorY))) & (player->env->texture->floor_height - 1);
-
-        int floor_color = FLOOR_COLOR;
-        if (texX >= 0 && texX < player->env->texture->floor_width && texY >= 0 && texY < player->env->texture->floor_height)
-        {
-            char *tex_pixel_ptr = player->env->texture->floor_addr + (texY * player->env->texture->floor_line_len + texX * (player->env->texture->floor_bpp / 8));
-            floor_color = *(unsigned int*) tex_pixel_ptr;
-            floor_color = darken_color(floor_color, rowDistance);
-            my_mlx_pixel_put(player->env, screen_x, y, floor_color);
-        }
-    }
-} 
 
 
 int main()
