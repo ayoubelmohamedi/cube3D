@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 12:15:13 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:17:47 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,40 +115,6 @@ static void	init_dda(double rayDirX, double rayDirY, double *rayX,
 static int	perform_dda(int *mapX, int *mapY, t_dda *dda);
 double	dda_algo(double rayDirX, double rayDirY, double *rayX,
             double *rayY, int *mapX, int *mapY, int *side);
-
-/*            ceiling render            */
-static void	init_ceiling_render(t_player *player, t_ceil_render *cr);
-static void	calc_ceiling_position(t_player *player, t_ceil_render *cr, int y);
-static int	get_ceiling_color(t_player *player, t_ceil_render *cr);
-void	render_ceiling(t_player *player, int screen_x, int y_start, 
-                    int y_end, int wall_height);
-
-
-/*            floor render            */
-static void	init_floor_render(t_player *player, t_floor_render *fr);
-static void	calc_floor_position(t_player *player, t_floor_render *fr, int y);
-static void	get_floor_texture_coords(t_player *player, t_floor_render *fr);
-static int	get_floor_color(t_player *player, t_floor_render *fr);
-void	render_floor(t_player *player, int screen_x, int y_start, 
-                                        int y_end, int wall_height);
-
-/*            wall texture render            */
-void	render_wall_tex(t_player *player, int y_start, int y_end, int curr_x,
-    int corrected_dist, int rayDirX, int rayDirY, int side, 
-    int wall_height);
-static void	draw_wall_slice(t_player *player, t_wall_render *wr);
-static int	get_texture_x(t_player *player, int side, double corrected_dist,
-    int rayDirX, int rayDirY, int texture_width);
-static void	get_texture_info(t_player *player, int side, char **texture_addr, 
-    int *texture_width, int *texture_height, 
-    int *texture_bpp, int *texture_line_len);
-
-/*            wall texture render            */
-
-void render_scene(t_env *env, t_player *player);
-void cast_ray(t_player *player, double ray_angle, int screen_x);    
-void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int wall_height, double corrected_dist, int side); 
-void my_mlx_pixel_put(t_env *env, int x, int y, int color);
 
 
 #endif 
