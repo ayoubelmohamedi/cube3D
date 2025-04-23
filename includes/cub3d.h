@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 12:07:18 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:10:36 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,20 @@ static int	perform_dda(int *mapX, int *mapY, t_dda *dda);
 double	dda_algo(double rayDirX, double rayDirY, double *rayX,
             double *rayY, int *mapX, int *mapY, int *side);
 
+/*            ceiling render            */
+static void	init_ceiling_render(t_player *player, t_ceil_render *cr);
+static void	calc_ceiling_position(t_player *player, t_ceil_render *cr, int y);
+static int	get_ceiling_color(t_player *player, t_ceil_render *cr);
+void	render_ceiling(t_player *player, int screen_x, int y_start, 
+                    int y_end, int wall_height);
+
+
+/*            floor render            */
+static void	init_floor_render(t_player *player, t_floor_render *fr);
+static void	calc_floor_position(t_player *player, t_floor_render *fr, int y);
+static void	get_floor_texture_coords(t_player *player, t_floor_render *fr);
+static int	get_floor_color(t_player *player, t_floor_render *fr);
+void	render_floor(t_player *player, int screen_x, int y_start, 
+                                        int y_end, int wall_height);
 
 #endif 
