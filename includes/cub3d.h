@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 12:02:04 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:07:18 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,18 @@ typedef struct
     t_env *env;
 } t_player;
 
-/*      colors & effects          */
+/*          colors & effects          */
 static int  handle_exit(t_player *player);
 static int  handle_movement(int key, t_player *player);
 static int  handle_rotation(int key, t_player *player);
 int         handle_keypress(int keypress, t_player *player);
 
-/*      */
-
+/*             DDA algo                */
+static void	init_dda(double rayDirX, double rayDirY, double *rayX,
+            double *rayY, int *mapX, int *mapY, t_dda *dda);
+static int	perform_dda(int *mapX, int *mapY, t_dda *dda);
+double	dda_algo(double rayDirX, double rayDirY, double *rayX,
+            double *rayY, int *mapX, int *mapY, int *side);
 
 
 #endif 
