@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:16:55 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 09:16:56 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:44:51 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	handle_movement(int key, t_player *player)
         new_x = player->x + sin(player->dir) * MOVE_SPEED;
         new_y = player->y - cos(player->dir) * MOVE_SPEED;
     }
-    else /* if (key == KEY_D) */
+    else
     {
         new_x = player->x - sin(player->dir) * MOVE_SPEED;
         new_y = player->y + cos(player->dir) * MOVE_SPEED;
