@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:07 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 09:16:28 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:30:14 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,68 +120,68 @@ void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int 
     }
 }
 
-void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int corrected_dist, int rayDirX, int rayDirY, int side, int wall_height)
-{
-    char *texture_addr = NULL;
-    int texture_width = 0;
-    int texture_height = 0;
-    int texture_bpp = 0;
-    int texture_line_len = 0;
+// void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int corrected_dist, int rayDirX, int rayDirY, int side, int wall_height)
+// {
+//     char *texture_addr = NULL;
+//     int texture_width = 0;
+//     int texture_height = 0;
+//     int texture_bpp = 0;
+//     int texture_line_len = 0;
 
-    switch (side) {
-       case SIDE_NORTH:
-           texture_addr = player->env->walls->north_addr; texture_width = player->env->walls->north_width; texture_height = player->env->walls->north_height;
-           texture_bpp = player->env->walls->north_bpp; texture_line_len = player->env->walls->north_line_len; break;
-       case SIDE_SOUTH:
-           texture_addr = player->env->walls->south_addr; texture_width = player->env->walls->south_width; texture_height = player->env->walls->south_heght;
-           texture_bpp = player->env->walls->south_bpp; texture_line_len = player->env->walls->south_line_len; break;
-       case SIDE_EAST:
-           texture_addr = player->env->walls->east_addr; texture_width = player->env->walls->east_width; texture_height = player->env->walls->east_height;
-           texture_bpp = player->env->walls->east_bpp; texture_line_len = player->env->walls->east_line_len; break;
-       case SIDE_WEST:
-           texture_addr = player->env->walls->west_addr; texture_width = player->env->walls->west_width; texture_height = player->env->walls->west_height;
-           texture_bpp = player->env->walls->west_bpp; texture_line_len = player->env->walls->west_line_len; break;
-    }
+//     switch (side) {
+//        case SIDE_NORTH:
+//            texture_addr = player->env->walls->north_addr; texture_width = player->env->walls->north_width; texture_height = player->env->walls->north_height;
+//            texture_bpp = player->env->walls->north_bpp; texture_line_len = player->env->walls->north_line_len; break;
+//        case SIDE_SOUTH:
+//            texture_addr = player->env->walls->south_addr; texture_width = player->env->walls->south_width; texture_height = player->env->walls->south_heght;
+//            texture_bpp = player->env->walls->south_bpp; texture_line_len = player->env->walls->south_line_len; break;
+//        case SIDE_EAST:
+//            texture_addr = player->env->walls->east_addr; texture_width = player->env->walls->east_width; texture_height = player->env->walls->east_height;
+//            texture_bpp = player->env->walls->east_bpp; texture_line_len = player->env->walls->east_line_len; break;
+//        case SIDE_WEST:
+//            texture_addr = player->env->walls->west_addr; texture_width = player->env->walls->west_width; texture_height = player->env->walls->west_height;
+//            texture_bpp = player->env->walls->west_bpp; texture_line_len = player->env->walls->west_line_len; break;
+//     }
 
-    double wallX;
+//     double wallX;
 
-    if (side == SIDE_EAST || side == SIDE_WEST) // Hit on X-oriented wall
-        wallX = player->y + corrected_dist * rayDirY;
-    else
-        wallX = player->x + corrected_dist * rayDirX; 
+//     if (side == SIDE_EAST || side == SIDE_WEST) // Hit on X-oriented wall
+//         wallX = player->y + corrected_dist * rayDirY;
+//     else
+//         wallX = player->x + corrected_dist * rayDirX; 
 
-    wallX -= floor(wallX);
-    int texX = (int) (wallX * (double) texture_width);
+//     wallX -= floor(wallX);
+//     int texX = (int) (wallX * (double) texture_width);
 
-    if ((side == SIDE_EAST || side == SIDE_WEST) && rayDirX > 0) // Facing West wall
-        texX = texture_width - texX - 1;
-    if ((side == SIDE_NORTH || side == SIDE_SOUTH) && rayDirY < 0) // Facing South wall
-        texX = texture_width - texX - 1;
+//     if ((side == SIDE_EAST || side == SIDE_WEST) && rayDirX > 0) // Facing West wall
+//         texX = texture_width - texX - 1;
+//     if ((side == SIDE_NORTH || side == SIDE_SOUTH) && rayDirY < 0) // Facing South wall
+//         texX = texture_width - texX - 1;
 
-    double step = 1.0 * texture_height / wall_height;
-    // texY = (int)texPos % texture_height; // Alternative using modulo
-    double texPos = (y_start - HEIGHT / 2.0 + wall_height / 2.0) * step;
+//     double step = 1.0 * texture_height / wall_height;
+//     // texY = (int)texPos % texture_height; // Alternative using modulo
+//     double texPos = (y_start - HEIGHT / 2.0 + wall_height / 2.0) * step;
  
-    // draw walls
-    int color = WALL_COLOR;
-    for (int y = y_start; y < y_end; y++)
-    {
-        // int texY = (int)texPos & (texture_height - 1); //  optimized but works for even numbers only,  
-        int texY = (int)texPos % texture_height;
-        if (texY < 0) texY += texture_height;
-        texPos += step;
+//     // draw walls
+//     int color = WALL_COLOR;
+//     for (int y = y_start; y < y_end; y++)
+//     {
+//         // int texY = (int)texPos & (texture_height - 1); //  optimized but works for even numbers only,  
+//         int texY = (int)texPos % texture_height;
+//         if (texY < 0) texY += texture_height;
+//         texPos += step;
 
-        // int color = 0;
-        if (texture_addr && texX >= 0 && texX < texture_width && texY >= 0 && texY < texture_height) {
-            char *dst = texture_addr + (texY * texture_line_len + texX * (texture_bpp / 8));
-            color = *(unsigned int *)dst;
-        }
-        // Apply vignette (optional)
-        color = darken_color(color, corrected_dist);
-        color  = vignette_effect(curr_x, color);
-        my_mlx_pixel_put(player->env, curr_x, y, color);
-    }
-}
+//         // int color = 0;
+//         if (texture_addr && texX >= 0 && texX < texture_width && texY >= 0 && texY < texture_height) {
+//             char *dst = texture_addr + (texY * texture_line_len + texX * (texture_bpp / 8));
+//             color = *(unsigned int *)dst;
+//         }
+//         // Apply vignette (optional)
+//         color = darken_color(color, corrected_dist);
+//         color  = vignette_effect(curr_x, color);
+//         my_mlx_pixel_put(player->env, curr_x, y, color);
+//     }
+// }
 
 
 int main()
