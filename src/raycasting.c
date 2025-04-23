@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:07 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 09:05:05 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:16:28 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,82 +183,6 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
     }
 }
 
-
-
-
-
-int handle_keypress(int keypress, t_player *player)
-{
-    bool need_render = false;
-
-    if (keypress == KEY_ESC)
-    {
-        mlx_destroy_image(player->env->mlx, player->env->img);
-        mlx_destroy_window(player->env->mlx, player->env->win);
-        exit(0);
-    }
-    if (keypress == KEY_W)
-    {
-        double new_x = player->x + cos(player->dir) * MOVE_SPEED;
-        double new_y = player->y + sin(player->dir) * MOVE_SPEED;
-        if (map[(int)new_y][(int)new_x] == 0)
-        {
-            player->x = new_x;
-            player->y = new_y;
-        }
-        need_render = true;
-    }
-    if (keypress == KEY_S)
-    {
-        double new_x = player->x - cos(player->dir) * MOVE_SPEED;
-        double new_y = player->y - sin(player->dir) * MOVE_SPEED;
-        if (map[(int)new_y][(int)new_x] == 0)
-        {
-            player->x = new_x;
-            player->y = new_y;
-        }
-        need_render = true;
-    }
-    if (keypress == KEY_A)
-    {
-        double new_x = player->x + sin(player->dir) * MOVE_SPEED;
-        double new_y = player->y - cos(player->dir) * MOVE_SPEED;
-        if (map[(int)new_y][(int)new_x] == 0)
-        {
-            player->x = new_x;
-            player->y = new_y;
-        }
-        need_render = true;
-    }
-    if (keypress == KEY_D)
-    {
-        double new_x = player->x - sin(player->dir) * MOVE_SPEED;
-        double new_y = player->y + cos(player->dir) * MOVE_SPEED;
-        if (map[(int)new_y][(int)new_x] == 0)
-        {
-            player->x = new_x;
-            player->y = new_y;
-        }
-        need_render = true;
-    }
-    if (keypress == KEY_LEFT)
-    {
-        player->dir -= ROTATE_SPEED;
-        if (player->dir < 0)
-            player->dir += 2 * M_PI;
-        need_render = true;
-    }
-    if (keypress == KEY_RIGHT)
-    {
-        player->dir += ROTATE_SPEED;
-        if (player->dir >= 2 * M_PI)
-            player->dir -= 2 * M_PI;
-        need_render = true; 
-    }
-    if (need_render)
-        render_scene(player->env, player);
-    return (0);
-}
 
 int main()
 {
