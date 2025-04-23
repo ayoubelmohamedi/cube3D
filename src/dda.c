@@ -1,62 +1,90 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   dda.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/23 12:04:49 by ael-moha          #+#    #+#             */
+/*   Updated: 2025/04/23 12:04:52 by ael-moha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 
 #include "cub3d.h"
 
-
-double dda_algo(double rayDirX, double rayDirY, double *rayX, double *rayY, int *mapX, int *mapY, int *side)
+typedef struct s_dda
 {
+    int		side_hit;
+    int		stepX;
+    int		stepY;
+    double	deltaDistX;
+    double	deltaDistY;
+    double	sideDistX;
+    double	sideDistY;
+}	t_dda;
 
-    int side_hit = 0;
-    // Initialize mapX and mapY to the player's current grid position
+static void	init_dda(double rayDirX, double rayDirY, double *rayX,
+                    double *rayY, int *mapX, int *mapY, t_dda *dda)
+{
     *mapX = (int)(*rayX);
     *mapY = (int)(*rayY);
+    dda->deltaDistX = fabs(1 / rayDirX);
+    dda->deltaDistY = fabs(1 / rayDirY);
+    dda->stepX = (rayDirX < 0) ? -1 : 1;
+    dda->stepY = (rayDirY < 0) ? -1 : 1;
+    dda->sideDistX = (rayDirX < 0) ? (*rayX - *mapX) * dda->deltaDistX
+        : (*mapX + 1.0 - *rayX) * dda->deltaDistX;
+    dda->sideDistY = (rayDirY < 0) ? (*rayY - *mapY) * dda->deltaDistY
+        : (*mapY + 1.0 - *rayY) * dda->deltaDistY;
+    dda->side_hit = 0;
+}
 
-    // Calculate delta distances
-    double deltaDistX = fabs(1 / rayDirX);
-    double deltaDistY = fabs(1 / rayDirY);
+static int	perform_dda(int *mapX, int *mapY, t_dda *dda)
+{
+    if (dda->sideDistX < dda->sideDistY)
+    {
+        dda->sideDistX += dda->deltaDistX;
+        *mapX += dda->stepX;
+        dda->side_hit = 0;
+    }
+    else
+    {
+        dda->sideDistY += dda->deltaDistY;
+        *mapY += dda->stepY;
+        dda->side_hit = 1;
+    }
+    if (*mapX < 0 || *mapX >= MAP_WIDTH || *mapY < 0 || *mapY >= MAP_HEIGHT)
+        return (-1);
+    if (map[*mapY][*mapX] > 0)
+        return (1);
+    return (0);
+}
 
-    // Determine step direction and initial side distances
-    int stepX = (rayDirX < 0) ? -1 : 1;
-    int stepY = (rayDirY < 0) ? -1 : 1;
+double	dda_algo(double rayDirX, double rayDirY, double *rayX,
+                double *rayY, int *mapX, int *mapY, int *side)
+{
+    t_dda	dda;
+    int		result;
 
-    double sideDistX = (rayDirX < 0) ? (*rayX - *mapX) * deltaDistX : (*mapX + 1.0 - *rayX) * deltaDistX;
-    double sideDistY = (rayDirY < 0) ? (*rayY - *mapY) * deltaDistY : (*mapY + 1.0 - *rayY) * deltaDistY;
-
-    // Perform DDA
+    init_dda(rayDirX, rayDirY, rayX, rayY, mapX, mapY, &dda);
     while (1)
     {
-        // Jump to the next grid cell
-        if (sideDistX < sideDistY)
-        {
-            sideDistX += deltaDistX;
-            *mapX += stepX;
-            side_hit = 0; // hit vertical line  (East or West)
-        }
-        else
-        {
-            sideDistY += deltaDistY;
-            *mapY += stepY;
-            side_hit = 1; // hit a horizontal wall (NORTH or SOUTH)
-        }
-
-        // check bound before check
-        if (*mapX < 0 || *mapX >= MAP_WIDTH || *mapY < 0 || *mapY >= MAP_HEIGHT)
+        result = perform_dda(mapX, mapY, &dda);
+        if (result == -1)
             return (-1.0);
-
-        // Check if a wall is hit
-        if (map[*mapY][*mapX] > 0)
-            break;
+        if (result == 1)
+            break ;
     }
-    // (wallX - playerX + (1 - stepX) / 2) / rayDirX
-    if (side_hit == 0)
+    if (dda.side_hit == 0)
     {
         *side = (rayDirX > 0) ? SIDE_WEST : SIDE_EAST;
-        return (sideDistX - deltaDistX);
+        return (dda.sideDistX - dda.deltaDistX);
     }
     else
     {
         *side = (rayDirY > 0) ? SIDE_NORTH : SIDE_SOUTH;
-        return (sideDistY - deltaDistY);
+        return (dda.sideDistY - dda.deltaDistY);
     }
 }
 
