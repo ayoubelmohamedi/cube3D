@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 09:04:56 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:29:25 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,15 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
     else
         for (int y = y_end; y < HEIGHT; y++)
             my_mlx_pixel_put(player->env, x, y, FLOOR_COLOR);
+}
+
+void my_mlx_pixel_put(t_env *env, int x, int y, int color)
+{
+    char *dst;
+
+    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+    {
+        dst = env->addr + (y * env->line_lenght + x * (env->bits_per_pixel / 8));
+        *(unsigned int *)dst = color;
+    }
 }
