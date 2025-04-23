@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:07 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 10:26:45 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:22:04 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,50 +75,6 @@ void render_floor(t_player *player, int screen_x, int y_start, int y_end, int wa
         }
     }
 } 
-
-void render_ceiling(t_player *player, int screen_x, int y_start, int y_end, int wall_height)
-{
-    (void) y_end;
-    (void) wall_height;
-
-    double playerDirX = cos(player->dir);
-    double playerDirY = sin(player->dir);
-
-    double fov_rad = FOV * (M_PI / 180);
-
-    double planeX = -playerDirY * tan(fov_rad / 2.0);
-    double planeY = playerDirX * tan(fov_rad / 2.0);
-    for (int y = 0; y < y_start; y++)
-    {
-        // distance from camera to ceiling pixel
-        float rowDistance = (0.5 * HEIGHT) / (HEIGHT / 2.0 - y);
-
-        // Calculate the real world step vector for this row (same as floor)
-        float floorStepX = rowDistance * (playerDirX + planeX - (playerDirX - planeX)) / WIDTH;
-        float floorStepY = rowDistance * (playerDirY + planeY - (playerDirY - planeY)) / WIDTH;
-
-        // Calculate the real world coordinates of the leftmost pixel in this row
-        float currentCeilX = player->x + rowDistance * (playerDirX - planeX);
-        float currentCeilY = player->y + rowDistance * (playerDirY - planeY);
-
-        // adjust to current screen_x column
-        currentCeilX += floorStepX * screen_x;
-        currentCeilY += floorStepY * screen_x;
-
-        // Get texture coordinates
-        int texX = (int)(player->env->texture->ceil_width * (currentCeilX - floor(currentCeilX))) & (player->env->texture->ceil_width - 1);
-        int texY = (int)(player->env->texture->ceil_height * (currentCeilY - floor(currentCeilY))) & (player->env->texture->ceil_height - 1);
-
-        int ceil_color = CEILING_COLOR;
-        if (texX >= 0 && texX < player->env->texture->ceil_width && texY >= 0 && texY < player->env->texture->ceil_height)
-        {
-            char *tex_pixel_ptr = player->env->texture->ceil_addr + (texY * player->env->texture->ceil_line_len + texX * (player->env->texture->ceil_bpp / 8));
-            ceil_color = *(unsigned int *)tex_pixel_ptr;
-            // to apply distance darkning based on distance ?
-        }
-        my_mlx_pixel_put(player->env, screen_x, y, ceil_fog_color(ceil_color , rowDistance));
-    }
-}
 
 
 int main()
