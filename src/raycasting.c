@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:07 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 08:56:08 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/23 09:05:05 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,77 +32,6 @@ void my_mlx_pixel_put(t_env *env, int x, int y, int color)
     {
         dst = env->addr + (y * env->line_lenght + x * (env->bits_per_pixel / 8));
         *(unsigned int *)dst = color;
-    }
-}
-
-
-
-
-void render_minimap(t_env *env, t_player *player)
-{
-    for (int y = 0; y < MINIMAP_SIZE; y++) {
-        for (int x = 0; x < MINIMAP_SIZE; x++) {
-            if (x < 2 || y < 2 || x >= MINIMAP_SIZE - 2 || y >= MINIMAP_SIZE - 2) {
-                my_mlx_pixel_put(env, MINIMAP_X + x, MINIMAP_Y + y, MINIMAP_BORDER_COLOR);
-                continue;
-            }
-            int mapX = (int)((x - MINIMAP_SIZE/2) / MINIMAP_SCALE + player->x);
-            int mapY = (int)((y - MINIMAP_SIZE/2) / MINIMAP_SCALE + player->y);
-            
-            if (mapX >= 0 && mapX < MAP_WIDTH && mapY >= 0 && mapY < MAP_HEIGHT) {
-                int color = (map[mapY][mapX] > 0) ? MINIMAP_WALL_COLOR : MINIMAP_FLOOR_COLOR;
-                
-                int dest_color = 0x000000; 
-                int r = (int)(MINIMAP_OPACITY * ((color >> 16) & 0xFF) + (1 - MINIMAP_OPACITY) * ((dest_color >> 16) & 0xFF));
-                int g = (int)(MINIMAP_OPACITY * ((color >> 8) & 0xFF) + (1 - MINIMAP_OPACITY) * ((dest_color >> 8) & 0xFF));
-                int b = (int)(MINIMAP_OPACITY * (color & 0xFF) + (1 - MINIMAP_OPACITY) * (dest_color & 0xFF));
-                
-                my_mlx_pixel_put(env, MINIMAP_X + x, MINIMAP_Y + y, (r << 16) | (g << 8) | b);
-            }
-            else {
-                my_mlx_pixel_put(env, MINIMAP_X + x, MINIMAP_Y + y, DARK_COLOR);
-            }
-        }
-    }
-    
-    int playerScreenX = MINIMAP_X + MINIMAP_SIZE / 2;
-    int playerScreenY = MINIMAP_Y + MINIMAP_SIZE / 2;
-    
-    int dirX = playerScreenX + cos(player->dir) * PLAYER_DIR_LENGTH;
-    int dirY = playerScreenY + sin(player->dir) * PLAYER_DIR_LENGTH;
-    
-    // Simple line drawing algorithm (Bresenham)
-    int dx = abs(dirX - playerScreenX);
-    int dy = abs(dirY - playerScreenY);
-    int sx = (playerScreenX < dirX) ? 1 : -1;
-    int sy = (playerScreenY < dirY) ? 1 : -1;
-    int err = dx - dy;
-    
-    while (1) {
-        my_mlx_pixel_put(env, playerScreenX, playerScreenY, PLAYER_DIR_COLOR);
-        if (playerScreenX == dirX && playerScreenY == dirY) break;
-        int e2 = 2 * err;
-        if (e2 > -dy) {
-            err -= dy;
-            playerScreenX += sx;
-        }
-        if (e2 < dx) {
-            err += dx;
-            playerScreenY += sy;
-        }
-    }
-
-    // Reset position for player dot
-    playerScreenX = MINIMAP_X + MINIMAP_SIZE / 2;
-    playerScreenY = MINIMAP_Y + MINIMAP_SIZE / 2;
-    
-    // Draw player dot
-    for (int y = -PLAYER_DOT_SIZE/2; y <= PLAYER_DOT_SIZE/2; y++) {
-        for (int x = -PLAYER_DOT_SIZE/2; x <= PLAYER_DOT_SIZE/2; x++) {
-            if (x*x + y*y <= (PLAYER_DOT_SIZE/2)*(PLAYER_DOT_SIZE/2)) {
-                my_mlx_pixel_put(env, playerScreenX + x, playerScreenY + y, PLAYER_DOT_COLOR);
-            }
-        }
     }
 }
 
@@ -254,146 +183,9 @@ void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x, int c
     }
 }
 
-void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int wall_height, double corrected_dist, int side)
-{
-    int y_start = (HEIGHT - wall_height) / 2;
-    if (y_start < 0) y_start = 0;
-    int y_end = y_start + wall_height;
-    if (y_end  > HEIGHT ) y_end = HEIGHT;
 
-    // draw ceiling
-    if (player->env->has_texture && player->env->texture->has_ceiling)
-        render_ceiling(player, x, y_start, y_end, wall_height);
-    else
-        for (int y = 0; y < y_start; y++)
-            my_mlx_pixel_put(player->env, x, y, CEILING_COLOR);
-    
-    if (player->env->has_wall_texture)
-        render_wall_tex(player, y_start, y_end,x,  corrected_dist, rayDirX, rayDirY, side, wall_height);
-    else
-        for (int y = y_start; y < y_end; y++)
-            my_mlx_pixel_put(player->env, x, y, vignette_effect(x, WALL_COLOR));
 
-    // draw floor
-    if (player->env->has_texture && player->env->texture->has_floor)
-        render_floor(player, x, y_start, y_end, wall_height);
-    else
-        for (int y = y_end; y < HEIGHT; y++)
-            my_mlx_pixel_put(player->env, x, y, FLOOR_COLOR);
-}
 
-double dda_algo(double rayDirX, double rayDirY, double *rayX, double *rayY, int *mapX, int *mapY, int *side)
-{
-
-    int side_hit = 0;
-    // Initialize mapX and mapY to the player's current grid position
-    *mapX = (int)(*rayX);
-    *mapY = (int)(*rayY);
-
-    // Calculate delta distances
-    double deltaDistX = fabs(1 / rayDirX);
-    double deltaDistY = fabs(1 / rayDirY);
-
-    // Determine step direction and initial side distances
-    int stepX = (rayDirX < 0) ? -1 : 1;
-    int stepY = (rayDirY < 0) ? -1 : 1;
-
-    double sideDistX = (rayDirX < 0) ? (*rayX - *mapX) * deltaDistX : (*mapX + 1.0 - *rayX) * deltaDistX;
-    double sideDistY = (rayDirY < 0) ? (*rayY - *mapY) * deltaDistY : (*mapY + 1.0 - *rayY) * deltaDistY;
-
-    // Perform DDA
-    while (1)
-    {
-        // Jump to the next grid cell
-        if (sideDistX < sideDistY)
-        {
-            sideDistX += deltaDistX;
-            *mapX += stepX;
-            side_hit = 0; // hit vertical line  (East or West)
-        }
-        else
-        {
-            sideDistY += deltaDistY;
-            *mapY += stepY;
-            side_hit = 1; // hit a horizontal wall (NORTH or SOUTH)
-        }
-
-        // check bound before check
-        if (*mapX < 0 || *mapX >= MAP_WIDTH || *mapY < 0 || *mapY >= MAP_HEIGHT)
-            return (-1.0);
-
-        // Check if a wall is hit
-        if (map[*mapY][*mapX] > 0)
-            break;
-    }
-    // (wallX - playerX + (1 - stepX) / 2) / rayDirX
-    if (side_hit == 0)
-    {
-        *side = (rayDirX > 0) ? SIDE_WEST : SIDE_EAST;
-        return (sideDistX - deltaDistX);
-    }
-    else
-    {
-        *side = (rayDirY > 0) ? SIDE_NORTH : SIDE_SOUTH;
-        return (sideDistY - deltaDistY);
-    }
-}
-
-void cast_ray(t_player *player, double ray_angle, int screen_x)
-{
-    double rayX = player->x;
-    double rayY = player->y;
-
-    double rayDirX = cos(ray_angle);
-    double rayDirY = sin(ray_angle);
-
-    int mapX = (int)rayX;
-    int mapY = (int)rayY;
-    int side;
-
-    if (mapX < 0 || mapX >= MAP_WIDTH || mapY < 0 || mapY >= MAP_HEIGHT)
-        return;
-
-    double dist = dda_algo(rayDirX, rayDirY, &rayX, &rayY, &mapX, &mapY, &side);
-    if (dist >= 0)
-    {
-        // fix bowelfish effect
-        double correct_dist = dist * cos(ray_angle - player->dir);
-        if (correct_dist < 0.01)
-            correct_dist = 0.01;
-
-        // int wall_type = map[mapY][mapX];
-        int wall_height = (int)(HEIGHT / correct_dist);
-        if (wall_height < 0)
-            wall_height = 0;
-        if (wall_height > HEIGHT)
-            wall_height = HEIGHT;
-        // int color = get_color(wall_type);
-        // color = darken_color(color, correct_dist);
-
-        draw_vertical_line(player, rayDirX, rayDirY,screen_x, wall_height,correct_dist, side);
-    }
-}
-
-// Main render function
-void render_scene(t_env *env, t_player *player)
-{
-    double fov_rad = (FOV * M_PI) / 180.0;
-
-    mlx_destroy_image(env->mlx, env->img);
-    env->img = mlx_new_image(env->mlx, WIDTH, HEIGHT);
-    mlx_get_data_addr(env->img, &env->bits_per_pixel,
-                      &env->line_lenght, &env->endian);
-
-    for (int x = 0; x < WIDTH; x++)
-    {
-        double ray_angle = player->dir - (fov_rad / 2.0) + (x * fov_rad / WIDTH);
-        cast_ray(player, ray_angle, x);
-    }
-    mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
-    if (env->has_minimap)
-        render_minimap(env, player);
-}
 
 int handle_keypress(int keypress, t_player *player)
 {
