@@ -1,5 +1,6 @@
 #include "cub3d.h"
 
+
 int	set_texture_path(t_textures *texture, char *line, char *trimmed)
 {
 	if (!ft_strncmp(line, "NO", 2))
@@ -100,28 +101,31 @@ int	read_texture_lines(t_textures *texture, int fd)
 	return (0);
 }
 
-int	valid_texture(t_cub3d *cub, t_textures *texture, int fd)
+int	valid_texture(t_cub3d *cub3d, t_textures *texture, int fd)
 {
-	(void)cub;
+	(void)cub3d;
 	if (read_texture_lines(texture, fd))
 	{
-		printf("Error in the Textures\n");
+		printf("1");
+		printf("TEXTURE ERROR");
 		return (1);
 	}
 	else if (!texture->no || !texture->so || !texture->we || !texture->ea
 		|| !texture->rgb->f || !texture->rgb->c)
 	{
-		printf("Error in the Textures\n");
-		return(1);
+		printf("2");
+		printf("TEXTURE ERROR");
+		return (1);
 	}
 	else if (parse_texture_extension(texture))
 	{
-		printf("Error in the Textures\n");
+		printf("3");
+		printf("TEXTURE ERROR");
 		return (1);
 	}
 	else if (check_colors(texture))
 	{
-		printf("Error in The colors \n");
+		printf("COLORS ERROR");
 		return (1);
 	}
 	else

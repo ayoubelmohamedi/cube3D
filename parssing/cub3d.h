@@ -70,7 +70,9 @@ typedef struct s_cub3d
     t_data  *my_data;
     t_textures *my_textures;
     t_mlx   mlx;
-     
+    double	player_x;
+	double	player_y;
+
 } t_cub3d;
 
 // ||>--================> parssing <======================--<||
