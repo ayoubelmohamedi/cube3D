@@ -14,7 +14,7 @@ int main(int argc, char **argv)
         return (1);
     textures = malloc(sizeof(textures));
     if (!textures)
-        return (1, free(cub));
+        return (free(cub), 1);
     parrsing_input(cub, &my_data, textures, argv[1]);
     //lanch_prg(cub, textures);
     return (0);
