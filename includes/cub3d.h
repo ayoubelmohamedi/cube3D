@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 12:21:48 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:45:28 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct
 
 typedef struct
 {
+    char *textures_files[2];
     void *mlx;
     void *win;
     void *addr;
