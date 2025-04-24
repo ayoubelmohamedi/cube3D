@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 12:29:56 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:43:42 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,64 @@ int map[8][8] = {
     {1, 1, 1, 1, 1, 1, 1, 1}};
 
 
+t_texture *  load_floor_ceiling_texture(t_env * env)
+{
+    t_texture *w_texture;
+
+    w_texture = (t_texture *)malloc(sizeof(t_texture));
+    if (!w_texture)
+        return (NULL);
+    w_texture->ceil_img = mlx_xpm_file_to_image(env->mlx, sky[3], &w_texture->ceil_width, &w_texture->ceil_height);
+    if (!w_texture->ceil_img)
+    { 
+        mlx_destroy_image(env->mlx, env->img);
+        mlx_destroy_window(env->mlx, env->win);
+        perror("celiling image error");
+        return (1);
+    }
+    w_texture->floor_img = mlx_xpm_file_to_image(env->mlx, floor[1], &w_texture->floor_width, &w_texture->floor_height);
+    if (!w_texture->ceil_img)
+    {
+        mlx_destroy_image(env->mlx, w_texture->ceil_img);
+        mlx_destroy_image(env->mlx, env->img);
+        mlx_destroy_window(env->mlx, env->win);
+        perror("floor image error");
+        return (1);
+    }
+    return (w_texture);
+}
+
+int    load_env(t_env *env)
+{
+    env = (t_env *)malloc(sizeof(t_env));   
+    if (!env)
+        return (0);
+    env->mlx = mlx_init();
+    env->win = mlx_new_window(env->mlx, WIDTH, HEIGHT, "Raycasting Demo");
+    env->img = mlx_new_image(env->mlx, WIDTH, HEIGHT);
+    env->addr = mlx_get_data_addr(env->img, &env->bits_per_pixel,
+                                 &env->line_lenght, &env->endian);
+    env->has_minimap = false;
+    env->has_texture = true;
+    env->has_wall_texture = true;
+    env->texture = load_floor_ceiling_texture();
+    env->walls = load_walls_texture(); 
+}
+
+
 int main()
 {
     t_env env;
     t_texture texture;
     t_wall_text wall_tex;
+
+
+    // init_env 
+    // init_mlx
+    // to handle spawning orientaiton and postion based on player (x,y) and {S,E,W,N} 
+    // load ceiling and floor (if exist), else (no texture file) load default colors.
+    // load walls texture, else load default colors? 
+    
 
     char *sky[] = {"assets/sky/minecraft.xpm",
                    "assets/sky/minecraft.xpm",
@@ -88,7 +141,7 @@ int main()
         return (1);
     }
 
-
+    
     // load wall textures
     wall_tex.north_img = mlx_xpm_file_to_image(env.mlx, walls_no[0], &env.walls->north_width, &env.walls->north_height);
     if (!wall_tex.north_img) { return (1); }
@@ -120,7 +173,6 @@ int main()
     render_scene(&env, &player);
 
     mlx_hook(env.win, 2, 1L << 0, handle_keypress, &player);
-
     mlx_loop(env.mlx);
     return 0;
 }
