@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/24 15:43:42 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 15:44:40 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int    load_env(t_env *env)
     env->has_minimap = false;
     env->has_texture = true;
     env->has_wall_texture = true;
-    env->texture = load_floor_ceiling_texture();
+    env->texture = load_floor_ceiling_texture(env);
     env->walls = load_walls_texture(); 
 }
 
