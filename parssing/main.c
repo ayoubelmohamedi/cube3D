@@ -8,7 +8,7 @@ int main(int argc, char **argv)
     t_data my_data;
 
     if (argc != 2)
-        fr_msg_error("Invalid argm");
+        fr_msg_error("Invalid args");
     cub = malloc(sizeof(t_cub3d));
     if (!cub)
         return (1);
