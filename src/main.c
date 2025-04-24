@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/24 16:32:46 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:38:02 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,22 +75,22 @@ t_wall_text *load_walls_texture(t_env *env)
     walls_tex = (t_wall_text *) malloc(sizeof(t_wall_text));
     if (!walls_tex)
         return (NULL);
-    wall_tex.north_img = mlx_xpm_file_to_image(env.mlx, walls_no[0], &env.walls->north_width, &env.walls->north_height);
-    if (!wall_tex.north_img) { return (1); }
-    wall_tex.north_addr = mlx_get_data_addr(env.walls->north_img, &env.walls->north_bpp, &env.walls->north_line_len, &env.walls->north_endian);
+    walls_tex->north_img = mlx_xpm_file_to_image(env->mlx, env->wall_tex_files[0], &walls_tex->north_width, &walls_tex->north_height);
+    if (!walls_tex->north_img) { return (1); }
+    walls_tex->north_addr = mlx_get_data_addr(walls_tex->north_img, &walls_tex->north_bpp, &walls_tex->north_line_len, &walls_tex->north_endian);
 
-    wall_tex.south_img = mlx_xpm_file_to_image(env.mlx, walls_so[0], &env.walls->south_width, &env.walls->south_heght);
-    if (!wall_tex.south_img) { return (1); }
-    wall_tex.south_addr = mlx_get_data_addr(env.walls->south_img, &env.walls->south_bpp, &env.walls->south_line_len, &env.walls->south_endian);
+    walls_tex->south_img = mlx_xpm_file_to_image(env->mlx, env->wall_tex_files[1], &walls_tex->south_width, &walls_tex->south_heght);
+    if (!walls_tex->south_img) { return (1); }
+    walls_tex->south_addr = mlx_get_data_addr(walls_tex->south_img, &walls_tex->south_bpp, &walls_tex->south_line_len, &walls_tex->south_endian);
 
-    wall_tex.east_img = mlx_xpm_file_to_image(env.mlx, walls_ea[0], &env.walls->east_width, &env.walls->east_height);
-    if (!wall_tex.east_img) { return (1); }
-    wall_tex.east_addr = mlx_get_data_addr(env.walls->east_img, &env.walls->east_bpp, &env.walls->east_line_len, &env.walls->east_endian);
+    walls_tex->west_img = mlx_xpm_file_to_image(env->mlx,  env->wall_tex_files[2], &walls_tex->west_width, &walls_tex->west_height);
+    if (!walls_tex->west_img) { return (1); }
+    walls_tex->west_addr = mlx_get_data_addr(walls_tex->west_img, &walls_tex->west_bpp, &walls_tex->west_line_len, &walls_tex->west_endian);
 
-    wall_tex.west_img = mlx_xpm_file_to_image(env.mlx, walls_we[0], &env.walls->west_width, &env.walls->west_height);
-    if (!wall_tex.west_img) { return (1); }
-    wall_tex.west_addr = mlx_get_data_addr(env.walls->west_img, &env.walls->west_bpp, &env.walls->west_line_len, &env.walls->west_endian);  
-
+        
+    walls_tex->east_img = mlx_xpm_file_to_image(env->mlx,  env->wall_tex_files[3], &walls_tex->east_width, &walls_tex->east_height);
+    if (!walls_tex->east_img) { return (1); }
+    walls_tex->east_addr = mlx_get_data_addr(walls_tex->east_img, &walls_tex->east_bpp, &walls_tex->east_line_len, &walls_tex->east_endian);
     
     return (walls_tex);
 } 
