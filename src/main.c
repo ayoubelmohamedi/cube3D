@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/24 16:41:22 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:54:31 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,19 @@ t_wall_text *load_walls_texture(t_env *env)
     return (walls_tex);
 } 
 
+void init_texture_paths(t_env *env)
+{
+    // textures paths for [no, so, we,ea]
+    env->wall_tex_files[0] = NULL;
+    env->wall_tex_files[1] = NULL;
+    env->wall_tex_files[2] = NULL;
+    env->wall_tex_files[3] = NULL;
+
+    // textures for ceiling + floor 
+    env->textures_files[0] = NULL;
+    env->textures_files[1] = NULL;
+}
+
 int    load_env(t_env *env)
 {
     env = (t_env *)malloc(sizeof(t_env));   
@@ -112,9 +125,11 @@ int    load_env(t_env *env)
                                  &env->line_lenght, &env->endian);
     env->has_minimap = false;
     env->has_texture = true;
+    init_texture_paths(env); 
     env->has_wall_texture = true;
     env->texture = load_floor_ceiling_texture(env);
-    env->walls = load_walls_texture(env); 
+    env->walls = load_walls_texture(env);
+    return (1);
 }
 
 
@@ -170,6 +185,7 @@ int main()
         return (1);
     }
 
+    env.has_minimap = true;
     
     // load wall textures
     wall_tex.north_img = mlx_xpm_file_to_image(env.mlx, walls_no[0], &env.walls->north_width, &env.walls->north_height);
@@ -198,7 +214,6 @@ int main()
     t_player player = {player_x, player_y, M_PI / 2, &env}; // center of map, facing down
 
     player.env = &env;
-    env.has_minimap = true;
     render_scene(&env, &player);
 
     mlx_hook(env.win, 2, 1L << 0, handle_keypress, &player);
