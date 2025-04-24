@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/24 16:54:31 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:02:59 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,20 @@ void init_texture_paths(t_env *env)
     env->textures_files[1] = NULL;
 }
 
+t_player *init_player(t_env *env)
+{
+    t_player *player;
+
+    player = (t_player*) malloc(sizeof(player));
+    if (!player)
+        return (NULL);
+    player->env = env;
+    player->x = 3.5;
+    player->y = 3.5;
+    player->dir =  M_PI / 2; //  facing down 
+    return (player);
+}
+
 int    load_env(t_env *env)
 {
     env = (t_env *)malloc(sizeof(t_env));   
@@ -125,7 +139,7 @@ int    load_env(t_env *env)
                                  &env->line_lenght, &env->endian);
     env->has_minimap = false;
     env->has_texture = true;
-    init_texture_paths(env); 
+    init_texture_paths(env);
     env->has_wall_texture = true;
     env->texture = load_floor_ceiling_texture(env);
     env->walls = load_walls_texture(env);
@@ -146,7 +160,10 @@ int main()
     // make player rotation with mouse intead 
     // load ceiling and floor (if exist), else (no texture file) load default colors.
     // load walls texture, else load default colors? 
-     
+    double player_x = 3.5;
+    double player_y = 3.5;
+
+    t_player player = {player_x, player_y, M_PI / 2, &env}; // center of map, facing down
 
     // adaptive part
     texture.has_ceiling = true;
@@ -208,10 +225,7 @@ int main()
     env.texture->floor_addr = mlx_get_data_addr(env.texture->floor_img, &env.texture->floor_bpp, &env.texture->floor_line_len, &env.texture->floor_endian);
     env.texture->ceil_addr = mlx_get_data_addr(env.texture->ceil_img, &env.texture->ceil_bpp, &env.texture->ceil_line_len, &env.texture->ceil_endian);
 
-    double player_x = 3.5;
-    double player_y = 3.5;
 
-    t_player player = {player_x, player_y, M_PI / 2, &env}; // center of map, facing down
 
     player.env = &env;
     render_scene(&env, &player);
