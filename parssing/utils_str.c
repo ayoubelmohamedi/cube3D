@@ -7,7 +7,7 @@ void ft_msg_error(char *msg)
     i = 0;
     while (msg[i])
     {
-        write(1, msg[i], 1);
+        write(1, &msg[i], 1);
         i++;
     }
 }

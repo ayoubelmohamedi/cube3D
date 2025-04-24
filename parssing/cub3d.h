@@ -74,8 +74,8 @@ typedef struct s_cub3d
 } t_cub3d;
 
 // ||>--================> parssing <======================--<||
-int    init_textures(t_textures *my_texts);
-void parrsing_input(t_cub3d *cub, t_data *my_data, t_textures *my_textures, char *file);
+int    init_texture(t_textures *my_texts);
+//void parrsing_input(t_cub3d *cub, t_data *my_data, t_textures *my_textures, char *file);
 int	init_data(t_data *data);
 void ft_msg_error(char *msg);
 int init_cub(t_cub3d *cub, t_data *my_data, t_textures *my_textures);
@@ -116,7 +116,7 @@ size_t	ft_strlen(const char *str);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memcpy(void *to, const void *from, size_t n);
 char	*ft_strdup(const char *src);
-char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrim(char  *s1, char  *set);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strspn(const char *s, const char *accept);
 void	*ft_memset(void *ptr, int x, size_t n);
@@ -124,8 +124,12 @@ int	    parse_texture_line(t_textures *texture, char *line);
 int	    rgb_to_int(int red, int green, int blue);
 int	    check_color(char *color);
 int	    parse_texture_extension(t_textures *texture);
-int check_colors(t_textures *texture);
-int	is_valid_rgb(char *rgb);
-void fr_msg_error(char *str);
+int     check_colors(t_textures *texture);
+int	    is_valid_rgb(char *rgb);
+void    fr_msg_error(char *str);
+int	    check_space(char c);
+int	parrsing_input( t_cub3d *cub , t_data *data, t_textures *texture, char *file);
+char	*ft_strchr(char *str, int c);
+
 // ||---------------------------------------------------------||
 #endif

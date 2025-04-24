@@ -1,5 +1,3 @@
-#include "cub3d.h"
-
 int	ft_isdigit(int index)
 {
 	if ('0' <= index && index <= '9')

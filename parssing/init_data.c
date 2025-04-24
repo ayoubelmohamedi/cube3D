@@ -1,6 +1,6 @@
 #include "cub3d.h"
 
-int    init_textures(t_textures *my_texts)
+int    init_texture(t_textures *my_texts)
 {
     my_texts->so = NULL;
     my_texts->ea = NULL;

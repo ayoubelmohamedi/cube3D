@@ -82,7 +82,7 @@ int	parrsing_input( t_cub3d *cub , t_data *data, t_textures *texture, char *file
 		return (close(fd), 1);
 	if (start_parser(cub, data, file, fd))
 	{
-		destroy_data(cub->my_data, cub->my_textures);
+		//destroy_data(cub->my_data, cub->my_textures);
 		(free(cub), close(fd));
 		exit(1);
 	}

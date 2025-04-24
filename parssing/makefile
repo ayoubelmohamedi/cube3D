@@ -2,7 +2,8 @@ CC = gcc
 CFLAGS = -Wall -Wextra -g
 
 TARGET = myprogram
-SRCS = $(wildcard *.c) $(wildcard ./get_next_line/*.c) $(wildcard ./help_fuct/*.c) 
+SRCS = $(wildcard *.c) #$(wildcard ./get_next_line/*.c) $(wildcard ./help_fuct/*.c) 
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(TARGET)
