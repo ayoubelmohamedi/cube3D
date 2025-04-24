@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/24 17:23:33 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:37:23 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_texture *  load_floor_ceiling_texture(t_env * env)
         mlx_destroy_image(env->mlx, env->img);
         mlx_destroy_window(env->mlx, env->win);
         perror("celiling image error");
-        return (1);
+        return (NULL);
     }
     w_texture->floor_img = mlx_xpm_file_to_image(env->mlx, env->textures_files[1], &w_texture->floor_width, &w_texture->floor_height);
     if (!w_texture->ceil_img)
@@ -35,7 +35,7 @@ t_texture *  load_floor_ceiling_texture(t_env * env)
         mlx_destroy_image(env->mlx, env->img);
         mlx_destroy_window(env->mlx, env->win);
         perror("floor image error");
-        return (1);
+        return (NULL);
     }
     w_texture->floor_addr = mlx_get_data_addr(w_texture->floor_img, &w_texture->floor_bpp, &w_texture->floor_line_len, &w_texture->floor_endian);
     w_texture->ceil_addr = mlx_get_data_addr(w_texture->ceil_img, &w_texture->ceil_bpp, &w_texture->ceil_line_len, &w_texture->ceil_endian);
@@ -50,20 +50,20 @@ t_wall_text *load_walls_texture(t_env *env)
     if (!walls_tex)
         return (NULL);
     walls_tex->north_img = mlx_xpm_file_to_image(env->mlx, env->wall_tex_files[0], &walls_tex->north_width, &walls_tex->north_height);
-    if (!walls_tex->north_img) { return (1); }
+    if (!walls_tex->north_img) { return (NULL); }
     walls_tex->north_addr = mlx_get_data_addr(walls_tex->north_img, &walls_tex->north_bpp, &walls_tex->north_line_len, &walls_tex->north_endian);
 
     walls_tex->south_img = mlx_xpm_file_to_image(env->mlx, env->wall_tex_files[1], &walls_tex->south_width, &walls_tex->south_heght);
-    if (!walls_tex->south_img) { return (1); }
+    if (!walls_tex->south_img) { return (NULL); }
     walls_tex->south_addr = mlx_get_data_addr(walls_tex->south_img, &walls_tex->south_bpp, &walls_tex->south_line_len, &walls_tex->south_endian);
 
     walls_tex->west_img = mlx_xpm_file_to_image(env->mlx,  env->wall_tex_files[2], &walls_tex->west_width, &walls_tex->west_height);
-    if (!walls_tex->west_img) { return (1); }
+    if (!walls_tex->west_img) { return (NULL); }
     walls_tex->west_addr = mlx_get_data_addr(walls_tex->west_img, &walls_tex->west_bpp, &walls_tex->west_line_len, &walls_tex->west_endian);
 
         
     walls_tex->east_img = mlx_xpm_file_to_image(env->mlx,  env->wall_tex_files[3], &walls_tex->east_width, &walls_tex->east_height);
-    if (!walls_tex->east_img) { return (1); }
+    if (!walls_tex->east_img) { return (NULL); }
     walls_tex->east_addr = mlx_get_data_addr(walls_tex->east_img, &walls_tex->east_bpp, &walls_tex->east_line_len, &walls_tex->east_endian);
     
     return (walls_tex);
@@ -134,7 +134,7 @@ int main()
     env = load_env();
     player = init_player(env);
    
-    render_scene(&env, &player);
+    render_scene(env, player);
 
     mlx_hook(env->win, 2, 1L << 0, handle_keypress, &player);
     mlx_loop(env->mlx);
