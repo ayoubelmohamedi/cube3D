@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/24 16:38:02 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 16:41:22 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ char *floor[] = { "assets/floor/concrete/lime.xpm",
     "assets/floor/planks/birch.xpm",
     NULL
 };
+
+char *walls_no[] = {"assets/walls/stone_bricks/1.xpm", NULL};
+char *walls_so[] = {"assets/walls/stone_bricks/2.xpm", NULL};
+char *walls_ea[] = {"assets/walls/stone_bricks/3.xpm", NULL}; 
+char *walls_we[] = {"assets/walls/stone_bricks/4.xpm", NULL};
 
 
 t_texture *  load_floor_ceiling_texture(t_env * env)
@@ -120,20 +125,13 @@ int main()
     t_wall_text wall_tex;
 
 
-    // init_env + init_mlx 
+    //[x] init_env + init_mlx 
+    //[x] added funcs for loading textures to t_env. ([ceiling & floor] + walls ) 
     // to handle spawning orientaiton and postion based on player (x,y) and {S,E,W,N} 
     // make player rotation with mouse intead 
     // load ceiling and floor (if exist), else (no texture file) load default colors.
     // load walls texture, else load default colors? 
-    
-
-
-
-
-    char *walls_no[] = {"assets/walls/stone_bricks/1.xpm", NULL};
-    char *walls_so[] = {"assets/walls/stone_bricks/2.xpm", NULL};
-    char *walls_ea[] = {"assets/walls/stone_bricks/3.xpm", NULL}; 
-    char *walls_we[] = {"assets/walls/stone_bricks/4.xpm", NULL};
+     
 
     // adaptive part
     texture.has_ceiling = true;
