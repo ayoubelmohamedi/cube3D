@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/24 17:23:52 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:33:36 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,22 @@ typedef struct
     t_env *env;
 } t_player;
 
-/*          colors & effects          */
+/*          Hooks          */
 int         handle_keypress(int keypress, t_player *player);
 
 /*             DDA algo                */
 double	dda_algo(double rayDirX, double rayDirY, double *rayX,
             double *rayY, int *mapX, int *mapY, int *side);
+
+/*              render minimap          */
+void render_minimap(t_env *env, t_player *player);
+void render_scene(t_env *env, t_player *player);
+
+/*             colors & effects         */
+int get_color(int wall_type);
+int darken_color(int color, double dist);
+int ceil_fog_color(int ceil_color, int rowDistance);
+int vignette_effect(int curr_x, int color);
 
 
 #endif 
