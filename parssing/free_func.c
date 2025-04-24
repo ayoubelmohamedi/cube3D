@@ -49,11 +49,11 @@ void	destroy_data(t_data *data, t_textures *texture)
 
 void	destroy_all(t_cub3d *cub)
 {
-	mlx_destroy_image(cub->mlx, cub->my_textures->no_texture.img);
-	mlx_destroy_image(cub->mlx, cub->my_textures->so_texture.img);
-	mlx_destroy_image(cub->mlx, cub->my_textures->we_texture.img);
-	mlx_destroy_image(cub->mlx, cub->my_textures->ea_texture.img);
-	destroy_data(cub->my_data, cub->my_textures);
+	//mlx_destroy_image(cub->mlx, cub->my_textures->no_texture.img);
+	//mlx_destroy_image(cub->mlx, cub->my_textures->so_texture.img);
+	// mlx_destroy_image(cub->mlx, cub->my_textures->we_texture.img);
+	// mlx_destroy_image(cub->mlx, cub->my_textures->ea_texture.img);
+	// destroy_data(cub->my_data, cub->my_textures);
 	//mlx_clear_window(cub->mlx, cub->win);
 	//mlx_destroy_image(cub->mlx, cub->img.img);
 	// mlx_destroy_window(cub->mlx, cub->win);

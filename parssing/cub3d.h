@@ -126,5 +126,6 @@ int	    check_color(char *color);
 int	    parse_texture_extension(t_textures *texture);
 int check_colors(t_textures *texture);
 int	is_valid_rgb(char *rgb);
+void fr_msg_error(char *str);
 // ||---------------------------------------------------------||
 #endif

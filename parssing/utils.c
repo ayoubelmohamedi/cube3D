@@ -82,3 +82,15 @@ int	parse_texture_extension(t_textures *texture)
 	return (0);
 }
 
+void fr_msg_error(char *str)
+{
+	int i;
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		write(1, &str[i], 1);
+		i++;
+	}
+}
