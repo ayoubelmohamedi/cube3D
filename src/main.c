@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/25 18:40:17 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:44:05 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,14 @@ t_wall_text *load_walls_texture(t_env *env)
 void init_texture_paths(t_env *env)
 {
     // textures paths for [no, so, we,ea]
-    env->wall_tex_files[0] = NULL;
-    env->wall_tex_files[1] = NULL;
-    env->wall_tex_files[2] = NULL;
-    env->wall_tex_files[3] = NULL;
+    env->wall_tex_files[0] = walls_no[0];
+    env->wall_tex_files[1] = walls_so[0];
+    env->wall_tex_files[2] = walls_we[0];
+    env->wall_tex_files[3] = walls_ea[0];
 
     // textures for ceiling + floor 
-    env->textures_files[0] = NULL;
-    env->textures_files[1] = NULL;
+    env->textures_files[0] = sky[0];
+    env->textures_files[1] = floors[0];
 }
 
 t_player *init_player(t_env *env)
