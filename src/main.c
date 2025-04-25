@@ -6,11 +6,11 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/24 17:37:23 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 17:45:44 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "includes/cub3d.h"
 
 
 t_texture *  load_floor_ceiling_texture(t_env * env)
