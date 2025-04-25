@@ -6,7 +6,7 @@
 #    By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 08:56:21 by ael-moha          #+#    #+#              #
-#    Updated: 2025/04/24 17:20:55 by ael-moha         ###   ########.fr        #
+#    Updated: 2025/04/25 18:00:15 by ael-moha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,9 @@ X11_FLAGS = -lXext -lX11 -lm -lz
 CC = cc
 CFLAGS = -Wall -Wextra -Werror  -g  #-O3
 
-SRCS = src/main.c \ src/raycasting.c \ src/dda.c \ src/hooks_helper.c \ src/minimap.c \
-       src/render.c \ src/render_ceiling.c \ src/render_floor.c \ src/render_wall_texture.c \
-       src/efffects.c
+SRCS = src/main.c \ src/dda.c \ src/hooks_helper.c \ src/minimap.c 
+		\ src/render.c \ src/render_ceiling.c \ src/render_floor.c \
+		 src/render_wall_texture.c \ src/efffects.c
 OBJS = $(SRCS:.c=.o)
 
 OS := $(shell uname)
