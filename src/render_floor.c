@@ -6,11 +6,11 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:27:36 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 11:27:39 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:32:34 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 typedef struct s_floor_render
 {

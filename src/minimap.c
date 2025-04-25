@@ -1,7 +1,7 @@
 
 
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 
 void render_minimap(t_env *env, t_player *player)

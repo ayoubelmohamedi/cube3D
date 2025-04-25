@@ -6,12 +6,12 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:04:49 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 12:04:52 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:32:11 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 typedef struct s_dda
 {

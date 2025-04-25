@@ -6,12 +6,12 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:16:55 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 13:44:51 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:32:16 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
 
 // Helper functions for key handling
 

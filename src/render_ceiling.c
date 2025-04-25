@@ -6,12 +6,13 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:27:20 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 11:23:20 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:32:23 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "cub3d.h"
+#include "../includes/cub3d.h"
+
 
 typedef struct s_ceil_render
 {
