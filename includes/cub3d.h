@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/25 18:07:28 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:09:58 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void render_ceiling(t_player *player, int screen_x, int y_start,
                    int y_end, int wall_height);
 void render_floor(t_player *player, int screen_x, int y_start, 
                   int y_end, int wall_height);
-void render_wall_tex(t_player *player, int y_start, int y_end, int curr_x,
-                    double corrected_dist, double rayDirX, double rayDirY, 
-                    int side, int wall_height);
+void	render_wall_tex(t_player *player, int y_start, int y_end, int curr_x,
+    int corrected_dist, int rayDirX, int rayDirY, int side, 
+    int wall_height);
 #endif 
