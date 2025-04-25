@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:27:46 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 10:22:17 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:15:45 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,6 @@ typedef struct s_wall_render
     int		texture_line_len;
     int		texX;
 }	t_wall_render;
-
-
-// Main wall texture rendering function
-void	render_wall_tex(t_player *player, int y_start, int y_end, int curr_x,
-    int corrected_dist, int rayDirX, int rayDirY, int side, 
-    int wall_height)
-{
-    t_wall_render	wr;
-
-    wr.y_start = y_start;
-    wr.y_end = y_end;
-    wr.curr_x = curr_x;
-    wr.corrected_dist = corrected_dist;
-    wr.wall_height = wall_height;
-    
-    get_texture_info(player, side, &wr.texture_addr, &wr.texture_width, 
-        &wr.texture_height, &wr.texture_bpp, &wr.texture_line_len);
-    
-    wr.texX = get_texture_x(player, side, corrected_dist, rayDirX, rayDirY, 
-            wr.texture_width);
-    
-    draw_wall_slice(player, &wr);
-}
 
 
 static void	draw_wall_slice(t_player *player, t_wall_render *wr)
@@ -141,3 +118,26 @@ static void	get_texture_info(t_player *player, int side, char **texture_addr,
         *texture_line_len = player->env->walls->west_line_len;
     }
 }
+
+// Main wall texture rendering function
+void	render_wall_tex(t_player *player, int y_start, int y_end, int curr_x,
+    int corrected_dist, int rayDirX, int rayDirY, int side, 
+    int wall_height)
+{
+    t_wall_render	wr;
+
+    wr.y_start = y_start;
+    wr.y_end = y_end;
+    wr.curr_x = curr_x;
+    wr.corrected_dist = corrected_dist;
+    wr.wall_height = wall_height;
+    
+    get_texture_info(player, side, &wr.texture_addr, &wr.texture_width, 
+        &wr.texture_height, &wr.texture_bpp, &wr.texture_line_len);
+    
+    wr.texX = get_texture_x(player, side, corrected_dist, rayDirX, rayDirY, 
+            wr.texture_width);
+    
+    draw_wall_slice(player, &wr);
+}
+
