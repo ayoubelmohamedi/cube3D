@@ -6,11 +6,44 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/25 18:32:18 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:39:32 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+
+/* Definitions of global variables here */
+
+char *walls_no[] = {"assets/walls/stone_bricks/1.xpm", NULL};
+char *walls_so[] = {"assets/walls/stone_bricks/2.xpm", NULL};
+char *walls_ea[] = {"assets/walls/stone_bricks/3.xpm", NULL}; 
+char *walls_we[] = {"assets/walls/stone_bricks/4.xpm", NULL};
+
+char *sky[] = {"assets/sky/minecraft.xpm",
+               "assets/sky/minecraft.xpm",
+               "assets/sky/minecraft2.xpm", 
+               "assets/sky/sunset.xpm",
+               "assets/sky/zenith.xpm",
+               NULL};
+
+char *floor[] = {"assets/floor/concrete/brick.xpm",
+                "assets/floor/concrete/lime.xpm",
+                "assets/floor/concrete/pink.xpm",
+                "assets/floor/concrete/red.xpm",
+                "assets/floor/concrete/white.xpm",
+                NULL};
+
+int map[MAP_HEIGHT][MAP_WIDTH] = {
+    {1, 1, 1, 1, 1, 1, 1, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 0, 0, 0, 0, 0, 0, 1},
+    {1, 1, 1, 1, 1, 1, 1, 1}
+};
 
 
 t_texture *  load_floor_ceiling_texture(t_env * env)

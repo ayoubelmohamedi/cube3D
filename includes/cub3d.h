@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/25 18:09:58 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:38:54 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,15 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-//to be deleted later 
-int map[8][8] = {
-    {1, 1, 1, 1, 1, 1, 1, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 2, 0, 3, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 0, 0, 0, 0, 0, 0, 1},
-    {1, 1, 1, 1, 1, 1, 1, 1}};
+extern char *walls_no[];
+extern char *walls_so[];
+extern char *walls_ea[];
+extern char *walls_we[];
+extern char *sky[];
+extern char *floor[];
 
-char *sky[] = {"assets/sky/minecraft.xpm",
-               "assets/sky/minecraft.xpm",
-               "assets/sky/minecraft2.xpm",
-               "assets/sky/sunset.xpm",
-               "assets/sky/zenith.xpm",
-               NULL};
-
-// concrete & grass & planks
-char *floors[] = { "assets/floor/concrete/lime.xpm",
-    "assets/floor/concrete/yellow.xpm",
-    "assets/floor/grass/AC.xpm",
-    "assets/floor/planks/birch.xpm",
-    NULL
-};
-
-char *walls_no[] = {"assets/walls/stone_bricks/1.xpm", NULL};
-char *walls_so[] = {"assets/walls/stone_bricks/2.xpm", NULL};
-char *walls_ea[] = {"assets/walls/stone_bricks/3.xpm", NULL}; 
-char *walls_we[] = {"assets/walls/stone_bricks/4.xpm", NULL};
-
-
+// For variables like map:
+extern int map[MAP_HEIGHT][MAP_WIDTH];
 
 typedef struct
 {
