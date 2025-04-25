@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/25 18:39:32 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:40:17 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char *sky[] = {"assets/sky/minecraft.xpm",
                "assets/sky/zenith.xpm",
                NULL};
 
-char *floor[] = {"assets/floor/concrete/brick.xpm",
+char *floors[] = {"assets/floor/concrete/brick.xpm",
                 "assets/floor/concrete/lime.xpm",
                 "assets/floor/concrete/pink.xpm",
                 "assets/floor/concrete/red.xpm",

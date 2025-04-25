@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/25 18:38:54 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/04/25 18:40:26 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ extern char *walls_so[];
 extern char *walls_ea[];
 extern char *walls_we[];
 extern char *sky[];
-extern char *floor[];
+extern char *floors[];
 
 // For variables like map:
 extern int map[MAP_HEIGHT][MAP_WIDTH];
