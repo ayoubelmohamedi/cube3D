@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/25 18:44:05 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:30:34 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,13 @@ char *walls_ea[] = {"assets/walls/stone_bricks/3.xpm", NULL};
 char *walls_we[] = {"assets/walls/stone_bricks/4.xpm", NULL};
 
 char *sky[] = {"assets/sky/minecraft.xpm",
-               "assets/sky/minecraft.xpm",
                "assets/sky/minecraft2.xpm", 
                "assets/sky/sunset.xpm",
                "assets/sky/zenith.xpm",
                NULL};
 
-char *floors[] = {"assets/floor/concrete/brick.xpm",
-                "assets/floor/concrete/lime.xpm",
-                "assets/floor/concrete/pink.xpm",
-                "assets/floor/concrete/red.xpm",
-                "assets/floor/concrete/white.xpm",
+char *floors[] = {"assets/floor/concrete/lime.xpm",
+                "assets/floor/concrete/yellow.xpm",
                 NULL};
 
 int map[MAP_HEIGHT][MAP_WIDTH] = {
@@ -54,24 +50,28 @@ t_texture *  load_floor_ceiling_texture(t_env * env)
     if (!w_texture)
         return (NULL);
     w_texture->ceil_img = mlx_xpm_file_to_image(env->mlx, env->textures_files[0], &w_texture->ceil_width, &w_texture->ceil_height);
+    // Todo, handle if no texture file exist [add default color]
     if (!w_texture->ceil_img)
-    { 
-        mlx_destroy_image(env->mlx, env->img);
-        mlx_destroy_window(env->mlx, env->win);
+    {
+        w_texture->has_ceiling = false;
+        w_texture->ceil_img = NULL;
+        w_texture->ceil_addr = NULL;
         perror("celiling image error");
         return (NULL);
     }
     w_texture->floor_img = mlx_xpm_file_to_image(env->mlx, env->textures_files[1], &w_texture->floor_width, &w_texture->floor_height);
-    if (!w_texture->ceil_img)
+    if (!w_texture->floor_img)
     {
-        mlx_destroy_image(env->mlx, w_texture->ceil_img);
-        mlx_destroy_image(env->mlx, env->img);
-        mlx_destroy_window(env->mlx, env->win);
+        w_texture->has_floor = false;
+        w_texture->floor_img = NULL;
+        w_texture->floor_addr = NULL;
         perror("floor image error");
         return (NULL);
     }
-    w_texture->floor_addr = mlx_get_data_addr(w_texture->floor_img, &w_texture->floor_bpp, &w_texture->floor_line_len, &w_texture->floor_endian);
-    w_texture->ceil_addr = mlx_get_data_addr(w_texture->ceil_img, &w_texture->ceil_bpp, &w_texture->ceil_line_len, &w_texture->ceil_endian);
+    if (w_texture->ceil_img)
+        w_texture->ceil_addr = mlx_get_data_addr(w_texture->ceil_img, &w_texture->ceil_bpp, &w_texture->ceil_line_len, &w_texture->ceil_endian);
+    if (w_texture->floor_img)
+        w_texture->floor_addr = mlx_get_data_addr(w_texture->floor_img, &w_texture->floor_bpp, &w_texture->floor_line_len, &w_texture->floor_endian);
     return (w_texture);
 }
 
@@ -119,7 +119,7 @@ t_player *init_player(t_env *env)
 {
     t_player *player;
 
-    player = (t_player*) malloc(sizeof(player));
+    player = (t_player*) malloc(sizeof(t_player));
     if (!player)
         return (NULL);
     player->env = env;
@@ -150,7 +150,6 @@ t_env    *load_env()
     return (env);
 }
 
-
 int main()
 {
     t_env *env;
@@ -166,10 +165,10 @@ int main()
 
     env = load_env();
     player = init_player(env);
-   
+    
     render_scene(env, player);
 
-    mlx_hook(env->win, 2, 1L << 0, handle_keypress, &player);
+    mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
     mlx_loop(env->mlx);
     return 0;
 }
