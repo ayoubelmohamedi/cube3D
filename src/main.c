@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/03 23:30:34 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/03 23:42:00 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ t_texture *  load_floor_ceiling_texture(t_env * env)
         return (NULL);
     w_texture->ceil_img = mlx_xpm_file_to_image(env->mlx, env->textures_files[0], &w_texture->ceil_width, &w_texture->ceil_height);
     // Todo, handle if no texture file exist [add default color]
+    w_texture->has_ceiling = true;
+    w_texture->has_floor = true;
     if (!w_texture->ceil_img)
     {
         w_texture->has_ceiling = false;
