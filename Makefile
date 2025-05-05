@@ -6,7 +6,7 @@
 #    By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 08:56:21 by ael-moha          #+#    #+#              #
-#    Updated: 2025/05/05 20:50:11 by ael-moha         ###   ########.fr        #
+#    Updated: 2025/05/05 23:03:55 by ael-moha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,15 @@ MLX_DIR = ./mlx
 # MLX VARS FOR LINUX
 MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux
 MLX_LIB = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux
-INCLUDES = -I/usr/include -Imlx_linux -Iincludes
+INCLUDES = -I/usr/include -Imlx_linux -Iincludes -Iparssing
 X11_FLAGS = -lXext -lX11 -lm -lz 
 
 
 # Compiler flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror  -g  #-O3
+
+SRCS_PARSER = $(wildcard src/parssing/*.c)
 
 SRCS = src/main.c \
        src/dda.c \
@@ -37,6 +39,7 @@ SRCS = src/main.c \
        src/efffects.c
 
 OBJS = $(SRCS:.c=.o)
+OBJS += $(SRCS_PARSER:.c=.o)
 
 OS := $(shell uname)
 
