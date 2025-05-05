@@ -6,12 +6,20 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/04/25 18:31:07 by ael-moha         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/23 12:29:25 by ael-moha         ###   ########.fr       */
+>>>>>>> backup_parsing
 /*                                                                            */
 /* ************************************************************************** */
 
 
+<<<<<<< HEAD
 #include "../includes/cub3d.h"
+=======
+#include "cub3d.h"
+>>>>>>> backup_parsing
 
 
 
