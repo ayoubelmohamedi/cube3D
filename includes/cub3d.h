@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 21:23:07 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:24:20 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ extern char *walls_we[];
 extern char *sky[];
 extern char *floors[];
 
-// For variables like map:
-extern int map[MAP_HEIGHT][MAP_WIDTH];
 
 typedef struct
 {
