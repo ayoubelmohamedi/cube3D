@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 22:03:01 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:06:06 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
         render_ceiling(player, x, y_start, y_end, wall_height);
     else
         for (int y = 0; y < y_start; y++)
-            my_mlx_pixel_put(player->env, x, y, player->env->rgb->c);
+            my_mlx_pixel_put(player->env, x, y, player->env->c_color);
     
     if (player->env->has_wall_texture)
         render_wall_tex(player, y_start, y_end,x,  corrected_dist, rayDirX, rayDirY, side, wall_height);
@@ -96,7 +96,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
         render_floor(player, x, y_start, y_end, wall_height);
     else
         for (int y = y_end; y < HEIGHT; y++)
-            my_mlx_pixel_put(player->env, x, y, player->env->rgb->f);
+            my_mlx_pixel_put(player->env, x, y, player->env->f_color);
 }
 
 void my_mlx_pixel_put(t_env *env, int x, int y, int color)

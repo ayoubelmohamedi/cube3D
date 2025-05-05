@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:29:57 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 21:19:47 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:08:21 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,15 @@ void ft_printmap(char **map)
 
 int	start_parser(t_cub3d *cub, t_data *data, char *path, int fd)
 {
+	(void)cub;
+	(void)fd;
 	if (!check_extension(path, "cub"))
 	{
 		printf("Error in the extension \n");
 		return (1);
 	}
-	if (valid_texture(cub, cub->my_textures, fd))
-		return (1);
+	// if (valid_texture(cub, cub->my_textures, fd))
+	// 	return (1);
 	if (check_map(data, path))
 	{
 		printf("Error in the map valeus \n");

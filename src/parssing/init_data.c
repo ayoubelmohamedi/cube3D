@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:26:17 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 21:19:47 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:06:35 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@ int	init_texture(t_textures *my_texts)
 	{
 		return (1);
 	}
-	my_texts->no_texture.img = NULL;
-	my_texts->ea_texture.img = NULL;
-	my_texts->we_texture.img = NULL;
-	my_texts->so_texture.img = NULL;
 	my_texts->rgb->c = NULL;
 	my_texts->rgb->f = NULL;
 	return (0);

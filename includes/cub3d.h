@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 21:56:34 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:05:30 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #define CUB3D_H
 
 #include "game_macros.h"
-#include "parsing.h"
+#include  "../src/parssing/parsing.h"
 #include "mlx.h"
 #include <math.h>
 #include <stdlib.h>
@@ -91,7 +91,8 @@ typedef struct
 typedef struct
 {
     char **map;
-    t_rgb *rgb;
+    int c_color;
+    int f_color;
     int map_width;
     int map_height;
     char *textures_files[2];

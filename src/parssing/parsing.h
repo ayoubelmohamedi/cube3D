@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:11:40 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 21:20:46 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:47:16 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,6 @@ typedef struct s_textures
 	char				*we;
 	char				*ea;
 	t_rgb				*rgb;
-	t_mlx				no_texture;
-	t_mlx				so_texture;
-	t_mlx				we_texture;
-	t_mlx				ea_texture;
 	int					c_color;
 	int					f_color;
 }						t_textures;

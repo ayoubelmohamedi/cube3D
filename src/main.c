@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 21:26:53 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:05:36by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,23 @@ t_wall_text *load_walls_texture(t_env *env)
     return (walls_tex);
 } 
 
-void init_texture_paths(t_env *env)
+void init_texture_paths(t_env *env, t_cub3d * cub)
 {
     // textures paths for [no, so, we,ea]
-    env->wall_tex_files[0] = walls_no[0];
-    env->wall_tex_files[1] = walls_so[0];
-    env->wall_tex_files[2] = walls_we[0];
-    env->wall_tex_files[3] = walls_ea[0];
+    env->wall_tex_files[0] = cub->my_textures->no;
+    env->wall_tex_files[1] = cub->my_textures->so;
+    env->wall_tex_files[2] = cub->my_textures->we;
+    env->wall_tex_files[3] = cub->my_textures->ea;
 
     // textures for ceiling + floor 
-    env->textures_files[0] = sky[0];
-    env->textures_files[1] = floors[0];
+    env->textures_files[0] = NULL;
+    env->textures_files[1] = NULL;
+
+    env->f_color = cub->my_textures->f_color;
+    env->c_color = cub->my_textures->c_color;
 }
 
-t_player *init_player(t_env *env)
+t_player *init_player(t_env *env, t_cub3d *cub)
 {
     t_player *player;
 
@@ -113,49 +116,71 @@ t_player *init_player(t_env *env)
     if (!player)
         return (NULL);
     player->env = env;
-    player->x = 3.5;
-    player->y = 3.5;
+    player->x = cub->player_x;
+    player->y = cub->player_y;
     player->dir =  M_PI / 2; //  facing down => todo: assign dir based on map orientation [NWES]
     return (player);
 }
 
-t_env    *load_env()
+t_env    *load_env(t_cub3d *cub)
 {
     t_env * env;
 
     env = (t_env *)malloc(sizeof(t_env));   
     if (!env)
         return (NULL);
+    env->map = cub->my_data->map;
+    env->map_width = cub->my_data->col;
+    env->map_height = cub->my_data->row; 
     env->mlx = mlx_init();
     env->win = mlx_new_window(env->mlx, WIDTH, HEIGHT, "Raycasting Demo");
     env->img = mlx_new_image(env->mlx, WIDTH, HEIGHT);
     env->addr = mlx_get_data_addr(env->img, &env->bits_per_pixel,
                                  &env->line_lenght, &env->endian);
     env->has_minimap = false;
-    env->has_texture = true;
-    init_texture_paths(env);
+    env->has_texture = false;
+    init_texture_paths(env, cub);
     env->has_wall_texture = true;
     env->texture = load_floor_ceiling_texture(env);
     env->walls = load_walls_texture(env);
     return (env);
 }
 
-int main()
+int main(int argc, char **argv)
 {
     t_env *env;
     t_player *player;
 
+    t_cub3d *cub;
+    t_textures *textures;
+    t_data my_data;
 
-    //[x] init_env + init_mlx 
-    //[x] added funcs for loading textures to t_env. ([ceiling & floor] + walls ) 
-    //[X] to handle spawning orientaiton and postion based on player (x,y) and {S,E,W,N} 
-    // make player rotation with mouse intead 
-    // load ceiling and floor (if exist), else (no texture file) load default colors.
-    // load walls texture, else load default colors? 
-
-    env = load_env();
-    player = init_player(env);
+    if (argc != 2)
+    {
+        printf("Invalid argm\n");
+        return (1);
+    }
+    cub = malloc(sizeof(t_cub3d));
+    if (!cub)
+        return (1);
+    textures = malloc(sizeof(textures));
+    if (!textures){
+        free(cub);
+        return (1);
+    }
+    printf("Here \n");
+    if (parrsing_input(cub, &my_data, textures, argv[1]))
+    {
+        free(cub);
+        free(textures);
+        return (0);
+    }
     
+    // =======================================================
+
+    env = load_env(cub);
+    player = init_player(env, cub);
+
     render_scene(env, player);
 
     mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
