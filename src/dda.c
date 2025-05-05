@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:04:49 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 21:32:02 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:41:47 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	init_dda(double rayDirX, double rayDirY, double *rayX,
     dda->side_hit = 0;
 }
 
-static int	perform_dda(int *mapX, int *mapY, t_dda *dda)
+static int	perform_dda(int *mapX, int *mapY, t_dda *dda, t_player *player)
 {
     if (dda->sideDistX < dda->sideDistY)
     {
@@ -56,13 +56,13 @@ static int	perform_dda(int *mapX, int *mapY, t_dda *dda)
     }
     if (*mapX < 0 || *mapX >= player->env->map_width || *mapY < 0 || *mapY >= player->env->map_height)
         return (-1);
-    if (map[*mapY][*mapX] > 0)
+    if (player->env->map[*mapY][*mapX] > 0)
         return (1);
     return (0);
 }
 
 double	dda_algo(double rayDirX, double rayDirY, double *rayX,
-                double *rayY, int *mapX, int *mapY, int *side)
+                double *rayY, int *mapX, int *mapY, int *side, t_player *player)
 {
     t_dda	dda;
     int		result;
@@ -70,7 +70,7 @@ double	dda_algo(double rayDirX, double rayDirY, double *rayX,
     init_dda(rayDirX, rayDirY, rayX, rayY, mapX, mapY, &dda);
     while (1)
     {
-        result = perform_dda(mapX, mapY, &dda);
+        result = perform_dda(mapX, mapY, &dda, player);
         if (result == -1)
             return (-1.0);
         if (result == 1)

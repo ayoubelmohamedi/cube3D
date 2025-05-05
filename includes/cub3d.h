@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 21:24:20 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:42:19 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int         handle_keypress(int keypress, t_player *player);
 
 /*             DDA algo                */
 double	dda_algo(double rayDirX, double rayDirY, double *rayX,
-            double *rayY, int *mapX, int *mapY, int *side);
+            double *rayY, int *mapX, int *mapY, int *side, t_player *player);
 
 /*              render minimap          */
 void render_minimap(t_env *env, t_player *player);
