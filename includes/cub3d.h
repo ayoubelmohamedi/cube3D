@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 20:50:11 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:23:07 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ typedef struct
 
 typedef struct
 {
+    char **map;
+    int map_width;
+    int map_height;
     char *textures_files[2];
     char *wall_tex_files[4];
     void *mlx;

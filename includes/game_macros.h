@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:12 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/04/23 08:56:13 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:23:39 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 #define WIDTH 640
 #define HEIGHT 480
 
-#define MAP_WIDTH 8
-#define MAP_HEIGHT 8
 #define TILE_SIZE 64
 #define FOV 60
 #define MOVE_SPEED 0.1
