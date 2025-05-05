@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:05:53 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 10:05:57 by aez-zoui         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:19:47 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "parsing.h"
 
 int	set_texture_path(t_textures *texture, char *line, char *trimmed)
 {
