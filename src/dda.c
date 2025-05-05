@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:04:49 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 20:50:11 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:32:02 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	perform_dda(int *mapX, int *mapY, t_dda *dda)
         *mapY += dda->stepY;
         dda->side_hit = 1;
     }
-    if (*mapX < 0 || *mapX >= MAP_WIDTH || *mapY < 0 || *mapY >= MAP_HEIGHT)
+    if (*mapX < 0 || *mapX >= player->env->map_width || *mapY < 0 || *mapY >= player->env->map_height)
         return (-1);
     if (map[*mapY][*mapX] > 0)
         return (1);

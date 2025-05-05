@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 21:21:49 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:26:53 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ t_player *init_player(t_env *env)
     player->env = env;
     player->x = 3.5;
     player->y = 3.5;
-    player->dir =  M_PI / 2; //  facing down 
+    player->dir =  M_PI / 2; //  facing down => todo: assign dir based on map orientation [NWES]
     return (player);
 }
 
