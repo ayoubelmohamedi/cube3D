@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:27:22 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 21:19:47 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:57:36 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	add_map_node(t_maplist **head, char *line)
 	}
 }
 
-t_maplist	*get_map(int fd)
+t_maplist	*get_map(int fd, char *path)
 {
 	char		*line;
 	t_maplist	*map;
@@ -51,14 +51,28 @@ t_maplist	*get_map(int fd)
 
 	map = NULL;
 	start = 0;
+
+	close(fd);
+	fd = open(path, O_RDONLY);
+	if (fd< 0)
+	{
+		perror("Error opening file: get_map");
+		return (NULL);
+	}
 	line = get_next_line(fd);
+	printf("line: %s\n", line);
 	while (line)
 	{
+		printf("inside line: %s\n", line);
 		if (process_map(&line, fd, &map, &start))
+		{
+			close(fd);
 			return (NULL);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
+	close(fd);
 	return (map);
 }
 

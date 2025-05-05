@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:11:40 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 22:47:16 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:56:57 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int						check_map(t_data *data, char *path);
 int						check_extension(char *exten, char *s);
 int						skip_textures(char **line, int fd);
 int						is_valid_characters(char *line);
-t_maplist				*get_map(int fd);
+t_maplist				*get_map(int fd, char *path);
 void					add_map_node(t_maplist **head, char *line);
 int						validate_map(t_maplist *map);
 int						get_biggest_line(t_maplist *head);

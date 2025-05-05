@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:29:57 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 23:08:21 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:54:44 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	check_map(t_data *data, char *path)
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (-1);
-	maplist = get_map(fd);
+	maplist = get_map(fd, path);
 	if (!maplist)
 		return (1);
 	head = maplist;
@@ -55,7 +55,6 @@ int	check_map(t_data *data, char *path)
 		return (ft_mapclear(&head), 1);
 	if (convert_map(data, head))
 		return (ft_mapclear(&head), 1);
-	close(fd);
 	return (ft_mapclear(&head), 0);
 }
 
@@ -93,7 +92,7 @@ int	start_parser(t_cub3d *cub, t_data *data, char *path, int fd)
 		printf("Error in the map valeus \n");
 		return (1);
 	}
-	//ft_printmap(cub->my_data->map);
+	ft_printmap(cub->my_data->map);
 	return (0);
 }
 
