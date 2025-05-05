@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parssing_input.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 10:29:57 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/05 10:29:59 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	check_extension(char *exten, char *s)
@@ -5,7 +17,7 @@ int	check_extension(char *exten, char *s)
 	int		len;
 	char	*copy;
 	int		i;
-	int 	result;
+	int		result;
 
 	i = 0;
 	len = ft_strlen(exten);
@@ -46,6 +58,25 @@ int	check_map(t_data *data, char *path)
 	close(fd);
 	return (ft_mapclear(&head), 0);
 }
+
+void ft_printmap(char **map)
+{
+	int i = 0;
+	int j ;
+
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			printf("%c", map[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
+
 int	start_parser(t_cub3d *cub, t_data *data, char *path, int fd)
 {
 	if (!check_extension(path, "cub"))
@@ -60,10 +91,11 @@ int	start_parser(t_cub3d *cub, t_data *data, char *path, int fd)
 		printf("Error in the map valeus \n");
 		return (1);
 	}
+	//ft_printmap(cub->my_data->map);
 	return (0);
 }
 
-int	parrsing_input( t_cub3d *cub , t_data *data, t_textures *texture, char *file)
+int	parrsing_input(t_cub3d *cub, t_data *data, t_textures *texture, char *file)
 {
 	int	fd;
 
@@ -82,7 +114,6 @@ int	parrsing_input( t_cub3d *cub , t_data *data, t_textures *texture, char *file
 		return (close(fd), 1);
 	if (start_parser(cub, data, file, fd))
 	{
-		//destroy_data(cub->my_data, cub->my_textures);
 		(free(cub), close(fd));
 		exit(1);
 	}

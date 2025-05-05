@@ -9,7 +9,7 @@ int main(int argc, char **argv)
 
     if (argc != 2)
     {
-        fr_msg_error("Invalid argm\n");
+        printf("Invalid argm\n");
         return (1);
     }
     cub = malloc(sizeof(t_cub3d));

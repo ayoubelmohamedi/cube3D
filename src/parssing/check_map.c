@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 10:05:26 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/05 10:05:29 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-t_maplist	*check_lines(int fd, t_maplist **map)
+static t_maplist	*check_lines(int fd, t_maplist **map)
 {
 	char	*line;
 
@@ -38,7 +50,7 @@ int	process_map(char **line, int fd, t_maplist **map, int *start)
 	return (0);
 }
 
-void	process_line(t_data *data, t_maplist *temp)
+static void	process_line(t_data *data, t_maplist *temp)
 {
 	while (temp->line[data->j])
 	{
@@ -55,7 +67,7 @@ void	process_line(t_data *data, t_maplist *temp)
 	data->i++;
 }
 
-int	init_map(t_maplist *m, t_data *data)
+static int	init_map(t_maplist *m, t_data *data)
 {
 	t_maplist	*temp;
 

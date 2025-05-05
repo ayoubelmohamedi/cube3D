@@ -1,16 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helper.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 10:22:34 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/05 10:23:03 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-
-// size_t	ft_strlen(const char *str)
-// {
-// 	size_t	lenght;
-
-// 	lenght = 0;
-// 	while (str[lenght] != '\0')
-// 	{
-// 		lenght++;
-// 	}
-// 	return (lenght);
-// }
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
@@ -51,21 +51,7 @@ void	*ft_memcpy(void *to, const void *from, size_t n)
 	return (ptr);
 }
 
-// char	*ft_strdup(const char *src)
-// {
-// 	size_t	size;
-// 	char	*dest;
-
-// 	size = ft_strlen(src);
-// 	dest = (char *)malloc(size * sizeof(char) + 1);
-// 	if (dest == NULL)
-// 		return (0);
-// 	ft_memcpy(dest, src, size);
-// 	dest[size] = '\0';
-// 	return (dest);
-// }
-
-char	*ft_strtrim(char  *s1, char  *set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	int		start;
 	int		end;

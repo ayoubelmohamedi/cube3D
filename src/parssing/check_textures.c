@@ -1,5 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_textures.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 10:05:53 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/05 10:05:57 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "cub3d.h"
 
 int	set_texture_path(t_textures *texture, char *line, char *trimmed)
 {
@@ -105,43 +116,14 @@ int	valid_texture(t_cub3d *cub3d, t_textures *texture, int fd)
 {
 	(void)cub3d;
 	if (read_texture_lines(texture, fd))
-	{
-		printf("1");
-		printf("TEXTURE ERROR");
 		return (1);
-	}
 	else if (!texture->no || !texture->so || !texture->we || !texture->ea
 		|| !texture->rgb->f || !texture->rgb->c)
-	{
-		printf("2");
-		printf("TEXTURE ERROR");
 		return (1);
-	}
 	else if (parse_texture_extension(texture))
-	{
-		printf("3");
-		printf("TEXTURE ERROR");
 		return (1);
-	}
 	else if (check_colors(texture))
-	{
-		printf("COLORS ERROR");
 		return (1);
-	}
 	else
 		return (0);
-}
-
-int	find_map(char *map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		if (map[i] == '0' || map[i] == '1')
-			return (1);
-		i++;
-	}
-	return (0);
 }

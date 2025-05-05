@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 10:27:37 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/05 10:27:40 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	check_color(char *color)
@@ -80,17 +92,4 @@ int	parse_texture_extension(t_textures *texture)
 		|| !check_extension(texture->so, "xpm"))
 		return (1);
 	return (0);
-}
-
-void fr_msg_error(char *str)
-{
-	int i;
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i])
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
 }
