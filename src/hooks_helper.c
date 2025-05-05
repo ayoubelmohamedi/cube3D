@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:16:55 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 20:50:11 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/05 21:38:35 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	handle_movement(int key, t_player *player)
         new_x = player->x - sin(player->dir) * MOVE_SPEED;
         new_y = player->y + cos(player->dir) * MOVE_SPEED;
     }
-    if (map[(int)new_y][(int)new_x] == 0)
+    if (player->env->map[(int)new_y][(int)new_x] == '0')
     {
         player->x = new_x;
         player->y = new_y;

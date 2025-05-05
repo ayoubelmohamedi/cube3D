@@ -16,7 +16,7 @@ void render_minimap(t_env *env, t_player *player)
             int mapY = (int)((y - MINIMAP_SIZE/2) / MINIMAP_SCALE + player->y);
             
             if (mapX >= 0 && mapX < player->env->map_width && mapY >= 0 && mapY < player->env->map_height) {
-                int color = (map[mapY][mapX] > 0) ? MINIMAP_WALL_COLOR : MINIMAP_FLOOR_COLOR;
+                int color = (player->env->map[mapY][mapX] != '0') ? MINIMAP_WALL_COLOR : MINIMAP_FLOOR_COLOR;
                 
                 int dest_color = 0x000000; 
                 int r = (int)(MINIMAP_OPACITY * ((color >> 16) & 0xFF) + (1 - MINIMAP_OPACITY) * ((dest_color >> 16) & 0xFF));
