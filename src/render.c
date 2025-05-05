@@ -6,21 +6,12 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/25 18:31:07 by ael-moha         ###   ########.fr       */
-=======
-/*   Updated: 2025/04/23 12:29:25 by ael-moha         ###   ########.fr       */
->>>>>>> backup_parsing
+/*   Updated: 2025/05/05 22:03:01 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-<<<<<<< HEAD
 #include "../includes/cub3d.h"
-=======
-#include "cub3d.h"
->>>>>>> backup_parsing
-
 
 
 // Main render function
@@ -28,7 +19,8 @@ void render_scene(t_env *env, t_player *player)
 {
     double fov_rad = (FOV * M_PI) / 180.0;
 
-    mlx_destroy_image(env->mlx, env->img);
+    if (env->img)
+        mlx_destroy_image(env->mlx, env->img);
     env->img = mlx_new_image(env->mlx, WIDTH, HEIGHT);
     mlx_get_data_addr(env->img, &env->bits_per_pixel,
                       &env->line_lenght, &env->endian);
@@ -55,10 +47,10 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
     int mapY = (int)rayY;
     int side;
 
-    if (mapX < 0 || mapX >= MAP_WIDTH || mapY < 0 || mapY >= MAP_HEIGHT)
+    if (mapX < 0 || mapX >= player->env->map_width || mapY < 0 || mapY >= player->env->map_height)
         return;
 
-    double dist = dda_algo(rayDirX, rayDirY, &rayX, &rayY, &mapX, &mapY, &side);
+    double dist = dda_algo(rayDirX, rayDirY, &rayX, &rayY, &mapX, &mapY, &side, player);
     if (dist >= 0)
     {
         // fix bowelfish effect
@@ -91,7 +83,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
         render_ceiling(player, x, y_start, y_end, wall_height);
     else
         for (int y = 0; y < y_start; y++)
-            my_mlx_pixel_put(player->env, x, y, CEILING_COLOR);
+            my_mlx_pixel_put(player->env, x, y, player->env->rgb->c);
     
     if (player->env->has_wall_texture)
         render_wall_tex(player, y_start, y_end,x,  corrected_dist, rayDirX, rayDirY, side, wall_height);
@@ -104,7 +96,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int w
         render_floor(player, x, y_start, y_end, wall_height);
     else
         for (int y = y_end; y < HEIGHT; y++)
-            my_mlx_pixel_put(player->env, x, y, FLOOR_COLOR);
+            my_mlx_pixel_put(player->env, x, y, player->env->rgb->f);
 }
 
 void my_mlx_pixel_put(t_env *env, int x, int y, int color)
