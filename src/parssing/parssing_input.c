@@ -86,8 +86,8 @@ int	start_parser(t_cub3d *cub, t_data *data, char *path, int fd)
 		printf("Error in the extension \n");
 		return (1);
 	}
-	// if (valid_texture(cub, cub->my_textures, fd))
-	// 	return (1);
+	if (valid_texture(cub, cub->my_textures, fd))
+	 	return (1);
 	if (check_map(data, path))
 	{
 		printf("Error in the map valeus \n");
