@@ -1,16 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 10:27:37 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 21:19:47 by ael-moha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "parsing.h"
+#include "../includes/cub3d.h"
 
 int	check_color(char *color)
 {
@@ -60,14 +48,14 @@ int	is_valid_rgb(char *rgb)
 	return (free_array(check), 0);
 }
 
-int	check_colors(t_textures *texture)
+int	check_colors(t_texture *texture)
 {
 	if (is_valid_rgb(texture->rgb->c) || is_valid_rgb(texture->rgb->f))
 		return (1);
 	return (0);
 }
 
-int	parse_texture_extension(t_textures *texture)
+int	parse_texture_extension(t_texture *texture)
 {
 	int	fd;
 
@@ -91,5 +79,19 @@ int	parse_texture_extension(t_textures *texture)
 			"xpm") || !check_extension(texture->we, "xpm")
 		|| !check_extension(texture->so, "xpm"))
 		return (1);
+	return (0);
+}
+
+int	find_map(char *map)
+{
+	int	i;
+
+	i = 0;
+	while (map[i])
+	{
+		if (map[i] == '0' || map[i] == '1')
+			return (1);
+		i++;
+	}
 	return (0);
 }

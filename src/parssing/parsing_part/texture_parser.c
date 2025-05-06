@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   check_textures.c                                   :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 10:05:53 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/05 21:19:47 by ael-moha         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include "../includes/cub3d.h"
 
-#include "parsing.h"
-
-int	set_texture_path(t_textures *texture, char *line, char *trimmed)
+int	set_texture_path(t_texture *texture, char *line, char *trimmed)
 {
 	if (!ft_strncmp(line, "NO", 2))
 	{
@@ -41,7 +29,7 @@ int	set_texture_path(t_textures *texture, char *line, char *trimmed)
 	return (0);
 }
 
-int	texture_path(t_textures *texture, char *line, char *trimmed)
+int	texture_path(t_texture *texture, char *line, char *trimmed)
 {
 	if (is_invalid_texture(line))
 		return (1);
@@ -64,7 +52,7 @@ int	texture_path(t_textures *texture, char *line, char *trimmed)
 	return (1);
 }
 
-int	parse_texture_line(t_textures *texture, char *line)
+int	parse_texture_line(t_texture *texture, char *line)
 {
 	char	*trimmed;
 	int		ret;
@@ -87,7 +75,7 @@ int	parse_texture_line(t_textures *texture, char *line)
 	return (1);
 }
 
-int	read_texture_lines(t_textures *texture, int fd)
+int	read_texture_lines(t_texture *texture, int fd)
 {
 	char	*line;
 
@@ -112,18 +100,30 @@ int	read_texture_lines(t_textures *texture, int fd)
 	return (0);
 }
 
-int	valid_texture(t_cub3d *cub3d, t_textures *texture, int fd)
+int	valid_texture(t_cub *cub, t_texture *texture, int fd)
 {
-	(void)cub3d;
+	(void)cub;
 	if (read_texture_lines(texture, fd))
+	{
+		printf("Error in The TEXTURES");
 		return (1);
+	}
 	else if (!texture->no || !texture->so || !texture->we || !texture->ea
 		|| !texture->rgb->f || !texture->rgb->c)
+	{
+		printf("Error in The TEXTURES");
 		return (1);
+	}
 	else if (parse_texture_extension(texture))
+	{
+		printf("Error in the extension\n");
 		return (1);
+	}
 	else if (check_colors(texture))
+	{
+		printf("Error in The Colors\n");
 		return (1);
+	}
 	else
 		return (0);
 }
