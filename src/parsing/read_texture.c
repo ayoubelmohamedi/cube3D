@@ -48,14 +48,14 @@ int	is_valid_rgb(char *rgb)
 	return (free_array(check), 0);
 }
 
-int	check_colors(t_texture *texture)
+int	check_colors(t_wall_textures *texture)
 {
 	if (is_valid_rgb(texture->rgb->c) || is_valid_rgb(texture->rgb->f))
 		return (1);
 	return (0);
 }
 
-int	parse_texture_extension(t_texture *texture)
+int	parse_texture_extension(t_wall_textures *texture)
 {
 	int	fd;
 

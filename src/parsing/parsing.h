@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:43:15 by ayel-mou          #+#    #+#             */
-/*   Updated: 2025/05/06 23:07:35 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/06 23:48:10 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_texture
 	t_rgb				*rgb;
 	int					c_color;
 	int					f_color;
-}						t_texture;
+}						t_wall_textures;
 
 typedef struct s_data
 {
@@ -65,14 +65,14 @@ typedef struct s_cub
 	float				p_angle;
 	int					pixel_size;
 	t_data				*data;
-	t_texture			*texture;
+	t_wall_textures			*texture;
 } t_cub;
 
 int			proccess_input(t_data *data, t_cub *cub, char *path,
-				t_texture *texture);
-int			init_texture(t_texture *texture);
+				t_wall_textures *texture);
+int			init_texture(t_wall_textures *texture);
 int			init_data(t_data *data);
-int			init_cub(t_cub *cub, t_data *data, t_texture *texture);
+int			init_cub(t_cub *cub, t_data *data, t_wall_textures *texture);
 int			ft_atoi(char *str);
 char		**ft_split(char const *s, char c);
 char		*get_next_line(int fd);
@@ -89,14 +89,14 @@ int			llist(t_list *list);
 void		copy_the_list(t_list *list, char *the_line);
 void		dealloc(t_list **list, t_list *clean_node, char *buf);
 char		*ft_strchr(const char *s, int c);
-int			valid_texture(t_cub *cub, t_texture *texture, int fd);
+int			valid_texture(t_cub *cub, t_wall_textures *texture, int fd);
 int			is_valid_rgb(char *rgb);
-int			check_colors(t_texture *texture);
-int			parse_texture_extension(t_texture *texture);
-int			read_texture_lines(t_texture *texture, int fd);
-int			parse_texture_line(t_texture *texture, char *line);
-int			texture_path(t_texture *texture, char *line, char *trimmed);
-int			set_texture_path(t_texture *texture, char *line, char *trimmed);
+int			check_colors(t_wall_textures *texture);
+int			parse_texture_extension(t_wall_textures *texture);
+int			read_texture_lines(t_wall_textures *texture, int fd);
+int			parse_texture_line(t_wall_textures *texture, char *line);
+int			texture_path(t_wall_textures *texture, char *line, char *trimmed);
+int			set_texture_path(t_wall_textures *texture, char *line, char *trimmed);
 void		free_array(char **arr);
 int			check_extension(char *exten, char *s);
 t_maplist	*create_map(char *line);
@@ -114,7 +114,7 @@ int			get_biggest_line(t_maplist *head);
 void		ft_mapclear(t_maplist **map);
 void		*ft_memset(void *ptr, int x, size_t n);
 void		destroy_all(t_cub *cub);
-void		destroy_data(t_data *data, t_texture *texture);
+void		destroy_data(t_data *data, t_wall_textures *texture);
 int			process_map(char **line, int fd, t_maplist **map, int *start);
 t_maplist	*check_lines(int fd, t_maplist **map);
 int			is_invalid_texture(char *str);

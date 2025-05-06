@@ -33,7 +33,7 @@ void	ft_mapclear(t_maplist **map)
 	*map = NULL;
 }
 
-void	destroy_data(t_data *data, t_texture *texture)
+void	destroy_data(t_data *data, t_wall_textures *texture)
 {
 	free(texture->rgb->f);
 	free(texture->rgb->c);

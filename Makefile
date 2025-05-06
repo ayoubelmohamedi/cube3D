@@ -6,7 +6,7 @@
 #    By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 08:56:21 by ael-moha          #+#    #+#              #
-#    Updated: 2025/05/06 23:25:24 by ael-moha         ###   ########.fr        #
+#    Updated: 2025/05/06 23:27:53 by ael-moha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ X11_FLAGS = -lXext -lX11 -lm -lz
 CC = cc
 CFLAGS = -Wall -Wextra -Werror  -g  #-O3
 
-SRCS_PARSER = $(wildcard src/parssing/lib_function/*.c)  $(wildcard src/parssing/parsing_part/*.c)  
+SRCS_PARSER = $(wildcard src/parsing/*.c)
 
 SRCS = src/main.c \
        src/dda.c \

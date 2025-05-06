@@ -1,6 +1,6 @@
 #include "parsing.h"
 
-int	set_texture_path(t_texture *texture, char *line, char *trimmed)
+int	set_texture_path(t_wall_textures *texture, char *line, char *trimmed)
 {
 	if (!ft_strncmp(line, "NO", 2))
 	{
@@ -29,7 +29,7 @@ int	set_texture_path(t_texture *texture, char *line, char *trimmed)
 	return (0);
 }
 
-int	texture_path(t_texture *texture, char *line, char *trimmed)
+int	texture_path(t_wall_textures *texture, char *line, char *trimmed)
 {
 	if (is_invalid_texture(line))
 		return (1);
@@ -52,7 +52,7 @@ int	texture_path(t_texture *texture, char *line, char *trimmed)
 	return (1);
 }
 
-int	parse_texture_line(t_texture *texture, char *line)
+int	parse_texture_line(t_wall_textures *texture, char *line)
 {
 	char	*trimmed;
 	int		ret;
@@ -75,7 +75,7 @@ int	parse_texture_line(t_texture *texture, char *line)
 	return (1);
 }
 
-int	read_texture_lines(t_texture *texture, int fd)
+int	read_texture_lines(t_wall_textures *texture, int fd)
 {
 	char	*line;
 
@@ -100,7 +100,7 @@ int	read_texture_lines(t_texture *texture, int fd)
 	return (0);
 }
 
-int	valid_texture(t_cub *cub, t_texture *texture, int fd)
+int	valid_texture(t_cub *cub, t_wall_textures *texture, int fd)
 {
 	(void)cub;
 	if (read_texture_lines(texture, fd))

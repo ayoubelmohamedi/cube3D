@@ -64,7 +64,7 @@ int	start_parser(t_cub *cub, t_data *data, char *path, int fd)
 	return (0);
 }
 
-int	proccess_input(t_data *data, t_cub *cub, char *path, t_texture *texture)
+int	proccess_input(t_data *data, t_cub *cub, char *path, t_wall_textures *texture)
 {
 	int	fd;
 

@@ -10,7 +10,7 @@ int	init_data(t_data *data)
 	return (0);
 }
 
-int	init_cub(t_cub *cub, t_data *data, t_texture *texture)
+int	init_cub(t_cub *cub, t_data *data, t_wall_textures *texture)
 {
 	cub->data = data;
 	cub->player_x = 0;
@@ -19,7 +19,7 @@ int	init_cub(t_cub *cub, t_data *data, t_texture *texture)
 	return (0);
 }
 
-int	init_texture(t_texture *texture)
+int	init_texture(t_wall_textures *texture)
 {
 	texture->no = NULL;
 	texture->so = NULL;

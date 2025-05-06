@@ -92,23 +92,23 @@ t_wall_text *load_walls_texture(t_env *env)
     return (walls_tex);
 } 
 
-void init_texture_paths(t_env *env, t_cub3d * cub)
+void init_texture_paths(t_env *env, t_cub * cub)
 {
     // textures paths for [no, so, we,ea]
-    env->wall_tex_files[0] = cub->my_textures->no;
-    env->wall_tex_files[1] = cub->my_textures->so;
-    env->wall_tex_files[2] = cub->my_textures->we;
-    env->wall_tex_files[3] = cub->my_textures->ea;
+    env->wall_tex_files[0] = cub->texture->no;
+    env->wall_tex_files[1] = cub->texture->so;
+    env->wall_tex_files[2] = cub->texture->we;
+    env->wall_tex_files[3] = cub->texture->ea;
 
     // textures for ceiling + floor 
     env->textures_files[0] = NULL;
     env->textures_files[1] = NULL;
 
-    env->f_color = cub->my_textures->f_color;
-    env->c_color = cub->my_textures->c_color;
+    env->f_color = cub->texture->f_color;
+    env->c_color = cub->texture->c_color;
 }
 
-t_player *init_player(t_env *env, t_cub3d *cub)
+t_player *init_player(t_env *env, t_cub *cub)
 {
     t_player *player;
 
@@ -122,16 +122,16 @@ t_player *init_player(t_env *env, t_cub3d *cub)
     return (player);
 }
 
-t_env    *load_env(t_cub3d *cub)
+t_env    *load_env(t_cub *cub)
 {
     t_env * env;
 
     env = (t_env *)malloc(sizeof(t_env));   
     if (!env)
         return (NULL);
-    env->map = cub->my_data->map;
-    env->map_width = cub->my_data->col;
-    env->map_height = cub->my_data->row; 
+    env->map = cub->data->map;
+    env->map_width = cub->data->col;
+    env->map_height = cub->data->row; 
     env->mlx = mlx_init();
     env->win = mlx_new_window(env->mlx, WIDTH, HEIGHT, "Raycasting Demo");
     env->img = mlx_new_image(env->mlx, WIDTH, HEIGHT);
@@ -165,21 +165,24 @@ void ft_print_map(char **map)
 	}
 }
 
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
     t_env *env;
     t_player *player;
 
 	t_data		data;
 	t_cub		*cub;
-	t_texture	*texture;
+	t_wall_textures	*texture;
 
 	if (ac != 2)
+    {
 		printf("Error ARG\n");
+        return (1);
+    }
 	cub = malloc(sizeof(t_cub));
 	if (!cub)
 		return (1);
-	texture = malloc(sizeof(t_texture));
+	texture = malloc(sizeof(t_wall_textures));
 	if (!texture)
 		return (free(cub), 1);
 	ft_memset(cub, 0, sizeof(t_cub));
