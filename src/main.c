@@ -146,44 +146,62 @@ t_env    *load_env(t_cub3d *cub)
     return (env);
 }
 
+void ft_print_map(char **map)
+{
+	int i , j;
+	i = 0;
+	j = 0;
+
+	while (map[i])
+	{
+		j = 0;
+		while (map[i][j])
+		{
+			printf("%c",map[i][j]);
+			j++;
+		}
+		i++;
+		printf("\n");
+	}
+}
+
 int main(int argc, char **argv)
 {
     t_env *env;
     t_player *player;
 
-    t_cub3d *cub;
-    t_textures *textures;
-    t_data my_data;
+	t_data		data;
+	t_cub		*cub;
+	t_texture	*texture;
 
-    if (argc != 2)
-    {
-        printf("Invalid argm\n");
-        return (1);
-    }
-    cub = malloc(sizeof(t_cub3d));
-    if (!cub)
-        return (1);
-    textures = malloc(sizeof(textures));
-    if (!textures){
-        free(cub);
-        return (1);
-    }
-    printf("Here \n");
-    if (parrsing_input(cub, &my_data, textures, argv[1]))
-    {
-        free(cub);
-        free(textures);
-        return (0);
-    }
-    
-    // =======================================================
+	if (ac != 2)
+		printf("Error ARG\n");
+	cub = malloc(sizeof(t_cub));
+	if (!cub)
+		return (1);
+	texture = malloc(sizeof(t_texture));
+	if (!texture)
+		return (free(cub), 1);
+	ft_memset(cub, 0, sizeof(t_cub));
+	ft_memset(&data, 0, sizeof(t_data));
+	if (proccess_input(&data, cub, av[1], texture))
+			return (free_heap(cub), 1);
 
-    env = load_env(cub);
-    player = init_player(env, cub);
+	printf("\n=================== MAP =====================\n\n");
+	ft_print_map(cub->data->map);
 
-    render_scene(env, player);
+	printf("\n=================== TEXTURES ================\n\n");
+	printf("NO :%s \n", cub->texture->no);
+	printf("EA :%s \n", cub->texture->ea);
+	printf("WE :%s \n", cub->texture->we);
+	printf("SO :%s \n", cub->texture->so);
 
-    mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
-    mlx_loop(env->mlx);
+    // env = load_env(cub);
+    // player = init_player(env, cub);
+
+    // render_scene(env, player);
+
+    // mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
+    // mlx_loop(env->mlx);
     return 0;
 }
