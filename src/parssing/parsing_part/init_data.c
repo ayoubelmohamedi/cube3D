@@ -34,3 +34,11 @@ int	init_texture(t_texture *texture)
 	texture->rgb->c = NULL;
 	return (0);
 }
+
+int	ft_exit(t_cub *cub)
+{
+	destroy_all(cub);
+	exit(0);
+	return (0);
+}
+

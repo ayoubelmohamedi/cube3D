@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ayel-mou <ayel-mou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 17:43:15 by ayel-mou          #+#    #+#             */
-/*   Updated: 2025/03/10 22:51:25 by ayel-mou         ###   ########.fr       */
+/*   Updated: 2025/05/06 22:52:28 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,6 @@ int			is_invalid_texture(char *str);
 void		free_heap(t_cub *cub);
 char		*remove_spaces(char *str);
 int			find_map(char *map);
+int	ft_exit(t_cub *cub);
 
 #endif

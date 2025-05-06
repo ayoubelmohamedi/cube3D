@@ -1,12 +1,5 @@
 #include "includes/cub3d.h"
 
-int	ft_exit(t_cub *cub)
-{
-	destroy_all(cub);
-	exit(0);
-	return (0);
-}
-
 void ft_print_map(char **map)
 {
 	int i , j;
