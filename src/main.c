@@ -198,9 +198,31 @@ int main(int ac, char **av)
 	printf("EA :%s \n", cub->texture->ea);
 	printf("WE :%s \n", cub->texture->we);
 	printf("SO :%s \n", cub->texture->so);
+    // destroy_all(cub);
+    env = load_env(cub);
+    player = init_player(env, cub);
 
-    // env = load_env(cub);
-    // player = init_player(env, cub);
+    // test env and player 
+    if (!env || !player)
+    {
+        perror("Error: failed to initialize env or player");
+        return (1);
+    }
+    //display content of env and player
+    printf("env->map_width: %d\n", env->map_width);
+    printf("env->map_height: %d\n", env->map_height);
+
+    // print all player attributes
+    printf("player->x: %f\n", player->x);
+    printf("player->y: %f\n", player->y);
+    printf("player->dir: %f\n", player->dir);
+    printf("env->f_color: %d\n", env->f_color);
+    printf("env->c_color: %d\n", env->c_color);
+    // printf("env->has_texture: %d\n", env->has_texture);
+    // printf("env->has_wall_texture: %d\n", env->has_wall_texture);
+    // printf("env->has_minimap: %d\n", env->has_minimap);
+    // printf("env->has_floor: %d\n", env->texture->has_floor);
+    // printf("env->has_ceiling: %d\n", env->texture->has_ceiling);
 
     // render_scene(env, player);
 
