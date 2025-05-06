@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "parsing.h"
 
 int	ft_isdigit(int index)
 {

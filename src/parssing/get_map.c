@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "parsing.h"
 
 t_maplist	*create_map(char *line)
 {

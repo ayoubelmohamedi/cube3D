@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "parsing.h"
 
 void	clist(t_list **list)
 {

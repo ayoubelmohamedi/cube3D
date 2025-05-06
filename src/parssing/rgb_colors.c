@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "parsing.h"
 
 int	rgb_to_int(int red, int green, int blue)
 {

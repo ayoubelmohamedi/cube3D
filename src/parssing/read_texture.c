@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "parsing.h"
 
 int	check_color(char *color)
 {

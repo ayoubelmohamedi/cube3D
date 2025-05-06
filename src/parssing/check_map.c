@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "parsing.h"
 
 t_maplist	*check_lines(int fd, t_maplist **map)
 {

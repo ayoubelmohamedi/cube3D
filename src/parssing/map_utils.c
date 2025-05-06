@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "parsing.h"
 
 char	*remove_spaces(char *str)
 {

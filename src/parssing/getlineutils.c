@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "parsing.h"
 
 int	newline_checker(t_list *list)
 {

@@ -1,4 +1,4 @@
-#include "cub3d.h"
+#include "parsing.h"
 
 size_t	ft_count_words(const char *s, char c)
 {

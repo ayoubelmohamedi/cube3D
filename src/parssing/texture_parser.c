@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "parsing.h"
 
 int	set_texture_path(t_texture *texture, char *line, char *trimmed)
 {
