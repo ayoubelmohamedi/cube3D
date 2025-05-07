@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:14:28 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/07 12:37:27 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:50:43 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ typedef struct s_data
 
 typedef struct s_cub
 {
-	float				player_x;
-	float				player_y;
-	float				p_angle;
+	double				player_x;
+	double				player_y;
+	double				p_angle;
 	int					pixel_size;
 	t_data				*data;
 	t_wall_textures			*texture;
