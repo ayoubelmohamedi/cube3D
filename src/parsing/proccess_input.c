@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proccess_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:14:48 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/07 10:14:49 by aez-zoui         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:09:13 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,49 @@ int	check_map(t_data *data, char *path)
 	return (ft_freemap(&head), 0);
 }
 
+
+void fill_player_pos_dir(t_cub *cub)
+{
+    int i = 0;
+    int j;
+    char cell;
+    bool found = false;
+
+    while (i < cub->data->row)
+    {
+        j = 0;
+        while (j < cub->data->col)
+        {
+            cell = cub->data->map[i][j];
+            if (cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
+            {
+                cub->player_x = j + 0.5; 
+                cub->player_y = i + 0.5;
+                
+                if (cell == 'N')
+                    cub->p_angle = 3 * MM_PI / 2;  // Looking up
+                else if (cell == 'S')
+                    cub->p_angle = MM_PI / 2;      // Looking down
+                else if (cell == 'E')
+                    cub->p_angle = 0;             // Looking right
+                else if (cell == 'W')
+                    cub->p_angle = MM_PI;          // Looking left
+                cub->data->map[i][j] = '0';
+                found = true;
+                break;
+            }
+            j++;
+        }
+        if (found)
+            break;
+        i++;
+    }
+    cub->data->i = i;
+    cub->data->j = j;
+    if (!found)
+        printf("Error: No player position found in map\n");
+}
+
 int	start_parser(t_cub *cub, t_data *data, char *path, int fd)
 {
 	if (!check_extension(path, "cub"))
@@ -73,6 +116,7 @@ int	start_parser(t_cub *cub, t_data *data, char *path, int fd)
 		printf("Invalid Map\n");
 		return (1);
 	}
+	fill_player_pos_dir(cub);
 	return (0);
 }
 
