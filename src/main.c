@@ -72,6 +72,11 @@ t_wall_text *load_walls_texture(t_env *env)
     walls_tex = (t_wall_text *) malloc(sizeof(t_wall_text));
     if (!walls_tex)
         return (NULL);
+    printf("walls_tex->north_img = %s\n", env->wall_tex_files[0]);
+    printf("walls_tex->south_img = %s\n", env->wall_tex_files[1]);
+    printf("walls_tex->west_img = %s\n", env->wall_tex_files[2]);
+    printf("walls_tex->east_img = %s\n", env->wall_tex_files[3]);
+
     walls_tex->north_img = mlx_xpm_file_to_image(env->mlx, env->wall_tex_files[0], &walls_tex->north_width, &walls_tex->north_height);
     if (!walls_tex->north_img) { return (NULL); }
     walls_tex->north_addr = mlx_get_data_addr(walls_tex->north_img, &walls_tex->north_bpp, &walls_tex->north_line_len, &walls_tex->north_endian);
@@ -103,6 +108,7 @@ void init_texture_paths(t_env *env, t_cub * cub)
     // textures for ceiling + floor 
     env->textures_files[0] = NULL;
     env->textures_files[1] = NULL;
+    env->has_texture = false;
 
     env->f_color = get_colors(cub->texture->rgb->f);
     env->c_color = get_colors(cub->texture->rgb->c);
@@ -226,12 +232,10 @@ int main(int ac, char **av)
     printf("env->has_texture: %d\n", env->has_texture);
     printf("env->has_wall_texture: %d\n", env->has_wall_texture);
     printf("env->has_minimap: %d\n", env->has_minimap);
-    // printf("env->has_floor: %d\n", env->texture->has_floor);
-    // printf("env->has_ceiling: %d\n", env->texture->has_ceiling);
 
-    // render_scene(env, player);
+    render_scene(env, player);
 
-    // mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
-    // mlx_loop(env->mlx);
+    mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
+    mlx_loop(env->mlx);
     return 0;
 }
