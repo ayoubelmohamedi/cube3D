@@ -118,7 +118,8 @@ t_player *init_player(t_env *env, t_cub *cub)
     player->env = env;
     player->x = cub->player_x;
     player->y = cub->player_y;
-    player->dir =  M_PI / 2; //  facing down => todo: assign dir based on map orientation [NWES]
+    // player->dir =  M_PI / 2; //  facing down => todo: assign dir based on map orientation [NWES]
+    player->dir =  cub->p_angle; //  (M_PI / 2)facing down => todo: assign dir based on map orientation [NWES]
     return (player);
 }
 
