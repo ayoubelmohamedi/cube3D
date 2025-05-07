@@ -45,6 +45,18 @@
    ./cube3D maps/example.cub
    ```
 
+### Concepts
+
+                  player->dir
+                      │
+                      ▼
+    ◄───────────────────────────────►
+    |                |                |
+    Left             Center            Right
+    (ray_angle =     (ray_angle =      (ray_angle =            
+    player->dir -    player->dir)       player->dir+
+    fov_rad/2)                         fov_rad/2)
+
 ### Controls
 
 | Key           | Action                |
@@ -104,11 +116,11 @@ cube3D/
 
 ## To-Do List
 
-- [ ] Parse maps
-- [ ] display the map in 2d
-- [ ] Basic 3D rendering with raycasting
-- [ ] Textured walls
-- [ ] Dynamic lighting
+- [ x] Parse maps
+- [ x] display the map in 2d
+- [ x] Basic 3D rendering with raycasting
+- [ x] Textured walls
+- [ x] Dynamic lighting
 - [ ] Interactive elements (maybe) (e.g., doors, pickups)
 
 ## License
