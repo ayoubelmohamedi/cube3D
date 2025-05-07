@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:14:48 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/07 14:09:13 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:12:21 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,47 +59,43 @@ int	check_map(t_data *data, char *path)
 	return (ft_freemap(&head), 0);
 }
 
-
-void fill_player_pos_dir(t_cub *cub)
+static double	get_player_angle(char dir)
 {
-    int i = 0;
-    int j;
-    char cell;
-    bool found = false;
+    if (dir == 'N')
+        return (3 * MM_PI / 2); // Looking up
+    if (dir == 'S')
+        return (MM_PI / 2); // Looking down
+    if (dir == 'E')
+        return (0);  // Looking right
+    return (MM_PI); // Looking left (W)
+}
 
-    while (i < cub->data->row)
+void	fill_player_pos_dir(t_cub *cub)
+{
+    int		i;
+    int		j;
+    char	cell;
+
+    i = -1;
+    while (++i < cub->data->row)
     {
-        j = 0;
-        while (j < cub->data->col)
+        j = -1;
+        while (++j < cub->data->col)
         {
             cell = cub->data->map[i][j];
             if (cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
             {
-                cub->player_x = j + 0.5; 
+                cub->player_x = j + 0.5;
                 cub->player_y = i + 0.5;
-                
-                if (cell == 'N')
-                    cub->p_angle = 3 * MM_PI / 2;  // Looking up
-                else if (cell == 'S')
-                    cub->p_angle = MM_PI / 2;      // Looking down
-                else if (cell == 'E')
-                    cub->p_angle = 0;             // Looking right
-                else if (cell == 'W')
-                    cub->p_angle = MM_PI;          // Looking left
+                cub->p_angle = get_player_angle(cell);
                 cub->data->map[i][j] = '0';
-                found = true;
-                break;
+                cub->data->i = i;
+                cub->data->j = j;
+                return ;
             }
-            j++;
         }
-        if (found)
-            break;
-        i++;
     }
-    cub->data->i = i;
-    cub->data->j = j;
-    if (!found)
-        printf("Error: No player position found in map\n");
+    printf("Error: No player position found in map\n");
 }
 
 int	start_parser(t_cub *cub, t_data *data, char *path, int fd)
