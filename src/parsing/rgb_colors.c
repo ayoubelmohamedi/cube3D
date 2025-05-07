@@ -13,6 +13,7 @@
 #include "parsing.h"
 
 //   result = (R≪16)+ (G≪8)+ B 
+//   https://chatgpt.com/share/681b3dd8-e11c-8008-bff1-faeaf9f9da9a
 int	rgb_to_int(int red, int green, int blue)
 {
 	int	shifted_red;
