@@ -216,8 +216,14 @@ int main(int ac, char **av)
     printf("player->x: %f\n", player->x);
     printf("player->y: %f\n", player->y);
     printf("player->dir: %f\n", player->dir);
-    printf("env->f_color: %d\n", env->f_color);
-    printf("env->c_color: %d\n", env->c_color);
+
+    printf("\n============= COLORS STRING=============\n");
+    printf("env->f_color: %s\n",cub->texture->rgb->f);
+    printf("env->c_color: %s\n", cub->texture->rgb->c);
+
+    printf("\n============= COLORS RGB================\n");
+    printf("env->f_color: %d\n",get_colors(cub->texture->rgb->f));
+    printf("env->c_color: %d\n", get_colors(cub->texture->rgb->c));
     // printf("env->has_texture: %d\n", env->has_texture);
     // printf("env->has_wall_texture: %d\n", env->has_wall_texture);
     // printf("env->has_minimap: %d\n", env->has_minimap);

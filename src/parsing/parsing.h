@@ -111,7 +111,8 @@ int			is_invalid_texture(char *str);
 void		free_heap(t_cub *cub);
 char		*remove_spaces(char *str);
 int			find_map(char *map);
-int	ft_exit(t_cub *cub);
+int		ft_exit(t_cub *cub);
+int		get_colors(char *rgb);
 
 // GET NEXT LINE
 char	*ft_strjoin(char *str, char *buffer);

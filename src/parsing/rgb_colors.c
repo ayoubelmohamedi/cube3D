@@ -12,6 +12,7 @@
 
 #include "parsing.h"
 
+//   result = (R≪16)+ (G≪8)+ B 
 int	rgb_to_int(int red, int green, int blue)
 {
 	int	shifted_red;
