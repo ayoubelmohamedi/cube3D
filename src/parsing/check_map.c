@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:11:42 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/07 10:11:44 by aez-zoui         ###   ########.fr       */
+/*   Updated: 2025/05/07 13:03:58 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_maplist	*check_lines(int fd, t_maplist **map)
 	return (*map);
 }
 
-int	checkline(char **line, int fd, t_maplist **map, int *start)
+int	checkline(char **line, int fd, t_maplist **map, int *start, int *i)
 {
 	if ((*line)[0] == '\n' && *start)
 		return (check_lines(fd, map) == NULL);
@@ -39,8 +39,9 @@ int	checkline(char **line, int fd, t_maplist **map, int *start)
 		return (free(*line), 1);
 	if (find_map(*line))
 	{
-		if (is_valid_characters(*line))
+		if (is_valid_characters(*line, i))
 		{
+			printf("Error: Invalid character in map\n");
 			ft_freemap(map);
 			return (free(*line), 1);
 		}

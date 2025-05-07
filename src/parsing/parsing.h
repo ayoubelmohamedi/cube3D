@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:14:28 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/07 10:14:38 by aez-zoui         ###   ########.fr       */
+/*   Updated: 2025/05/07 12:37:27 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int			check_extension(char *exten, char *s);
 t_maplist	*create_map(char *line);
 void		add_map_node(t_maplist **head, char *line);
 int			skip_textures(char **line, int fd);
-int			is_valid_characters(char *line);
+int			is_valid_characters(char *line, int *j);
 int			init_map(t_maplist *m, t_data *data);
 int			convert_map(t_data *data, t_maplist *m);
 int			is_not_closed(t_maplist *prev, t_maplist *current, t_maplist *next);
@@ -105,7 +105,7 @@ void		ft_freemap(t_maplist **map);
 void		*ft_memset(void *ptr, int x, size_t n);
 void		destroy_all(t_cub *cub);
 void		destroy_data(t_data *data, t_wall_textures *texture);
-int			checkline(char **line, int fd, t_maplist **map, int *start);
+int			checkline(char **line, int fd, t_maplist **map, int *start, int *i);
 t_maplist	*check_lines(int fd, t_maplist **map);
 int			is_invalid_texture(char *str);
 void		free_heap(t_cub *cub);
