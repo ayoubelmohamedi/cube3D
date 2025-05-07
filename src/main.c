@@ -104,8 +104,8 @@ void init_texture_paths(t_env *env, t_cub * cub)
     env->textures_files[0] = NULL;
     env->textures_files[1] = NULL;
 
-    env->f_color = cub->texture->f_color;
-    env->c_color = cub->texture->c_color;
+    env->f_color = get_colors(cub->texture->rgb->f);
+    env->c_color = get_colors(cub->texture->rgb->c);
 }
 
 t_player *init_player(t_env *env, t_cub *cub)
@@ -141,8 +141,11 @@ t_env    *load_env(t_cub *cub)
     env->has_texture = false;
     init_texture_paths(env, cub);
     env->has_wall_texture = true;
-    env->texture = load_floor_ceiling_texture(env);
-    env->walls = load_walls_texture(env);
+    env->has_texture = false;
+    if (env->has_texture)
+        env->texture = load_floor_ceiling_texture(env);
+    if (env->has_wall_texture)
+        env->walls = load_walls_texture(env);
     return (env);
 }
 
@@ -218,9 +221,11 @@ int main(int ac, char **av)
     printf("player->dir: %f\n", player->dir);
     printf("env->f_color: %d\n", env->f_color);
     printf("env->c_color: %d\n", env->c_color);
-    // printf("env->has_texture: %d\n", env->has_texture);
-    // printf("env->has_wall_texture: %d\n", env->has_wall_texture);
-    // printf("env->has_minimap: %d\n", env->has_minimap);
+
+
+    printf("env->has_texture: %d\n", env->has_texture);
+    printf("env->has_wall_texture: %d\n", env->has_wall_texture);
+    printf("env->has_minimap: %d\n", env->has_minimap);
     // printf("env->has_floor: %d\n", env->texture->has_floor);
     // printf("env->has_ceiling: %d\n", env->texture->has_ceiling);
 
