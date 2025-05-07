@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:14:28 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/07 13:50:43 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/07 14:08:04 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # define BUFFER_SIZE 1
+
+
+#define MM_PI 3.14159265358979323846
 
 typedef struct s_maplist
 {
@@ -63,6 +66,8 @@ typedef struct s_cub
 	t_wall_textures			*texture;
 } t_cub;
 
+
+void 		fill_player_pos_dir(t_cub *cub);
 int			proccess_input(t_data *data, t_cub *cub, char *path,
 				t_wall_textures *texture);
 int			init_texture(t_wall_textures *texture);
