@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_map.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 10:12:49 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/07 10:12:52 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 t_maplist	*create_map(char *line)
@@ -42,7 +54,7 @@ t_maplist	*get_map(int fd)
 	line = get_next_line(fd);
 	while (line)
 	{
-		if (process_map(&line, fd, &map, &start))
+		if (checkline(&line, fd, &map, &start))
 			return (NULL);
 		free(line);
 		line = get_next_line(fd);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   proccess_input.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 10:14:48 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/07 10:14:49 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 int	check_extension(char *exten, char *s)
@@ -40,11 +52,11 @@ int	check_map(t_data *data, char *path)
 		return (1);
 	head = maplist;
 	if (validate_map(head))
-		return (ft_mapclear(&head), 1);
+		return (ft_freemap(&head), 1);
 	if (convert_map(data, head))
-		return (ft_mapclear(&head), 1);
+		return (ft_freemap(&head), 1);
 	close(fd);
-	return (ft_mapclear(&head), 0);
+	return (ft_freemap(&head), 0);
 }
 
 int	start_parser(t_cub *cub, t_data *data, char *path, int fd)

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helper.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 10:13:16 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/07 10:13:19 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	lenght;
 
@@ -51,21 +63,7 @@ void	*ft_memcpy(void *to, const void *from, size_t n)
 	return (ptr);
 }
 
-char	*ft_strdup(const char *src)
-{
-	size_t	size;
-	char	*dest;
-
-	size = ft_strlen(src);
-	dest = (char *)malloc(size * sizeof(char) + 1);
-	if (dest == NULL)
-		return (0);
-	ft_memcpy(dest, src, size);
-	dest[size] = '\0';
-	return (dest);
-}
-
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char *s1, char *set)
 {
 	int		start;
 	int		end;

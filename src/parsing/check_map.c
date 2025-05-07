@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 10:11:42 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/07 10:11:44 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 t_maplist	*check_lines(int fd, t_maplist **map)
@@ -9,7 +21,7 @@ t_maplist	*check_lines(int fd, t_maplist **map)
 	{
 		if (line[0] != '\n')
 		{
-			ft_mapclear(map);
+			ft_freemap(map);
 			free(line);
 			return (NULL);
 		}
@@ -19,7 +31,7 @@ t_maplist	*check_lines(int fd, t_maplist **map)
 	return (*map);
 }
 
-int	process_map(char **line, int fd, t_maplist **map, int *start)
+int	checkline(char **line, int fd, t_maplist **map, int *start)
 {
 	if ((*line)[0] == '\n' && *start)
 		return (check_lines(fd, map) == NULL);
@@ -29,7 +41,7 @@ int	process_map(char **line, int fd, t_maplist **map, int *start)
 	{
 		if (is_valid_characters(*line))
 		{
-			ft_mapclear(map);
+			ft_freemap(map);
 			return (free(*line), 1);
 		}
 		add_map_node(map, *line);

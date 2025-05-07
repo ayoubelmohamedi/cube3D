@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/16 17:43:15 by ayel-mou          #+#    #+#             */
-/*   Updated: 2025/05/06 23:48:10 by ael-moha         ###   ########.fr       */
+/*   Created: 2025/05/07 10:14:28 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/07 10:14:38 by aez-zoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 # include <stdlib.h>
 # include <unistd.h>
 # define BUFFER_SIZE 1
-typedef struct s_list
-{
-	char				*content;
-	struct s_list		*next;
-}						t_list;
 
 typedef struct s_maplist
 {
@@ -76,19 +71,14 @@ int			init_cub(t_cub *cub, t_data *data, t_wall_textures *texture);
 int			ft_atoi(char *str);
 char		**ft_split(char const *s, char c);
 char		*get_next_line(int fd);
-size_t		ft_strlen(const char *str);
+size_t		ft_strlen(char *str);
 int			ft_strncmp(const char *s1, const char *s2, size_t n);
 void		*ft_memcpy(void *to, const void *from, size_t n);
-char		*ft_strdup(const char *src);
-char		*ft_strtrim(char const *s1, char const *set);
-size_t		ft_strlcpy(char *dst, const char *src, size_t size);
-size_t		ft_strspn(const char *s, const char *accept);
+char		*ft_strdup(char *src);
+char		*ft_strtrim(char *s1, char  *set);
+size_t		ft_strlcpy(char *dst,char *src, size_t size);
 int			check_space(char c);
-int			newline_checker(t_list *list);
-int			llist(t_list *list);
-void		copy_the_list(t_list *list, char *the_line);
-void		dealloc(t_list **list, t_list *clean_node, char *buf);
-char		*ft_strchr(const char *s, int c);
+char		*ft_strchr(char *s, int c);
 int			valid_texture(t_cub *cub, t_wall_textures *texture, int fd);
 int			is_valid_rgb(char *rgb);
 int			check_colors(t_wall_textures *texture);
@@ -111,16 +101,21 @@ int			convert_map(t_data *data, t_maplist *m);
 void		process_line(t_data *data, t_maplist *temp);
 t_maplist	*get_map(int fd);
 int			get_biggest_line(t_maplist *head);
-void		ft_mapclear(t_maplist **map);
+void		ft_freemap(t_maplist **map);
 void		*ft_memset(void *ptr, int x, size_t n);
 void		destroy_all(t_cub *cub);
 void		destroy_data(t_data *data, t_wall_textures *texture);
-int			process_map(char **line, int fd, t_maplist **map, int *start);
+int			checkline(char **line, int fd, t_maplist **map, int *start);
 t_maplist	*check_lines(int fd, t_maplist **map);
 int			is_invalid_texture(char *str);
 void		free_heap(t_cub *cub);
 char		*remove_spaces(char *str);
 int			find_map(char *map);
 int	ft_exit(t_cub *cub);
+
+// GET NEXT LINE
+char	*ft_strjoin(char *str, char *buffer);
+char	*ft_substr(char *string, int start, int len);
+void	ft_joinstring(char *string, char *str, char *buffer);
 
 #endif

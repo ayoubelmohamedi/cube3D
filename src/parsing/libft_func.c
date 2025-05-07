@@ -1,6 +1,6 @@
 #include "parsing.h"
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst,char *src, size_t size)
 {
 	size_t	len;
 
@@ -15,33 +15,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 		dst[len] = '\0';
 	}
 	return (ft_strlen(src));
-}
-
-size_t	ft_strspn(const char *s, const char *accept)
-{
-	size_t	i;
-	size_t	j;
-	int		found;
-
-	i = 0;
-	while (s[i])
-	{
-		j = 0;
-		found = 0;
-		while (accept[j])
-		{
-			if (s[i] == accept[j])
-			{
-				found = 1;
-				break ;
-			}
-			j++;
-		}
-		if (!found)
-			return (i);
-		i++;
-	}
-	return (i);
 }
 
 int	check_space(char c)

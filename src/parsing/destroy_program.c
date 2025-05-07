@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   destroy_program.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/07 10:11:50 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/07 10:12:02 by aez-zoui         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parsing.h"
 
 void	free_array(char **arr)
@@ -17,7 +29,7 @@ void	free_array(char **arr)
 	arr = NULL;
 }
 
-void	ft_mapclear(t_maplist **map)
+void	ft_freemap(t_maplist **map)
 {
 	t_maplist	*tmp;
 
