@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 23:06:06 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:17:16 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void render_scene(t_env *env, t_player *player)
     if (env->img)
         mlx_destroy_image(env->mlx, env->img);
     env->img = mlx_new_image(env->mlx, WIDTH, HEIGHT);
-    mlx_get_data_addr(env->img, &env->bits_per_pixel,
+    env->addr= mlx_get_data_addr(env->img, &env->bits_per_pixel,
                       &env->line_lenght, &env->endian);
 
     for (int x = 0; x < WIDTH; x++)
