@@ -12,7 +12,7 @@
 
 ## Screenshots
 
-![Screenshot of cube3D gameplay](./assets/screenshot.png)
+![Screenshot of cube3D gameplay](./assets/raycasting_sshot.png)
 
 ## Getting Started
 
