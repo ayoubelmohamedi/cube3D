@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 12:04:49 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 21:41:47 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/09 11:35:58y ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	perform_dda(int *mapX, int *mapY, t_dda *dda, t_player *player)
     }
     if (*mapX < 0 || *mapX >= player->env->map_width || *mapY < 0 || *mapY >= player->env->map_height)
         return (-1);
-    if (player->env->map[*mapY][*mapX] > 0)
+    if ((player->env->map[*mapY][*mapX]) != '0')
         return (1);
     return (0);
 }
