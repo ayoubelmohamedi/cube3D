@@ -1,4 +1,4 @@
-# cube3D
+# cube3D 🧊
 
 **cube3D** is a simple 3D graphics project inspired by early 3D games like Wolfenstein 3D. It uses raycasting to render a 3D environment and allows basic player interaction. This project is developed in C using the MinilibX library as part of the 42 School curriculum.
 
