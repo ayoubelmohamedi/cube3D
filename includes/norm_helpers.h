@@ -91,5 +91,34 @@ typedef struct s_floor_render
 	int		tex_y;
 }			t_floor_render;
 
+typedef struct s_wall_render
+{
+	int		y_start;
+	int		y_end;
+	int		curr_x;
+	int		corrected_dist;
+	int		wall_height;
+	char	*texture_addr;
+	int		texture_width;
+	int		texture_height;
+	int		texture_bpp;
+	int		texture_line_len;
+	int		texX;
+}			t_wall_render;
+
+typedef struct s_texture_calc {
+    int     tex_y;
+    double  step;
+    double  tex_pos;
+    char    *dst;
+    int     color;
+}   t_texture_calc;
+
+
+void	set_north_texture(t_player *player, t_texture_info *tex);
+void	set_south_texture(t_player *player, t_texture_info *tex);
+void	set_east_texture(t_player *player, t_texture_info *tex);
+void	set_west_texture(t_player *player, t_texture_info *tex);
+
 
 #endif
