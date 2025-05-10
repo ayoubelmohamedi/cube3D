@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:27:20 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 20:50:11 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:39:58 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,12 @@ static int	get_ceiling_color(t_player *player, t_ceil_render *cr)
     return (ceil_color);
 }
 
-void	render_ceiling(t_player *player, int screen_x, int y_start, 
-                    int y_end, int wall_height)
+void	render_ceiling(t_player *player, int screen_x, int y_start)
 {
     int			y;
     int			ceil_color;
     t_ceil_render	cr;
 
-    (void) y_end;
-    (void) wall_height;
     cr.screen_x = screen_x;
     init_ceiling_render(player, &cr);
     y = 0;

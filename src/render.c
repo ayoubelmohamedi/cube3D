@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:34:30 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:40:31 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void draw_vertical_line(t_player *player, t_vertical_info info)
 
     // draw ceiling
     if (player->env->has_texture && player->env->texture->has_ceiling)
-        render_ceiling(player, info.x, y_start, y_end, info.wall_height);
+        render_ceiling(player, info.x, y_start);
     else
         for (int y = 0; y < y_start; y++)
             my_mlx_pixel_put(player->env, info.x, y, player->env->c_color);

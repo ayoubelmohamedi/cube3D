@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:39:34 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:40:45 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,7 @@ void draw_vertical_line(t_player *player, t_vertical_info info);
                     
 
 /*              Rendering Components          */
-void render_ceiling(t_player *player, int screen_x, int y_start, 
-                   int y_end, int wall_height);
+void render_ceiling(t_player *player, int screen_x, int y_start);
 void render_floor(t_player *player, int curr_x, int y_end);
 void	render_wall_tex(t_player *player, int y_start, int y_end, t_vertical_info info);
 #endif 
