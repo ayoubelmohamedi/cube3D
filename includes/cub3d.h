@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:18:27 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:39:34 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,7 @@ void my_mlx_pixel_put(t_env *env, int x, int y, int color);
 
 /*              Raycasting Core          */
 void cast_ray(t_player *player, double ray_angle, int screen_x);
-void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x,
-                     int wall_height, double corrected_dist, int side);
+void draw_vertical_line(t_player *player, t_vertical_info info);
                     
 
 /*              Rendering Components          */
