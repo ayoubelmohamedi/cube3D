@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 22:37:40 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:48:29 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,11 @@ void	set_north_texture(t_player *player, t_texture_info *tex);
 void	set_south_texture(t_player *player, t_texture_info *tex);
 void	set_east_texture(t_player *player, t_texture_info *tex);
 void	set_west_texture(t_player *player, t_texture_info *tex);
+
+int	load_north_texture(t_env *env, t_wall_text *walls_tex);
+int	load_south_texture(t_env *env, t_wall_text *walls_tex);
+int	load_west_texture(t_env *env, t_wall_text *walls_tex);
+int	load_east_texture(t_env *env, t_wall_text *walls_tex);
 
 void    render_wall_section(t_player *player, t_vertical_info info, int y_start, int y_end);
 void    render_floor_section(t_player *player, int x, int y_end);

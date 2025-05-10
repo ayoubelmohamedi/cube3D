@@ -63,58 +63,24 @@ t_texture	*load_floor_ceiling_texture(t_env *env)
 	return (w_texture);
 }
 
+
+
 t_wall_text	*load_walls_texture(t_env *env)
 {
-	t_wall_text	*walls_tex;
+    t_wall_text	*walls_tex;
 
-	walls_tex = (t_wall_text *)malloc(sizeof(t_wall_text));
-	if (!walls_tex)
-		return (NULL);
-	printf("walls_tex->north_img = %s\n", env->wall_tex_files[0]);
-	printf("walls_tex->south_img = %s\n", env->wall_tex_files[1]);
-	printf("walls_tex->west_img = %s\n", env->wall_tex_files[2]);
-	printf("walls_tex->east_img = %s\n", env->wall_tex_files[3]);
-	walls_tex->north_img = mlx_xpm_file_to_image(env->mlx,
-			env->wall_tex_files[0], &walls_tex->north_width,
-			&walls_tex->north_height);
-	if (!walls_tex->north_img)
-	{
-		return (NULL);
-	}
-	walls_tex->north_addr = mlx_get_data_addr(walls_tex->north_img,
-			&walls_tex->north_bpp, &walls_tex->north_line_len,
-			&walls_tex->north_endian);
-	walls_tex->south_img = mlx_xpm_file_to_image(env->mlx,
-			env->wall_tex_files[1], &walls_tex->south_width,
-			&walls_tex->south_heght);
-	if (!walls_tex->south_img)
-	{
-		return (NULL);
-	}
-	walls_tex->south_addr = mlx_get_data_addr(walls_tex->south_img,
-			&walls_tex->south_bpp, &walls_tex->south_line_len,
-			&walls_tex->south_endian);
-	walls_tex->west_img = mlx_xpm_file_to_image(env->mlx,
-			env->wall_tex_files[2], &walls_tex->west_width,
-			&walls_tex->west_height);
-	if (!walls_tex->west_img)
-	{
-		return (NULL);
-	}
-	walls_tex->west_addr = mlx_get_data_addr(walls_tex->west_img,
-			&walls_tex->west_bpp, &walls_tex->west_line_len,
-			&walls_tex->west_endian);
-	walls_tex->east_img = mlx_xpm_file_to_image(env->mlx,
-			env->wall_tex_files[3], &walls_tex->east_width,
-			&walls_tex->east_height);
-	if (!walls_tex->east_img)
-	{
-		return (NULL);
-	}
-	walls_tex->east_addr = mlx_get_data_addr(walls_tex->east_img,
-			&walls_tex->east_bpp, &walls_tex->east_line_len,
-			&walls_tex->east_endian);
-	return (walls_tex);
+    walls_tex = (t_wall_text *)malloc(sizeof(t_wall_text));
+    if (!walls_tex)
+        return (NULL);
+    if (load_north_texture(env, walls_tex))
+        return (free(walls_tex), NULL);
+    if (load_south_texture(env, walls_tex))
+        return (free(walls_tex), NULL);
+    if (load_west_texture(env, walls_tex))
+        return (free(walls_tex), NULL);
+    if (load_east_texture(env, walls_tex))
+        return (free(walls_tex), NULL);
+    return (walls_tex);
 }
 
 void	init_texture_paths(t_env *env, t_cub *cub)
