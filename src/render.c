@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 21:45:51 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 23:12:49 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ void	render_scene(t_env *env, t_player *player)
 		x++;
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
-	if (env->has_minimap)
-		render_minimap(env, player);
 }
 
 void	cast_ray(t_player *player, double ray_angle, int screen_x)

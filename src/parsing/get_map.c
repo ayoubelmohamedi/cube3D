@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 10:12:49 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/07 13:08:20 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 23:14:50 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_maplist	*get_map(int fd)
 	line = get_next_line(fd);
 	while (line)
 	{	
-		printf("line = %s ||| current i = %d\n", line, i);
 		if (checkline(&line, fd, &map, &start, &i))
 			return (NULL);
 		free(line);
@@ -84,10 +83,7 @@ int	is_valid_characters(char *line, int *j)
 			|| line[i] == 'E' || line[i] == 'W' || line[i] == '\n')
 			{
 				if (line[i] == 'N' || line[i] == 'E' || line[i] == 'S' || line[i] == 'W')
-				{
-					printf("POSITION DETECTED\n");
 					(*j)++;
-				}
 				if (*j > 1)
 				{
 					printf("Error: More than one position\n");

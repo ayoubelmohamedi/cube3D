@@ -5,24 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 12:15:42 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 22:05:36by ael-moha         ###   ########.fr       */
+/*   Created: 2025/05/10 23:09:35 by ael-moha          #+#    #+#             */
+/*   Updated: 2025/05/10 23:11:13 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-
-
-
 void	init_texture_paths(t_env *env, t_cub *cub)
 {
-	// textures paths for [no, so, we,ea]
 	env->wall_tex_files[0] = cub->texture->no;
 	env->wall_tex_files[1] = cub->texture->so;
 	env->wall_tex_files[2] = cub->texture->we;
 	env->wall_tex_files[3] = cub->texture->ea;
-    env->has_wall_texture = true;
+	env->has_wall_texture = true;
 	env->f_color = get_colors(cub->texture->rgb->f);
 	env->c_color = get_colors(cub->texture->rgb->c);
 }
@@ -85,16 +81,13 @@ int	main(int ac, char **av)
 	ft_memset(&data, 0, sizeof(t_data));
 	if (proccess_input(&data, cub, av[1], texture))
 		return (free_heap(cub), 1);
-	// destroy_all(cub);
 	env = load_env(cub);
 	player = init_player(env, cub);
-	// test env and player
 	if (!env || !player)
 	{
 		perror("Error: failed to initialize env or player");
 		return (1);
 	}
-
 	render_scene(env, player);
 	mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
 	mlx_loop(env->mlx);
