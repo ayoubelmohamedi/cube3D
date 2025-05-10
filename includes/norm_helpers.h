@@ -59,6 +59,21 @@ typedef struct s_texture_info {
     int		line_len;
 }	t_texture_info;
 
+typedef struct s_ceil_render
+{
+	double	player_dir_x;
+	double	player_dir_y;
+	double	plane_x;
+	double	plane_y;
+	int		screen_x;
+	float	row_distance;
+	float	floor_step_x;
+	float	floor_step_y;
+	float	current_ceil_x;
+	float	current_ceil_y;
+	int		tex_x;
+	int		tex_y;
+}			t_ceil_render;
 
 
 #endif

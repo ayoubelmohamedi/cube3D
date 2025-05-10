@@ -6,27 +6,11 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 10:27:20 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 19:39:58 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:28:07 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-typedef struct s_ceil_render
-{
-	double	player_dir_x;
-	double	player_dir_y;
-	double	plane_x;
-	double	plane_y;
-	int		screen_x;
-	float	row_distance;
-	float	floor_step_x;
-	float	floor_step_y;
-	float	current_ceil_x;
-	float	current_ceil_y;
-	int		tex_x;
-	int		tex_y;
-}			t_ceil_render;
 
 static void	init_ceiling_render(t_player *player, t_ceil_render *cr)
 {
@@ -55,13 +39,15 @@ static int	get_ceiling_color(t_player *player, t_ceil_render *cr)
 {
 	int		ceil_color;
 	char	*tex_pixel_ptr;
+	int		ceil_width;
+	int		ceil_height;
 
-	cr->tex_x = (int)(player->env->texture->ceil_width * (cr->current_ceil_x
-				- floor(cr->current_ceil_x))) & (player->env->texture->ceil_width
-			- 1);
-	cr->tex_y = (int)(player->env->texture->ceil_height * (cr->current_ceil_y
-				- floor(cr->current_ceil_y))) & (player->env->texture->ceil_height
-			- 1);
+	ceil_width = player->env->texture->ceil_width;
+	ceil_height = player->env->texture->ceil_height;
+	cr->tex_x = (int)(ceil_width * (cr->current_ceil_x
+				- floor(cr->current_ceil_x))) & (ceil_width - 1);
+	cr->tex_y = (int)(ceil_height * (cr->current_ceil_y
+				- floor(cr->current_ceil_y))) & (ceil_height - 1);
 	ceil_color = CEILING_COLOR;
 	if (cr->tex_x >= 0 && cr->tex_x < player->env->texture->ceil_width
 		&& cr->tex_y >= 0 && cr->tex_y < player->env->texture->ceil_height)
@@ -76,9 +62,9 @@ static int	get_ceiling_color(t_player *player, t_ceil_render *cr)
 
 void	render_ceiling(t_player *player, int screen_x, int y_start)
 {
-	int y;
-	int ceil_color;
-	t_ceil_render cr;
+	int				y;
+	int				ceil_color;
+	t_ceil_render	cr;
 
 	cr.screen_x = screen_x;
 	init_ceiling_render(player, &cr);
