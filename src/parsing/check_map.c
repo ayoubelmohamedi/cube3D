@@ -31,7 +31,7 @@ t_maplist	*check_lines(int fd, t_maplist **map)
 	return (*map);
 }
 
-int	checkline(char **line, int fd, t_maplist **map, int *start, int *i)
+int	checkline(char **line, int fd, t_maplist **map, int *start)
 {
 	if ((*line)[0] == '\n' && *start)
 		return (check_lines(fd, map) == NULL);
@@ -39,9 +39,8 @@ int	checkline(char **line, int fd, t_maplist **map, int *start, int *i)
 		return (free(*line), 1);
 	if (find_map(*line))
 	{
-		if (is_valid_characters(*line, i))
+		if (is_valid_characters(*line))
 		{
-			printf("Error: Invalid character in map\n");
 			ft_freemap(map);
 			return (free(*line), 1);
 		}

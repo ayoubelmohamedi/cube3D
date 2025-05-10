@@ -100,7 +100,7 @@ int						check_extension(char *exten, char *s);
 t_maplist				*create_map(char *line);
 void					add_map_node(t_maplist **head, char *line);
 int						skip_textures(char **line, int fd);
-int						is_valid_characters(char *line, int *j);
+int						is_valid_characters(char *line);
 int						init_map(t_maplist *m, t_data *data);
 int						convert_map(t_data *data, t_maplist *m);
 int						is_not_closed(t_maplist *prev, t_maplist *current,
@@ -115,7 +115,7 @@ void					*ft_memset(void *ptr, int x, size_t n);
 void					destroy_all(t_cub *cub);
 void					destroy_data(t_data *data, t_wall_textures *texture);
 int						checkline(char **line, int fd, t_maplist **map,
-							int *start, int *i);
+							int *start);
 t_maplist				*check_lines(int fd, t_maplist **map);
 int						is_invalid_texture(char *str);
 void					free_heap(t_cub *cub);
@@ -123,6 +123,7 @@ char					*remove_spaces(char *str);
 int						find_map(char *map);
 int						ft_exit(t_cub *cub);
 int						get_colors(char *rgb);
+int						check_map(t_data *data, char *path);
 
 // GET NEXT LINE
 char					*ft_strjoin(char *str, char *buffer);

@@ -50,51 +50,30 @@ t_maplist	*get_map(int fd)
 	char		*line;
 	t_maplist	*map;
 	int			start;
-	int			i;
 
 	map = NULL;
-	i = 0;
 	start = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		printf("line = %s ||| current i = %d\n", line, i);
-		if (checkline(&line, fd, &map, &start, &i))
+		if (checkline(&line, fd, &map, &start))
 			return (NULL);
 		free(line);
 		line = get_next_line(fd);
 	}
-	if (i == 0 || i > 1)
-	{
-		ft_freemap(&map);
-		printf("Exit Error, more than one position\n");
-		exit(1);
-		return (NULL);
-	}
 	return (map);
 }
 
-int	is_valid_characters(char *line, int *j)
+int	is_valid_characters(char *line)
 {
 	int	i;
 
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '1' || line[i] == '0' || line[i] == ' '
-			|| line[i] == '\t' || line[i] == 'N' || line[i] == 'S'
-			|| line[i] == 'E' || line[i] == 'W' || line[i] == '\n')
-		{
-			if (line[i] == 'N' || line[i] == 'E' || line[i] == 'S'
-				|| line[i] == 'W')
-				(*j)++;
-			if (*j > 1)
-			{
-				(*j) = 0;
-				return (1);
-			}
-		}
-		else
+		if (line[i] != '1' && line[i] != '0' && line[i] != ' '
+			&& line[i] != '\t' && line[i] != 'N' && line[i] != 'S'
+			&& line[i] != 'E' && line[i] != 'W' && line[i] != '\n')
 			return (1);
 		i++;
 	}

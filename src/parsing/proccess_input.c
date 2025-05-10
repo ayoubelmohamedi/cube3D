@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   proccess_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aez-zoui <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 10:14:48 by aez-zoui          #+#    #+#             */
-/*   Updated: 2025/05/07 14:12:21 by ael-moha         ###   ########.fr       */
+/*   Created: 2025/05/10 14:59:38 by aez-zoui          #+#    #+#             */
+/*   Updated: 2025/05/10 14:59:43 by aez-zoui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-int	check_map(t_data *data, char *path)
-{
-	int			fd;
-	t_maplist	*maplist;
-	t_maplist	*head;
-
-	fd = open(path, O_RDONLY);
-	if (fd < 0)
-		return (-1);
-	maplist = get_map(fd);
-	if (!maplist)
-		return (1);
-	head = maplist;
-	if (validate_map(head))
-		return (ft_freemap(&head), 1);
-	if (convert_map(data, head))
-		return (ft_freemap(&head), 1);
-	close(fd);
-	return (ft_freemap(&head), 0);
-}
 
 static double	get_player_angle(char dir)
 {
@@ -72,9 +51,29 @@ void	fill_player_pos_dir(t_cub *cub)
 	printf("Error: No player position found in map\n");
 }
 
-int 	check_player(t_cub *cub)
+int	check_player(t_cub *cub)
 {
 	int		i;
+	int		j;
+	char	cell;
+	int		countp;
+
+	i = -1;
+	countp = 0;
+	while (++i < cub->data->row)
+	{
+		j = -1;
+		while (++j < cub->data->col)
+		{
+			cell = cub->data->map[i][j];
+			if (cell == 'N' || cell == 'S' || cell == 'E' || cell == 'W')
+				countp++;
+		}
+	}
+	if (countp != 1)
+		return (1);
+	else
+		return (0);
 }
 
 int	start_parser(t_cub *cub, t_data *data, char *path, int fd)
@@ -92,13 +91,16 @@ int	start_parser(t_cub *cub, t_data *data, char *path, int fd)
 		return (1);
 	}
 	if (check_player(cub))
+	{
+		printf("player position not found\n");
 		return (1);
+	}
 	fill_player_pos_dir(cub);
 	return (0);
 }
 
 int	proccess_input(t_data *data, t_cub *cub, char *path,
-		t_wall_textures *texture)
+	t_wall_textures *texture)
 {
 	int	fd;
 
