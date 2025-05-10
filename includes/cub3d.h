@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 19:53:12 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 22:37:40 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,18 @@ void draw_vertical_line(t_player *player, t_vertical_info info);
 void render_ceiling(t_player *player, int screen_x, int y_start);
 void render_floor(t_player *player, int curr_x, int y_end);
 void	render_wall_tex(t_player *player, int y_start, int y_end, t_vertical_info info);
+
+
+/*              helpers                         */
+void	set_north_texture(t_player *player, t_texture_info *tex);
+void	set_south_texture(t_player *player, t_texture_info *tex);
+void	set_east_texture(t_player *player, t_texture_info *tex);
+void	set_west_texture(t_player *player, t_texture_info *tex);
+
+void    render_wall_section(t_player *player, t_vertical_info info, int y_start, int y_end);
+void    render_floor_section(t_player *player, int x, int y_end);
+void    render_wall_section(t_player *player, t_vertical_info info, int y_start, int y_end);
+void    render_ceiling_section(t_player *player, int x, int y_start);
+void    fill_vertical_info(t_vertical_info *info, int screen_x, int wall_height, double correct_dist);
+void    fill_rays(t_rays *rays, t_player *player, double ray_angle);
 #endif 

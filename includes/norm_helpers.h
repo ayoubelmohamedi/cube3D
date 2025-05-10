@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   norm_helpers.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/10 22:33:27 by ael-moha          #+#    #+#             */
+/*   Updated: 2025/05/10 22:34:28 by ael-moha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 
 
@@ -115,11 +127,6 @@ typedef struct s_texture_calc {
     int     color;
 }   t_texture_calc;
 
-
-void	set_north_texture(t_player *player, t_texture_info *tex);
-void	set_south_texture(t_player *player, t_texture_info *tex);
-void	set_east_texture(t_player *player, t_texture_info *tex);
-void	set_west_texture(t_player *player, t_texture_info *tex);
 
 
 #endif
