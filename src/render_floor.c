@@ -6,27 +6,11 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:27:36 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:06:33 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:32:37 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-typedef struct s_floor_render
-{
-	double	player_dir_x;
-	double	player_dir_y;
-	double	plane_x;
-	double	plane_y;
-	int		screen_x;
-	double	row_distance;
-	float	floor_step_x;
-	float	floor_step_y;
-	float	current_floor_x;
-	float	current_floor_y;
-	int		tex_x;
-	int		tex_y;
-}			t_floor_render;
 
 static void	init_floor_render(t_player *player, t_floor_render *fr)
 {
@@ -56,12 +40,15 @@ static void	calc_floor_position(t_player *player, t_floor_render *fr, int y)
 
 static void	get_floor_texture_coords(t_player *player, t_floor_render *fr)
 {
-	fr->tex_x = (int)(player->env->texture->floor_width * (fr->current_floor_x
-				- floor(fr->current_floor_x))) & (player->env->texture->floor_width
-			- 2);
-	fr->tex_y = (int)(player->env->texture->floor_height * (fr->current_floor_y
-				- floor(fr->current_floor_y))) & (player->env->texture->floor_height
-			- 1);
+	int	floor_width;
+	int	floor_height;
+
+	floor_width = player->env->texture->floor_width;
+	floor_height = player->env->texture->floor_height;
+	fr->tex_x = (int)(floor_width * (fr->current_floor_x
+				- floor(fr->current_floor_x))) & (floor_width - 2);
+	fr->tex_y = (int)(floor_height * (fr->current_floor_y
+				- floor(fr->current_floor_y))) & (floor_height - 1);
 }
 
 static int	get_floor_color(t_player *player, t_floor_render *fr)
@@ -84,9 +71,9 @@ static int	get_floor_color(t_player *player, t_floor_render *fr)
 
 void	render_floor(t_player *player, int curr_x, int y_end)
 {
-	int y;
-	int floor_color;
-	t_floor_render fr;
+	int				y;
+	int				floor_color;
+	t_floor_render	fr;
 
 	fr.screen_x = curr_x;
 	init_floor_render(player, &fr);
