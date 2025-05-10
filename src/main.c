@@ -106,9 +106,14 @@ void init_texture_paths(t_env *env, t_cub * cub)
     env->wall_tex_files[3] = cub->texture->ea;
 
     // textures for ceiling + floor 
-    env->textures_files[0] = NULL;
-    env->textures_files[1] = NULL;
+    env->textures_files[0] = sky[0];
+    env->textures_files[1] = floors[0];
+
     env->has_texture = false;
+    if (env->textures_files[0] && env->textures_files[1])
+        env->has_texture = true;
+    
+    env->has_minimap = false;
 
     env->f_color = get_colors(cub->texture->rgb->f);
     env->c_color = get_colors(cub->texture->rgb->c);
@@ -144,10 +149,9 @@ t_env    *load_env(t_cub *cub)
     env->addr = mlx_get_data_addr(env->img, &env->bits_per_pixel,
                                  &env->line_lenght, &env->endian);
     env->has_minimap = false;
-    env->has_texture = false;
+    env->has_texture = true;
     init_texture_paths(env, cub);
     env->has_wall_texture = true;
-    env->has_texture = false;
     if (env->has_texture)
         env->texture = load_floor_ceiling_texture(env);
     if (env->has_wall_texture)
