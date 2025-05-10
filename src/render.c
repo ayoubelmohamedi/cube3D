@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/08 16:17:16 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 16:08:26 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,26 @@ void render_scene(t_env *env, t_player *player)
         render_minimap(env, player);
 }
 
+
+void fill_rays(t_rays * rays, t_player *player, double ray_angle)
+{
+    rays->rayX = &player->x;
+    rays->rayY = &player->y;
+    rays->rayDirX = cos(ray_angle);
+    rays->rayDirY = sin(ray_angle);
+    rays->mapX = (int) rays->rayX;
+    rays->mapY = (int) rays->rayY;
+}
+
 void cast_ray(t_player *player, double ray_angle, int screen_x)
 {
-    double rayX = player->x;
-    double rayY = player->y;
-
-    double rayDirX = cos(ray_angle);
-    double rayDirY = sin(ray_angle);
-
-    int mapX = (int)rayX;
-    int mapY = (int)rayY;
+    t_rays rays;
     int side;
 
-    if (mapX < 0 || mapX >= player->env->map_width || mapY < 0 || mapY >= player->env->map_height)
+    fill_rays(&rays, player, ray_angle);
+    if (rays.mapX < 0 || rays.mapX >= player->env->map_width || rays.mapY < 0 || rays.mapY >= player->env->map_height)
         return;
-
-    double dist = dda_algo(rayDirX, rayDirY, &rayX, &rayY, &mapX, &mapY, &side, player);
+    double dist = dda_algo(&rays, &side, player);
     if (dist >= 0)
     {
         // fix bowelfish effect
@@ -58,15 +62,11 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
         if (correct_dist < 0.01)
             correct_dist = 0.01;
 
-        // int wall_type = map[mapY][mapX];
         int wall_height = (int)(HEIGHT / correct_dist);
         if (wall_height < 0)
             wall_height = 0;
         if (wall_height > HEIGHT)
             wall_height = HEIGHT;
-        // int color = get_color(wall_type);
-        // color = darken_color(color, correct_dist);
-
         draw_vertical_line(player, rayDirX, rayDirY,screen_x, wall_height,correct_dist, side);
     }
 }
