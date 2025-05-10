@@ -12,6 +12,8 @@
 
 #include "parsing.h"
 
+#include "parsing.h"
+
 t_maplist	*create_map(char *line)
 {
 	t_maplist	*node;
@@ -48,14 +50,14 @@ t_maplist	*get_map(int fd)
 	char		*line;
 	t_maplist	*map;
 	int			start;
-	int 			i;
+	int			i;
 
 	map = NULL;
 	i = 0;
 	start = 0;
 	line = get_next_line(fd);
 	while (line)
-	{	
+	{
 		printf("line = %s ||| current i = %d\n", line, i);
 		if (checkline(&line, fd, &map, &start, &i))
 			return (NULL);
@@ -82,21 +84,18 @@ int	is_valid_characters(char *line, int *j)
 		if (line[i] == '1' || line[i] == '0' || line[i] == ' '
 			|| line[i] == '\t' || line[i] == 'N' || line[i] == 'S'
 			|| line[i] == 'E' || line[i] == 'W' || line[i] == '\n')
+		{
+			if (line[i] == 'N' || line[i] == 'E' || line[i] == 'S'
+				|| line[i] == 'W')
+				(*j)++;
+			if (*j > 1)
 			{
-				if (line[i] == 'N' || line[i] == 'E' || line[i] == 'S' || line[i] == 'W')
-				{
-					printf("POSITION DETECTED\n");
-					(*j)++;
-				}
-				if (*j > 1)
-				{
-					printf("Error: More than one position\n");
-					(*j) = 0;
-					return (1);
-				}
-			}
-			else
+				(*j) = 0;
 				return (1);
+			}
+		}
+		else
+			return (1);
 		i++;
 	}
 	return (0);

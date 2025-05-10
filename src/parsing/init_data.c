@@ -27,7 +27,7 @@ int	init_cub(t_cub *cub, t_data *data, t_wall_textures *texture)
 	cub->data = data;
 	cub->player_x = 0;
 	cub->player_y = 0;
-	cub->texture = texture;;
+	cub->texture = texture;
 	return (0);
 }
 
@@ -53,4 +53,3 @@ int	ft_exit(t_cub *cub)
 	exit(0);
 	return (0);
 }
-
