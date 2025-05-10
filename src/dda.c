@@ -24,19 +24,19 @@ typedef struct s_dda
     double	sideDistY;
 }	t_dda;
 
-static void	init_dda(double rayDirX, double rayDirY, double *rayX,
-                    double *rayY, int *mapX, int *mapY, t_dda *dda)
+
+static void	init_dda(t_rays *rays, t_dda *dda)
 {
-    *mapX = (int)(*rayX);
-    *mapY = (int)(*rayY);
-    dda->deltaDistX = fabs(1 / rayDirX);
-    dda->deltaDistY = fabs(1 / rayDirY);
-    dda->stepX = (rayDirX < 0) ? -1 : 1;
-    dda->stepY = (rayDirY < 0) ? -1 : 1;
-    dda->sideDistX = (rayDirX < 0) ? (*rayX - *mapX) * dda->deltaDistX
-        : (*mapX + 1.0 - *rayX) * dda->deltaDistX;
-    dda->sideDistY = (rayDirY < 0) ? (*rayY - *mapY) * dda->deltaDistY
-        : (*mapY + 1.0 - *rayY) * dda->deltaDistY;
+    rays->mapX = (int)(*rays->rayX);
+    rays->mapY = (int)(*rays->rayY);
+    dda->deltaDistX = fabs(1 / rays->rayDirX);
+    dda->deltaDistY = fabs(1 / rays->rayDirY);
+    dda->stepX = (rays->rayDirX < 0) ? -1 : 1;
+    dda->stepY = (rays->rayDirY < 0) ? -1 : 1;
+    dda->sideDistX = (rays->rayDirX < 0) ? (*rays->rayX - *rays->mapX) * dda->deltaDistX
+        : (*rays->mapX + 1.0 - *rays->rayX) * dda->deltaDistX;
+    dda->sideDistY = (rays->rayDirY < 0) ? (*rays->rayY - *rays->mapY) * dda->deltaDistY
+        : (*rays->mapY + 1.0 - *rays->rayY) * dda->deltaDistY;
     dda->side_hit = 0;
 }
 
@@ -61,16 +61,15 @@ static int	perform_dda(int *mapX, int *mapY, t_dda *dda, t_player *player)
     return (0);
 }
 
-double	dda_algo(double rayDirX, double rayDirY, double *rayX,
-                double *rayY, int *mapX, int *mapY, int *side, t_player *player)
+double	dda_algo(t_rays *rays,int *side, t_player *player)
 {
     t_dda	dda;
     int		result;
 
-    init_dda(rayDirX, rayDirY, rayX, rayY, mapX, mapY, &dda);
+    init_dda(rays, &dda);
     while (1)
     {
-        result = perform_dda(mapX, mapY, &dda, player);
+        result = perform_dda(rays->mapX, rays->mapY, &dda, player);
         if (result == -1)
             return (-1.0);
         if (result == 1)
@@ -78,12 +77,12 @@ double	dda_algo(double rayDirX, double rayDirY, double *rayX,
     }
     if (dda.side_hit == 0)
     {
-        *side = (rayDirX > 0) ? SIDE_WEST : SIDE_EAST;
+        *side = (rays->rayDirX > 0) ? SIDE_WEST : SIDE_EAST;
         return (dda.sideDistX - dda.deltaDistX);
     }
     else
     {
-        *side = (rayDirY > 0) ? SIDE_NORTH : SIDE_SOUTH;
+        *side = (rays->rayDirY > 0) ? SIDE_NORTH : SIDE_SOUTH;
         return (dda.sideDistY - dda.deltaDistY);
     }
 }

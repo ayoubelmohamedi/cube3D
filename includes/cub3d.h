@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/06 23:24:58 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 15:58:30 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 #include "game_macros.h"
 #include  "../src/parsing/parsing.h"
+#include "norm_helpers.h"
 #include "mlx.h"
 #include <math.h>
 #include <stdlib.h>
@@ -122,8 +123,7 @@ typedef struct
 int         handle_keypress(int keypress, t_player *player);
 
 /*             DDA algo                */
-double	dda_algo(double rayDirX, double rayDirY, double *rayX,
-            double *rayY, int *mapX, int *mapY, int *side, t_player *player);
+double	dda_algo(t_rays *rays, int *side, t_player *player);
 
 /*              render minimap          */
 void render_minimap(t_env *env, t_player *player);
