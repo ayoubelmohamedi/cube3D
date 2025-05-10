@@ -26,7 +26,7 @@ typedef struct s_vertical_info
     double rayDirY;
 } t_vertical_info;
 
-typedef struct s_rgb
+typedef struct s_rgb_info
 {
 	int	r;
 	int	g;
@@ -40,7 +40,7 @@ typedef struct s_rgb
 	int	final_r;
 	int	final_g;
 	int	final_b;
-}		t_rgb;
+}		t_rgb_info;
 
 
 

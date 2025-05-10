@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   efffects.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:00 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 17:39:28 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/10 18:25:42 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	get_color(int wall_type)
 // Darken the color based on distance
 int	darken_color(int color, double dist)
 {
-	t_rgb	rgb;
+	t_rgb_info	rgb;
 
 	double factor = 1.0 / (1.0 + dist * 0.05); // fade with distance
 	rgb.r = ((color >> 16) & 0xFF) * factor;
@@ -39,7 +39,7 @@ int	darken_color(int color, double dist)
 int	ceil_fog_color(int ceil_color, int rowDistance)
 {
 	double	fog_factor;
-	t_rgb	rgb;
+	t_rgb_info	rgb;
 
 	fog_factor = 1.0 - exp(-rowDistance * FOG_DENSITY);
 	if (fog_factor < 0.0)
