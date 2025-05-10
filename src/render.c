@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:07:34 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:12:33 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, t_vertical_i
             my_mlx_pixel_put(player->env, info.x, y, player->env->c_color);
     
     if (player->env->has_wall_texture)
-        render_wall_tex(player, y_start, y_end,info.x,  info.corrected_dist, rayDirX, rayDirY, info.side, info.wall_height);
+        render_wall_tex(player, y_start, y_end, rayDirX, rayDirY, info);
     else
         for (int y = y_start; y < y_end; y++)
             my_mlx_pixel_put(player->env, info.x, y, vignette_effect(info.x, WALL_COLOR));

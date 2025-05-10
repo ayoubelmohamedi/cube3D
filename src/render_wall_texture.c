@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:27:46 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 20:50:11 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:14:47 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,22 +120,20 @@ static void	get_texture_info(t_player *player, int side, char **texture_addr,
 }
 
 // Main wall texture rendering function
-void	render_wall_tex(t_player *player, int y_start, int y_end, int curr_x,
-    int corrected_dist, int rayDirX, int rayDirY, int side, 
-    int wall_height)
+void	render_wall_tex(t_player *player, int y_start, int y_end, int rayDirX, int rayDirY, t_vertical_info info)
 {
     t_wall_render	wr;
 
     wr.y_start = y_start;
     wr.y_end = y_end;
-    wr.curr_x = curr_x;
-    wr.corrected_dist = corrected_dist;
-    wr.wall_height = wall_height;
+    wr.curr_x = info.x;
+    wr.corrected_dist = info.corrected_dist;
+    wr.wall_height = info.wall_height;
     
-    get_texture_info(player, side, &wr.texture_addr, &wr.texture_width, 
+    get_texture_info(player, info.side, &wr.texture_addr, &wr.texture_width, 
         &wr.texture_height, &wr.texture_bpp, &wr.texture_line_len);
     
-    wr.texX = get_texture_x(player, side, corrected_dist, rayDirX, rayDirY, 
+    wr.texX = get_texture_x(player, info.side, info.corrected_dist, rayDirX, rayDirY, 
             wr.texture_width);
     
     draw_wall_slice(player, &wr);
