@@ -38,7 +38,7 @@ int	darken_color(int color, double dist)
 
 int	ceil_fog_color(int ceil_color, int rowDistance)
 {
-	double	fog_factor;
+	double		fog_factor;
 	t_rgb_info	rgb;
 
 	fog_factor = 1.0 - exp(-rowDistance * FOG_DENSITY);

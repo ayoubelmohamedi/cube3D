@@ -4,7 +4,16 @@
 #ifndef NORM_HELPERS_H
 #define NORM_HELPERS_H
 
-
+typedef struct s_dda
+{
+	int		side_hit;
+	int		stepX;
+	int		stepY;
+	double	deltaDistX;
+	double	deltaDistY;
+	double	sideDistX;
+	double	sideDistY;
+}			t_dda;
 typedef struct s_rays
 {
     double rayDirX;
