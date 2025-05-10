@@ -12,58 +12,6 @@
 
 #include "../includes/cub3d.h"
 
-/* Definitions of global variables here */
-
-char		*sky[] = {"assets/sky/minecraft.xpm", "assets/sky/minecraft2.xpm",
-			"assets/sky/sunset.xpm", "assets/sky/zenith.xpm", NULL};
-
-char		*floors[] = {"assets/floor/concrete/lime.xpm",
-			"assets/floor/concrete/yellow.xpm", NULL};
-
-t_texture	*load_floor_ceiling_texture(t_env *env)
-{
-	t_texture	*w_texture;
-
-	w_texture = (t_texture *)malloc(sizeof(t_texture));
-	if (!w_texture)
-		return (NULL);
-	w_texture->ceil_img = mlx_xpm_file_to_image(env->mlx,
-			env->textures_files[0], &w_texture->ceil_width,
-			&w_texture->ceil_height);
-	// Todo, handle if no texture file exist [add default color]
-	w_texture->has_ceiling = true;
-	w_texture->has_floor = true;
-	if (!w_texture->ceil_img)
-	{
-		w_texture->has_ceiling = false;
-		w_texture->ceil_img = NULL;
-		w_texture->ceil_addr = NULL;
-		perror("celiling image error");
-		return (NULL);
-	}
-	w_texture->floor_img = mlx_xpm_file_to_image(env->mlx,
-			env->textures_files[1], &w_texture->floor_width,
-			&w_texture->floor_height);
-	if (!w_texture->floor_img)
-	{
-		w_texture->has_floor = false;
-		w_texture->floor_img = NULL;
-		w_texture->floor_addr = NULL;
-		perror("floor image error");
-		return (NULL);
-	}
-	if (w_texture->ceil_img)
-		w_texture->ceil_addr = mlx_get_data_addr(w_texture->ceil_img,
-				&w_texture->ceil_bpp, &w_texture->ceil_line_len,
-				&w_texture->ceil_endian);
-	if (w_texture->floor_img)
-		w_texture->floor_addr = mlx_get_data_addr(w_texture->floor_img,
-				&w_texture->floor_bpp, &w_texture->floor_line_len,
-				&w_texture->floor_endian);
-	return (w_texture);
-}
-
-
 
 t_wall_text	*load_walls_texture(t_env *env)
 {
@@ -90,13 +38,7 @@ void	init_texture_paths(t_env *env, t_cub *cub)
 	env->wall_tex_files[1] = cub->texture->so;
 	env->wall_tex_files[2] = cub->texture->we;
 	env->wall_tex_files[3] = cub->texture->ea;
-	// textures for ceiling + floor
-	env->textures_files[0] = sky[0];
-	env->textures_files[1] = floors[0];
-	env->has_texture = false;
-	if (env->textures_files[0] && env->textures_files[1])
-		env->has_texture = true;
-	env->has_minimap = false;
+    env->has_wall_texture = true;
 	env->f_color = get_colors(cub->texture->rgb->f);
 	env->c_color = get_colors(cub->texture->rgb->c);
 }
@@ -130,33 +72,10 @@ t_env	*load_env(t_cub *cub)
 	env->img = mlx_new_image(env->mlx, WIDTH, HEIGHT);
 	env->addr = mlx_get_data_addr(env->img, &env->bits_per_pixel,
 			&env->line_lenght, &env->endian);
-	env->has_minimap = false;
-	env->has_texture = true;
 	init_texture_paths(env, cub);
-	env->has_wall_texture = true;
-	if (env->has_texture)
-		env->texture = load_floor_ceiling_texture(env);
 	if (env->has_wall_texture)
 		env->walls = load_walls_texture(env);
 	return (env);
-}
-
-void	ft_print_map(char **map)
-{
-	int i, j;
-	i = 0;
-	j = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			printf("%c", map[i][j]);
-			j++;
-		}
-		i++;
-		printf("\n");
-	}
 }
 
 int	main(int ac, char **av)

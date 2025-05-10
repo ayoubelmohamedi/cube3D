@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 22:33:27 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 22:34:28 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 23:04:07 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,38 +71,6 @@ typedef struct s_texture_info {
     int		bpp;
     int		line_len;
 }	t_texture_info;
-
-typedef struct s_ceil_render
-{
-	double	player_dir_x;
-	double	player_dir_y;
-	double	plane_x;
-	double	plane_y;
-	int		screen_x;
-	float	row_distance;
-	float	floor_step_x;
-	float	floor_step_y;
-	float	current_ceil_x;
-	float	current_ceil_y;
-	int		tex_x;
-	int		tex_y;
-}			t_ceil_render;
-
-typedef struct s_floor_render
-{
-	double	player_dir_x;
-	double	player_dir_y;
-	double	plane_x;
-	double	plane_y;
-	int		screen_x;
-	double	row_distance;
-	float	floor_step_x;
-	float	floor_step_y;
-	float	current_floor_x;
-	float	current_floor_y;
-	int		tex_x;
-	int		tex_y;
-}			t_floor_render;
 
 typedef struct s_wall_render
 {
