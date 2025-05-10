@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
+/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 17:38:39 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/10 18:07:34 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, t_vertical_i
 
     // draw floor
     if (player->env->has_texture && player->env->texture->has_floor)
-        render_floor(player, info.x, y_start, y_end, info.wall_height);
+        render_floor(player, info.x, y_end);
     else
         for (int y = y_end; y < HEIGHT; y++)
             my_mlx_pixel_put(player->env, info.x, y, player->env->f_color);

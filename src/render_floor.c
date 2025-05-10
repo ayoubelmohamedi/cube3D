@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 11:27:36 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 20:50:11 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:06:33 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,13 @@ static int	get_floor_color(t_player *player, t_floor_render *fr)
     return (floor_color);
 }
 
-void	render_floor(t_player *player, int screen_x, int y_start, 
-                    int y_end, int wall_height)
+void	render_floor(t_player *player, int curr_x, int y_end)
 {
     int				y;
     int				floor_color;
     t_floor_render	fr;
 
-    (void)y_start;
-    (void)wall_height;
-    fr.screen_x = screen_x;
+    fr.screen_x = curr_x;
     init_floor_render(player, &fr);
     y = y_end;
     while (y < HEIGHT)
@@ -97,7 +94,7 @@ void	render_floor(t_player *player, int screen_x, int y_start,
         calc_floor_position(player, &fr, y);
         get_floor_texture_coords(player, &fr);
         floor_color = get_floor_color(player, &fr);
-        my_mlx_pixel_put(player->env, screen_x, y, floor_color);
+        my_mlx_pixel_put(player->env, curr_x, y, floor_color);
         y++;
     }
 }
