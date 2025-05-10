@@ -34,7 +34,6 @@ typedef struct s_vertical_info
     double rayDirX;
     double rayDirY;
     double dist;
-    double corrected_dist;
 } t_vertical_info;
 
 typedef struct s_rgb_info
