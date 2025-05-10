@@ -6,7 +6,7 @@
 #    By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 08:56:21 by ael-moha          #+#    #+#              #
-#    Updated: 2025/05/06 23:27:53 by ael-moha         ###   ########.fr        #
+#    Updated: 2025/05/10 22:42:32 by ael-moha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,9 @@ SRCS = src/main.c \
        src/render_ceiling.c \
        src/render_floor.c \
        src/render_wall_texture.c \
-       src/efffects.c
+       src/efffects.c \
+       src/texture_helpers.c \
+       src/render_helpers.c \
 
 OBJS = $(SRCS:.c=.o)
 OBJS += $(SRCS_PARSER:.c=.o)
