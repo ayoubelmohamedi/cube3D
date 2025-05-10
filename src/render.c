@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:17:44 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:34:30 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void fill_rays(t_rays * rays, t_player *player, double ray_angle)
     rays->rayY = &player->y;
     rays->rayDirX = cos(ray_angle);
     rays->rayDirY = sin(ray_angle);
-    rays->mapX = (int) rays->rayX;
-    rays->mapY = (int) rays->rayY;
+    rays->mapX = (int) *rays->rayX;
+    rays->mapY = (int) *rays->rayY;
 }
 
 

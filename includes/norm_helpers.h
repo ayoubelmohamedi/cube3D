@@ -11,8 +11,8 @@ typedef struct s_rays
     double rayDirY;
     double *rayX;
     double *rayY;
-    int *mapX;
-    int *mapY;
+    int 	mapX;
+    int 	mapY;
 } t_rays;
 
 

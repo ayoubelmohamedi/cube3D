@@ -27,16 +27,16 @@ typedef struct s_dda
 
 static void	init_dda(t_rays *rays, t_dda *dda)
 {
-    rays->mapX = (int)(*rays->rayX);
-    rays->mapY = (int)(*rays->rayY);
+    rays->mapX = (int)*rays->rayX;
+    rays->mapY = (int)*rays->rayY;
     dda->deltaDistX = fabs(1 / rays->rayDirX);
     dda->deltaDistY = fabs(1 / rays->rayDirY);
     dda->stepX = (rays->rayDirX < 0) ? -1 : 1;
     dda->stepY = (rays->rayDirY < 0) ? -1 : 1;
-    dda->sideDistX = (rays->rayDirX < 0) ? (*rays->rayX - *rays->mapX) * dda->deltaDistX
-        : (*rays->mapX + 1.0 - *rays->rayX) * dda->deltaDistX;
-    dda->sideDistY = (rays->rayDirY < 0) ? (*rays->rayY - *rays->mapY) * dda->deltaDistY
-        : (*rays->mapY + 1.0 - *rays->rayY) * dda->deltaDistY;
+    dda->sideDistX = (rays->rayDirX < 0) ? (*rays->rayX - rays->mapX) * dda->deltaDistX
+        : (rays->mapX + 1.0 - *rays->rayX) * dda->deltaDistX;
+    dda->sideDistY = (rays->rayDirY < 0) ? (*rays->rayY - rays->mapY) * dda->deltaDistY
+        : (rays->mapY + 1.0 - *rays->rayY) * dda->deltaDistY;
     dda->side_hit = 0;
 }
 
@@ -69,7 +69,7 @@ double	dda_algo(t_rays *rays,int *side, t_player *player)
     init_dda(rays, &dda);
     while (1)
     {
-        result = perform_dda(rays->mapX, rays->mapY, &dda, player);
+        result = perform_dda(&rays->mapX, &rays->mapY, &dda, player);
         if (result == -1)
             return (-1.0);
         if (result == 1)
