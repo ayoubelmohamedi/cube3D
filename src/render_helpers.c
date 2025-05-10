@@ -51,14 +51,14 @@ void	render_wall_section(t_player *player, t_vertical_info info, int y_start,
 	if (player->env->has_wall_texture)
 		render_wall_tex(player, y_start, y_end, info);
 	else
-    {
+	{
 		while (y < y_end)
 		{
 			my_mlx_pixel_put(player->env, info.x, y, vignette_effect(info.x,
 					WALL_COLOR));
 			y++;
 		}
-    }
+	}
 }
 
 void	render_floor_section(t_player *player, int x, int y_end)
@@ -71,6 +71,4 @@ void	render_floor_section(t_player *player, int x, int y_end)
 		my_mlx_pixel_put(player->env, x, y, player->env->f_color);
 		y++;
 	}
-
-}	
-    
+}
