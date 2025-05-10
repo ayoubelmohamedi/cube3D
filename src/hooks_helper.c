@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:16:55 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/05 21:38:35 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:17:59 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,37 @@ static int	handle_exit(t_player *player)
 	return (0);
 }
 
+static void	calculate_movement(int key, t_player *player, double *new_x,
+		double *new_y)
+{
+	if (key == KEY_W)
+	{
+		*new_x = player->x + cos(player->dir) * MOVE_SPEED;
+		*new_y = player->y + sin(player->dir) * MOVE_SPEED;
+	}
+	else if (key == KEY_S)
+	{
+		*new_x = player->x - cos(player->dir) * MOVE_SPEED;
+		*new_y = player->y - sin(player->dir) * MOVE_SPEED;
+	}
+	else if (key == KEY_A)
+	{
+		*new_x = player->x + sin(player->dir) * MOVE_SPEED;
+		*new_y = player->y - cos(player->dir) * MOVE_SPEED;
+	}
+	else
+	{
+		*new_x = player->x - sin(player->dir) * MOVE_SPEED;
+		*new_y = player->y + cos(player->dir) * MOVE_SPEED;
+	}
+}
+
 static int	handle_movement(int key, t_player *player)
 {
 	double	new_x;
 	double	new_y;
 
-	if (key == KEY_W)
-	{
-		new_x = player->x + cos(player->dir) * MOVE_SPEED;
-		new_y = player->y + sin(player->dir) * MOVE_SPEED;
-	}
-	else if (key == KEY_S)
-	{
-		new_x = player->x - cos(player->dir) * MOVE_SPEED;
-		new_y = player->y - sin(player->dir) * MOVE_SPEED;
-	}
-	else if (key == KEY_A)
-	{
-		new_x = player->x + sin(player->dir) * MOVE_SPEED;
-		new_y = player->y - cos(player->dir) * MOVE_SPEED;
-	}
-	else
-	{
-		new_x = player->x - sin(player->dir) * MOVE_SPEED;
-		new_y = player->y + cos(player->dir) * MOVE_SPEED;
-	}
+	calculate_movement(key, player, &new_x, &new_y);
 	if (player->env->map[(int)new_y][(int)new_x] == '0')
 	{
 		player->x = new_x;
@@ -75,7 +81,7 @@ static int	handle_rotation(int key, t_player *player)
 
 int	handle_keypress(int keypress, t_player *player)
 {
-	bool need_render;
+	bool	need_render;
 
 	need_render = false;
 	if (keypress == KEY_ESC)
