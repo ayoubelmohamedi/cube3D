@@ -6,13 +6,11 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 19:55:54 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 19:56:15 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 20:11:03 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-
 
 static void	init_dda(t_rays *rays, t_dda *dda)
 {
@@ -20,12 +18,20 @@ static void	init_dda(t_rays *rays, t_dda *dda)
 	rays->mapY = (int)*rays->rayY;
 	dda->deltaDistX = fabs(1 / rays->rayDirX);
 	dda->deltaDistY = fabs(1 / rays->rayDirY);
-	dda->stepX = (rays->rayDirX < 0) ? -1 : 1;
-	dda->stepY = (rays->rayDirY < 0) ? -1 : 1;
-	dda->sideDistX = (rays->rayDirX < 0) ? (*rays->rayX - rays->mapX)
-		* dda->deltaDistX : (rays->mapX + 1.0 - *rays->rayX) * dda->deltaDistX;
-	dda->sideDistY = (rays->rayDirY < 0) ? (*rays->rayY - rays->mapY)
-		* dda->deltaDistY : (rays->mapY + 1.0 - *rays->rayY) * dda->deltaDistY;
+	dda->stepX = 1;
+	if (rays->rayDirX < 0)
+		dda->stepX = -1;
+	dda->stepY = 1;
+	if (rays->rayDirY < 0)
+		dda->stepY = -1;
+	if (rays->rayDirX < 0)
+		dda->sideDistX = (*rays->rayX - rays->mapX) * dda->deltaDistX;
+	else
+		dda->sideDistX = (rays->mapX + 1.0 - *rays->rayX) * dda->deltaDistX;
+	if (rays->rayDirY < 0)
+		dda->sideDistY = (*rays->rayY - rays->mapY) * dda->deltaDistY;
+	else
+		dda->sideDistY = (rays->mapY + 1.0 - *rays->rayY) * dda->deltaDistY;
 	dda->side_hit = 0;
 }
 
@@ -51,6 +57,24 @@ static int	perform_dda(int *mapX, int *mapY, t_dda *dda, t_player *player)
 	return (0);
 }
 
+static double	calculate_wall_distance(t_rays *rays, int *side, t_dda *dda)
+{
+	if (dda->side_hit == 0)
+	{
+		*side = SIDE_EAST;
+		if (rays->rayDirX > 0)
+			*side = SIDE_WEST;
+		return (dda->sideDistX - dda->deltaDistX);
+	}
+	else
+	{
+		*side = SIDE_SOUTH;
+		if (rays->rayDirY > 0)
+			*side = SIDE_NORTH;
+		return (dda->sideDistY - dda->deltaDistY);
+	}
+}
+
 double	dda_algo(t_rays *rays, int *side, t_player *player)
 {
 	t_dda	dda;
@@ -65,14 +89,5 @@ double	dda_algo(t_rays *rays, int *side, t_player *player)
 		if (result == 1)
 			break ;
 	}
-	if (dda.side_hit == 0)
-	{
-		*side = (rays->rayDirX > 0) ? SIDE_WEST : SIDE_EAST;
-		return (dda.sideDistX - dda.deltaDistX);
-	}
-	else
-	{
-		*side = (rays->rayDirY > 0) ? SIDE_NORTH : SIDE_SOUTH;
-		return (dda.sideDistY - dda.deltaDistY);
-	}
+	return (calculate_wall_distance(rays, side, &dda));
 }
