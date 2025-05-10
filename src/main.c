@@ -13,23 +13,7 @@
 #include "../includes/cub3d.h"
 
 
-t_wall_text	*load_walls_texture(t_env *env)
-{
-    t_wall_text	*walls_tex;
 
-    walls_tex = (t_wall_text *)malloc(sizeof(t_wall_text));
-    if (!walls_tex)
-        return (NULL);
-    if (load_north_texture(env, walls_tex))
-        return (free(walls_tex), NULL);
-    if (load_south_texture(env, walls_tex))
-        return (free(walls_tex), NULL);
-    if (load_west_texture(env, walls_tex))
-        return (free(walls_tex), NULL);
-    if (load_east_texture(env, walls_tex))
-        return (free(walls_tex), NULL);
-    return (walls_tex);
-}
 
 void	init_texture_paths(t_env *env, t_cub *cub)
 {
@@ -101,13 +85,6 @@ int	main(int ac, char **av)
 	ft_memset(&data, 0, sizeof(t_data));
 	if (proccess_input(&data, cub, av[1], texture))
 		return (free_heap(cub), 1);
-	printf("\n=================== MAP =====================\n\n");
-	ft_print_map(cub->data->map);
-	printf("\n=================== TEXTURES ================\n\n");
-	printf("NO :%s \n", cub->texture->no);
-	printf("EA :%s \n", cub->texture->ea);
-	printf("WE :%s \n", cub->texture->we);
-	printf("SO :%s \n", cub->texture->so);
 	// destroy_all(cub);
 	env = load_env(cub);
 	player = init_player(env, cub);
@@ -117,18 +94,7 @@ int	main(int ac, char **av)
 		perror("Error: failed to initialize env or player");
 		return (1);
 	}
-	// display content of env and player
-	printf("env->map_width: %d\n", env->map_width);
-	printf("env->map_height: %d\n", env->map_height);
-	// print all player attributes
-	printf("player->x: %f\n", player->x);
-	printf("player->y: %f\n", player->y);
-	printf("player->dir: %f\n", player->dir);
-	printf("env->f_color: %d\n", env->f_color);
-	printf("env->c_color: %d\n", env->c_color);
-	printf("env->has_texture: %d\n", env->has_texture);
-	printf("env->has_wall_texture: %d\n", env->has_wall_texture);
-	printf("env->has_minimap: %d\n", env->has_minimap);
+
 	render_scene(env, player);
 	mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
 	mlx_loop(env->mlx);

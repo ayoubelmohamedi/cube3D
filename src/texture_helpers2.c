@@ -6,11 +6,29 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 22:46:55 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 22:47:21 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 23:07:05 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+t_wall_text	*load_walls_texture(t_env *env)
+{
+    t_wall_text	*walls_tex;
+
+    walls_tex = (t_wall_text *)malloc(sizeof(t_wall_text));
+    if (!walls_tex)
+        return (NULL);
+    if (load_north_texture(env, walls_tex))
+        return (free(walls_tex), NULL);
+    if (load_south_texture(env, walls_tex))
+        return (free(walls_tex), NULL);
+    if (load_west_texture(env, walls_tex))
+        return (free(walls_tex), NULL);
+    if (load_east_texture(env, walls_tex))
+        return (free(walls_tex), NULL);
+    return (walls_tex);
+}
 
 int	load_north_texture(t_env *env, t_wall_text *walls_tex)
 {
