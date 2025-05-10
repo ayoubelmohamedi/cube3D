@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:27:46 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:18:03 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:23:19 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,20 @@ static void	draw_wall_slice(t_player *player, t_wall_render *wr)
     }
 }
 
-static int	get_texture_x(t_player *player, int side, double corrected_dist,
-    int rayDirX, int rayDirY, int texture_width)
+static int	get_texture_x(t_player *player, t_vertical_info info, int texture_width)
 {
     double	wallX;
     int		texX;
     
-    if (side == SIDE_EAST || side == SIDE_WEST)
-        wallX = player->y + corrected_dist * rayDirY;
+    if (info.side == SIDE_EAST || info.side == SIDE_WEST)
+        wallX = player->y + info.corrected_dist * info.rayDirY;
     else
-        wallX = player->x + corrected_dist * rayDirX;
+        wallX = player->x + info.corrected_dist * info.rayDirX;
     wallX -= floor(wallX);
     texX = (int)(wallX * (double)texture_width);
-    if ((side == SIDE_EAST || side == SIDE_WEST) && rayDirX > 0)
+    if ((info.side == SIDE_EAST || info.side == SIDE_WEST) && info.rayDirX > 0)
         texX = texture_width - texX - 1;
-    if ((side == SIDE_NORTH || side == SIDE_SOUTH) && rayDirY < 0)
+    if ((info.side == SIDE_NORTH || info.side == SIDE_SOUTH) && info.rayDirY < 0)
         texX = texture_width - texX - 1;
     return (texX);
 }
@@ -133,8 +132,7 @@ void	render_wall_tex(t_player *player, int y_start, int y_end, t_vertical_info i
     get_texture_info(player, info.side, &wr.texture_addr, &wr.texture_width, 
         &wr.texture_height, &wr.texture_bpp, &wr.texture_line_len);
     
-    wr.texX = get_texture_x(player, info.side, info.corrected_dist, info.rayDirX, info.rayDirY, 
-            wr.texture_width);
+    wr.texX = get_texture_x(player, info, wr.texture_width);
     
     draw_wall_slice(player, &wr);
 }
