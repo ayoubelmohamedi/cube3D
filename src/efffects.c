@@ -3,30 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   efffects.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
+/*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:00 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 13:12:14 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 17:39:28 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-typedef struct s_rgb
-{
-	int	r;
-	int	g;
-	int	b;
-	int	ceil_r;
-	int	ceil_g;
-	int	ceil_b;
-	int	fog_r;
-	int	fog_g;
-	int	fog_b;
-	int	final_r;
-	int	final_g;
-	int	final_b;
-}		t_rgb;
 
 // Choose wall color by type Red, Green, Blue
 int	get_color(int wall_type)

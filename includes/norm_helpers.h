@@ -24,6 +24,23 @@ typedef struct s_vertical_info
     int side;
 } t_vertical_info;
 
+typedef struct s_rgb
+{
+	int	r;
+	int	g;
+	int	b;
+	int	ceil_r;
+	int	ceil_g;
+	int	ceil_b;
+	int	fog_r;
+	int	fog_g;
+	int	fog_b;
+	int	final_r;
+	int	final_g;
+	int	final_b;
+}		t_rgb;
+
+
 
 
 

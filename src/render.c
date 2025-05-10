@@ -6,7 +6,7 @@
 /*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 16:35:50 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/10 17:38:39 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void fill_rays(t_rays * rays, t_player *player, double ray_angle)
 }
 
 
-void fill_vertical_info(t_vertical_info * info,int screen_x, int wall_height, double correct_dist)
+void fill_vertical_info(t_vertical_info * info, int screen_x, int wall_height, double correct_dist)
 {
     info->x = screen_x;
     info->wall_height = wall_height;
