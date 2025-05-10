@@ -16,5 +16,15 @@ typedef struct s_rays
 } t_rays;
 
 
+typedef struct s_vertical_info
+{
+    int x;
+    int wall_height;
+    double corrected_dist;
+    int side;
+} t_vertical_info;
+
+
+
 
 #endif

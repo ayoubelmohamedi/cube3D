@@ -6,7 +6,7 @@
 /*   By: macbookpro <macbookpro@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 16:08:26 by macbookpro       ###   ########.fr       */
+/*   Updated: 2025/05/10 16:35:50 by macbookpro       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,18 @@ void fill_rays(t_rays * rays, t_player *player, double ray_angle)
     rays->mapY = (int) rays->rayY;
 }
 
+
+void fill_vertical_info(t_vertical_info * info,int screen_x, int wall_height, double correct_dist)
+{
+    info->x = screen_x;
+    info->wall_height = wall_height;
+    info->corrected_dist = correct_dist;
+}
+
 void cast_ray(t_player *player, double ray_angle, int screen_x)
 {
     t_rays rays;
+    t_vertical_info info;
     int side;
 
     fill_rays(&rays, player, ray_angle);
@@ -67,36 +76,38 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
             wall_height = 0;
         if (wall_height > HEIGHT)
             wall_height = HEIGHT;
-        draw_vertical_line(player, rayDirX, rayDirY,screen_x, wall_height,correct_dist, side);
+        info.side = side;
+        fill_vertical_info(&info, screen_x, wall_height, correct_dist);
+        draw_vertical_line(player, rays.rayDirX, rays.rayDirY, info);
     }
 }
 
-void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, int x, int wall_height, double corrected_dist, int side)
+void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, t_vertical_info info)
 {
-    int y_start = (HEIGHT - wall_height) / 2;
+    int y_start = (HEIGHT - info.wall_height) / 2;
     if (y_start < 0) y_start = 0;
-    int y_end = y_start + wall_height;
+    int y_end = y_start + info.wall_height;
     if (y_end  > HEIGHT ) y_end = HEIGHT;
 
     // draw ceiling
     if (player->env->has_texture && player->env->texture->has_ceiling)
-        render_ceiling(player, x, y_start, y_end, wall_height);
+        render_ceiling(player, info.x, y_start, y_end, info.wall_height);
     else
         for (int y = 0; y < y_start; y++)
-            my_mlx_pixel_put(player->env, x, y, player->env->c_color);
+            my_mlx_pixel_put(player->env, info.x, y, player->env->c_color);
     
     if (player->env->has_wall_texture)
-        render_wall_tex(player, y_start, y_end,x,  corrected_dist, rayDirX, rayDirY, side, wall_height);
+        render_wall_tex(player, y_start, y_end,info.x,  info.corrected_dist, rayDirX, rayDirY, info.side, info.wall_height);
     else
         for (int y = y_start; y < y_end; y++)
-            my_mlx_pixel_put(player->env, x, y, vignette_effect(x, WALL_COLOR));
+            my_mlx_pixel_put(player->env, info.x, y, vignette_effect(info.x, WALL_COLOR));
 
     // draw floor
     if (player->env->has_texture && player->env->texture->has_floor)
-        render_floor(player, x, y_start, y_end, wall_height);
+        render_floor(player, info.x, y_start, y_end, info.wall_height);
     else
         for (int y = y_end; y < HEIGHT; y++)
-            my_mlx_pixel_put(player->env, x, y, player->env->f_color);
+            my_mlx_pixel_put(player->env, info.x, y, player->env->f_color);
 }
 
 void my_mlx_pixel_put(t_env *env, int x, int y, int color)
