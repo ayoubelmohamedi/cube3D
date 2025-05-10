@@ -42,7 +42,13 @@ typedef struct s_rgb_info
 	int	final_b;
 }		t_rgb_info;
 
-
+typedef struct s_texture_info {
+    char	*addr;
+    int		width;
+    int		height;
+    int		bpp;
+    int		line_len;
+}	t_texture_info;
 
 
 

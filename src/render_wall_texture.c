@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:27:46 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:23:19 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:46:35 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,41 +80,39 @@ static int	get_texture_x(t_player *player, t_vertical_info info, int texture_wid
     return (texX);
 }
 
-static void	get_texture_info(t_player *player, int side, char **texture_addr, 
-    int *texture_width, int *texture_height, 
-    int *texture_bpp, int *texture_line_len)
+static void	get_texture_info(t_player *player, int side, t_texture_info *tex)
 {
     if (side == SIDE_NORTH)
     {
-        *texture_addr = player->env->walls->north_addr;
-        *texture_width = player->env->walls->north_width;
-        *texture_height = player->env->walls->north_height;
-        *texture_bpp = player->env->walls->north_bpp;
-        *texture_line_len = player->env->walls->north_line_len;
+        tex->addr = player->env->walls->north_addr;
+        tex->width = player->env->walls->north_width;
+        tex->height = player->env->walls->north_height;
+        tex->bpp = player->env->walls->north_bpp;
+        tex->line_len = player->env->walls->north_line_len;
     }
     else if (side == SIDE_SOUTH)
     {
-        *texture_addr = player->env->walls->south_addr;
-        *texture_width = player->env->walls->south_width;
-        *texture_height = player->env->walls->south_heght; 
-        *texture_bpp = player->env->walls->south_bpp;
-        *texture_line_len = player->env->walls->south_line_len;
+        tex->addr = player->env->walls->south_addr;
+        tex->width = player->env->walls->south_width;
+        tex->height = player->env->walls->south_heght;
+        tex->bpp = player->env->walls->south_bpp;
+        tex->line_len = player->env->walls->south_line_len;
     }
     else if (side == SIDE_EAST)
     {
-        *texture_addr = player->env->walls->east_addr;
-        *texture_width = player->env->walls->east_width;
-        *texture_height = player->env->walls->east_height;
-        *texture_bpp = player->env->walls->east_bpp;
-        *texture_line_len = player->env->walls->east_line_len;
+        tex->addr = player->env->walls->east_addr;
+        tex->width = player->env->walls->east_width;
+        tex->height = player->env->walls->east_height;
+        tex->bpp = player->env->walls->east_bpp;
+        tex->line_len = player->env->walls->east_line_len;
     }
     else
     {
-        *texture_addr = player->env->walls->west_addr;
-        *texture_width = player->env->walls->west_width;
-        *texture_height = player->env->walls->west_height;
-        *texture_bpp = player->env->walls->west_bpp;
-        *texture_line_len = player->env->walls->west_line_len;
+        tex->addr = player->env->walls->west_addr;
+        tex->width = player->env->walls->west_width;
+        tex->height = player->env->walls->west_height;
+        tex->bpp = player->env->walls->west_bpp;
+        tex->line_len = player->env->walls->west_line_len;
     }
 }
 
@@ -122,6 +120,7 @@ static void	get_texture_info(t_player *player, int side, char **texture_addr,
 void	render_wall_tex(t_player *player, int y_start, int y_end, t_vertical_info info)
 {
     t_wall_render	wr;
+    t_texture_info    tex;
 
     wr.y_start = y_start;
     wr.y_end = y_end;
@@ -129,8 +128,13 @@ void	render_wall_tex(t_player *player, int y_start, int y_end, t_vertical_info i
     wr.corrected_dist = info.corrected_dist;
     wr.wall_height = info.wall_height;
     
-    get_texture_info(player, info.side, &wr.texture_addr, &wr.texture_width, 
-        &wr.texture_height, &wr.texture_bpp, &wr.texture_line_len);
+    get_texture_info(player, info.side, &tex);
+
+    wr.texture_addr = tex.addr;
+    wr.texture_width = tex.width;
+    wr.texture_height = tex.height;
+    wr.texture_bpp = tex.bpp;
+    wr.texture_line_len = tex.line_len;
     
     wr.texX = get_texture_x(player, info, wr.texture_width);
     
