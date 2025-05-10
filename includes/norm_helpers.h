@@ -22,6 +22,8 @@ typedef struct s_vertical_info
     int wall_height;
     double corrected_dist;
     int side;
+    double rayDirX;
+    double rayDirY;
 } t_vertical_info;
 
 typedef struct s_rgb

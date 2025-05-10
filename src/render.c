@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:12:33 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:17:44 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
     int side;
 
     fill_rays(&rays, player, ray_angle);
+    info.rayDirX = rays.rayDirX;
+    info.rayDirY = rays.rayDirY;
     if (rays.mapX < 0 || rays.mapX >= player->env->map_width || rays.mapY < 0 || rays.mapY >= player->env->map_height)
         return;
     double dist = dda_algo(&rays, &side, player);
@@ -78,11 +80,11 @@ void cast_ray(t_player *player, double ray_angle, int screen_x)
             wall_height = HEIGHT;
         info.side = side;
         fill_vertical_info(&info, screen_x, wall_height, correct_dist);
-        draw_vertical_line(player, rays.rayDirX, rays.rayDirY, info);
+        draw_vertical_line(player, info);
     }
 }
 
-void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, t_vertical_info info)
+void draw_vertical_line(t_player *player, t_vertical_info info)
 {
     int y_start = (HEIGHT - info.wall_height) / 2;
     if (y_start < 0) y_start = 0;
@@ -97,7 +99,7 @@ void draw_vertical_line(t_player *player, int rayDirX, int rayDirY, t_vertical_i
             my_mlx_pixel_put(player->env, info.x, y, player->env->c_color);
     
     if (player->env->has_wall_texture)
-        render_wall_tex(player, y_start, y_end, rayDirX, rayDirY, info);
+        render_wall_tex(player, y_start, y_end, info);
     else
         for (int y = y_start; y < y_end; y++)
             my_mlx_pixel_put(player->env, info.x, y, vignette_effect(info.x, WALL_COLOR));

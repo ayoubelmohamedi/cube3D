@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:27:46 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 18:14:47 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 18:18:03 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static void	get_texture_info(t_player *player, int side, char **texture_addr,
 }
 
 // Main wall texture rendering function
-void	render_wall_tex(t_player *player, int y_start, int y_end, int rayDirX, int rayDirY, t_vertical_info info)
+void	render_wall_tex(t_player *player, int y_start, int y_end, t_vertical_info info)
 {
     t_wall_render	wr;
 
@@ -133,7 +133,7 @@ void	render_wall_tex(t_player *player, int y_start, int y_end, int rayDirX, int 
     get_texture_info(player, info.side, &wr.texture_addr, &wr.texture_width, 
         &wr.texture_height, &wr.texture_bpp, &wr.texture_line_len);
     
-    wr.texX = get_texture_x(player, info.side, info.corrected_dist, rayDirX, rayDirY, 
+    wr.texX = get_texture_x(player, info.side, info.corrected_dist, info.rayDirX, info.rayDirY, 
             wr.texture_width);
     
     draw_wall_slice(player, &wr);
