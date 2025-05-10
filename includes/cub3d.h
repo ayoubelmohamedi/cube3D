@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 19:40:45 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/10 19:53:12 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-extern char *walls_no[];
-extern char *walls_so[];
-extern char *walls_ea[];
-extern char *walls_we[];
 extern char *sky[];
 extern char *floors[];
 

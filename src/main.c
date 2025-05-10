@@ -15,10 +15,6 @@
 
 /* Definitions of global variables here */
 
-char *walls_no[] = {"assets/walls/stone_bricks/1.xpm", NULL};
-char *walls_so[] = {"assets/walls/stone_bricks/2.xpm", NULL};
-char *walls_ea[] = {"assets/walls/stone_bricks/3.xpm", NULL}; 
-char *walls_we[] = {"assets/walls/stone_bricks/4.xpm", NULL};
 
 char *sky[] = {"assets/sky/minecraft.xpm",
                "assets/sky/minecraft2.xpm", 
