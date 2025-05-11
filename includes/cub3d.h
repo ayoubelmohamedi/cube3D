@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:56:09 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 23:07:32 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:24:35 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,34 +65,11 @@ typedef struct
 
 typedef struct
 {
-    bool has_floor;
-    void *floor_img;
-    char *floor_addr;
-    int floor_bpp;
-    int floor_line_len;
-    int floor_endian;
-    int floor_width;
-    int floor_height;
-
-    bool has_ceiling;
-    void *ceil_img;
-    char *ceil_addr;
-    int ceil_bpp;
-    int ceil_line_len;
-    int ceil_endian;
-    int ceil_width;
-    int ceil_height;
-
-} t_texture;
-
-typedef struct
-{
     char **map;
     int c_color;
     int f_color;
     int map_width;
     int map_height;
-    char *textures_files[2];
     char *wall_tex_files[4];
     void *mlx;
     void *win;
@@ -101,10 +78,7 @@ typedef struct
     int endian;
     int line_lenght;
     int bits_per_pixel;
-    bool has_texture;
     bool has_wall_texture;
-    bool has_minimap; 
-    t_texture *texture;
     t_wall_text *walls;
 } t_env;
 
@@ -113,6 +87,7 @@ typedef struct
     double x, y;
     double dir;
     t_env *env;
+    t_cub *cub;
 } t_player;
 
 /*          Hooks          */
@@ -164,4 +139,8 @@ void    render_wall_section(t_player *player, t_vertical_info info, int y_start,
 void    render_ceiling_section(t_player *player, int x, int y_start);
 void    fill_vertical_info(t_vertical_info *info, int screen_x, int wall_height, double correct_dist);
 void    fill_rays(t_rays *rays, t_player *player, double ray_angle);
+
+/*              Freeing memory          */
+void    destroy_all_render(t_player *player);
+
 #endif 

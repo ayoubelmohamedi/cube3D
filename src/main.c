@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 23:09:35 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 23:11:13 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:43:13 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_player	*init_player(t_env *env, t_cub *cub)
 	player->x = cub->player_x;
 	player->y = cub->player_y;
 	player->dir = cub->p_angle;
+	player->cub = cub;
 	return (player);
 }
 
@@ -56,6 +57,35 @@ t_env	*load_env(t_cub *cub)
 	if (env->has_wall_texture)
 		env->walls = load_walls_texture(env);
 	return (env);
+}
+
+
+void destroy_all_render(t_player *player)
+{
+    if (!player || !player->env)
+        return;
+    if (player->env->img)
+		mlx_destroy_image(player->env->mlx, player->env->img);
+	if (player->env->has_wall_texture && player->env->walls)
+	{
+		if (player->env->walls->north_img)
+			mlx_destroy_image(player->env->mlx, player->env->walls->north_img);
+		if (player->env->walls->south_img)
+			mlx_destroy_image(player->env->mlx, player->env->walls->south_img);
+		if (player->env->walls->west_img)
+			mlx_destroy_image(player->env->mlx, player->env->walls->west_img);
+		if (player->env->walls->east_img)
+			mlx_destroy_image(player->env->mlx, player->env->walls->east_img);
+		free(player->env->walls);
+	}
+    if (player->env->win)
+		mlx_destroy_window(player->env->mlx, player->env->win);
+	mlx_destroy_display(player->env->mlx);
+	free(player->env->mlx);
+	destroy_data(player->cub->data, player->cub->texture);
+	free(player->cub);
+ 	free(player->env);
+    free(player);
 }
 
 int	main(int ac, char **av)
@@ -91,5 +121,7 @@ int	main(int ac, char **av)
 	render_scene(env, player);
 	mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
 	mlx_loop(env->mlx);
+	destroy_all_render(player);
 	return (0);
 }
+

@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 09:16:55 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 20:17:59 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/11 18:22:29 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 
 static int	handle_exit(t_player *player)
 {
-	mlx_destroy_image(player->env->mlx, player->env->img);
-	mlx_destroy_window(player->env->mlx, player->env->win);
+	destroy_all_render(player);
 	exit(0);
 	return (0);
 }
