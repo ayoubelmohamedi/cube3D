@@ -1,7 +1,7 @@
-NO textures/simonkraft/soul_sand.xpm
-SO textures/simonkraft/soul_soil_01.xpm
-WE textures/simonkraft/soul_soil.xpm
-EA textures/simonkraft/soul_sand.xpm
+NO textures/books/soul_sand.xpm
+SO textures/books/soul_soil_01.xpm
+WE textures/books/soul_soil.xpm
+EA textures/books/soul_sand.xpm
 
 C 51,153,255
 F 0,100,0
