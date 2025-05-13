@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 23:09:35 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/13 15:21:14 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:26:06 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,11 @@ t_env	*load_env(t_cub *cub)
 	return (env);
 }
 
-
-void destroy_all_render(t_player *player)
+void	destroy_all_render(t_player *player)
 {
-    if (!player || !player->env)
-        return;
-    if (player->env->img)
+	if (!player || !player->env)
+		return ;
+	if (player->env->img)
 		mlx_destroy_image(player->env->mlx, player->env->img);
 	if (player->env->has_wall_texture && player->env->walls)
 	{
@@ -78,14 +77,14 @@ void destroy_all_render(t_player *player)
 			mlx_destroy_image(player->env->mlx, player->env->walls->east_img);
 		free(player->env->walls);
 	}
-    if (player->env->win)
+	if (player->env->win)
 		mlx_destroy_window(player->env->mlx, player->env->win);
 	mlx_destroy_display(player->env->mlx);
 	free(player->env->mlx);
 	destroy_data(player->cub->data, player->cub->texture);
 	free(player->cub);
- 	free(player->env);
-    free(player);
+	free(player->env);
+	free(player);
 }
 
 int	main(int ac, char **av)
@@ -97,15 +96,10 @@ int	main(int ac, char **av)
 	t_wall_textures	*texture;
 
 	if (ac != 2 || HEIGHT <= 0 || WIDTH <= 0)
-	{
-		printf("Error: Invalid arguments\n");
-		return (1);
-	}	
+		return (perror("Error: Invalid arguments\n"), 1);
 	cub = malloc(sizeof(t_cub));
-	if (!cub)
-		return (1);
 	texture = malloc(sizeof(t_wall_textures));
-	if (!texture)
+	if (!texture || !cub)
 		return (free(cub), 1);
 	ft_memset(cub, 0, sizeof(t_cub));
 	ft_memset(&data, 0, sizeof(t_data));
@@ -114,14 +108,10 @@ int	main(int ac, char **av)
 	env = load_env(cub);
 	player = init_player(env, cub);
 	if (!env || !player)
-	{
-		perror("Error: failed to initialize env or player");
-		return (1);
-	}
+		return (perror("Error: failed to initialize env or player"), 1);
 	render_scene(env, player);
 	mlx_hook(env->win, 2, 1L << 0, handle_keypress, player);
 	mlx_loop(env->mlx);
 	destroy_all_render(player);
 	return (0);
 }
-
