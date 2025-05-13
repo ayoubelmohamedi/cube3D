@@ -57,3 +57,29 @@ int	ft_atoi(char *str)
 	}
 	return (result * ans);
 }
+
+int	check_extension(char *exten, char *s)
+{
+	int		len;
+	char	*copy;
+	int		i;
+	bool	result;
+
+	i = 0;
+	len = ft_strlen(exten);
+	copy = malloc(sizeof(char) * (len + 1));
+	while (exten[len] != '.' && len > 0)
+		len--;
+	if (exten[len] == '.')
+	{
+		len++;
+		while (exten[len] != '\0')
+		{
+			copy[i++] = exten[len++];
+		}
+	}
+	copy[i] = '\0';
+	result = ft_strncmp(s, copy, ft_strlen(s)) == 0;
+	free(copy);
+	return (result);
+}

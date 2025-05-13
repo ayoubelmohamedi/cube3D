@@ -32,7 +32,6 @@ char	*ft_strchr(char *s, int c)
 	return (NULL);
 }
 
-
 char	*ft_readfile(int fd, char *string, char *buffer)
 {
 	char	*tmp;

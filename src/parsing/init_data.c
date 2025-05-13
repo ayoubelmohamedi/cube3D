@@ -27,7 +27,7 @@ int	init_cub(t_cub *cub, t_data *data, t_wall_textures *texture)
 	cub->data = data;
 	cub->player_x = 0;
 	cub->player_y = 0;
-	cub->texture = texture;;
+	cub->texture = texture;
 	return (0);
 }
 
@@ -54,3 +54,23 @@ int	ft_exit(t_cub *cub)
 	return (0);
 }
 
+int	check_map(t_data *data, char *path)
+{
+	int			fd;
+	t_maplist	*maplist;
+	t_maplist	*head;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (-1);
+	maplist = get_map(fd);
+	if (!maplist)
+		return (1);
+	head = maplist;
+	if (validate_map(head))
+		return (ft_freemap(&head), 1);
+	if (convert_map(data, head))
+		return (ft_freemap(&head), 1);
+	close(fd);
+	return (ft_freemap(&head), 0);
+}
