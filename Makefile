@@ -6,27 +6,39 @@
 #    By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 08:56:21 by ael-moha          #+#    #+#              #
-#    Updated: 2025/05/10 23:11:59 by ael-moha         ###   ########.fr        #
+#    Updated: 2025/05/13 15:43:10 by ael-moha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-# MLX Configuration
 NAME = cube3d
 
-# mlx dir for linux
 MLX_DIR = ./mlx
-# MLX VARS FOR LINUX
+
 MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux
 MLX_LIB = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux
 INCLUDES = -I/usr/include -Imlx_linux -Iincludes -Iparsing
 X11_FLAGS = -lXext -lX11 -lm -lz 
 
 
-# Compiler flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror  -g  #-O3
 
-SRCS_PARSER = $(wildcard src/parsing/*.c)
+SRCS_PARSER = \
+    src/parsing/check_map.c \
+    src/parsing/get_map.c \
+    src/parsing/init_data.c \
+    src/parsing/proccess_input.c \
+    src/parsing/destroy_program.c \
+    src/parsing/get_next_line.c \
+    src/parsing/libft_func.c \
+    src/parsing/read_texture.c \
+    src/parsing/ft_atoi.c \
+    src/parsing/get_next_line_utils.c \
+    src/parsing/map_utils.c \
+    src/parsing/rgb_colors.c \
+    src/parsing/ft_split.c \
+    src/parsing/helper.c \
+    src/parsing/texture_parser.c
 
 SRCS = src/main.c \
        src/dda.c \
@@ -44,7 +56,7 @@ OBJS += $(SRCS_PARSER:.c=.o)
 OS := $(shell uname)
 
 all: $(NAME)
-# $(info OS : $(OS))
+
 ifeq ($(OS),Darwin)
 MLX_LIB = $(MLX_DIR)/libmlx_Darwin.a
 FRAMEWORKS = -framework OpenGL -framework AppKit
