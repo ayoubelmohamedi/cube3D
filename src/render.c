@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 08:58:26 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/10 23:12:49 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/13 14:12:28 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,6 @@ void	cast_ray(t_player *player, double ray_angle, int screen_x)
 		if (info.corrected_dist < 0.01)
 			info.corrected_dist = 0.01;
 		wall_height = (int)(HEIGHT / info.corrected_dist);
-		if (wall_height < 0)
-			wall_height = 0;
-		if (wall_height > HEIGHT)
-			wall_height = HEIGHT;
 		fill_vertical_info(&info, screen_x, wall_height, info.corrected_dist);
 		draw_vertical_line(player, info);
 	}
