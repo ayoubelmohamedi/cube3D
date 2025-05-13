@@ -6,22 +6,19 @@
 #    By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/23 08:56:21 by ael-moha          #+#    #+#              #
-#    Updated: 2025/05/13 15:43:10 by ael-moha         ###   ########.fr        #
+#    Updated: 2025/05/13 15:58:16 by ael-moha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cube3d
 
-MLX_DIR = ./mlx
 
-MLX_FLAGS = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux
-MLX_LIB = -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux
 INCLUDES = -I/usr/include -Imlx_linux -Iincludes -Iparsing
-X11_FLAGS = -lXext -lX11 -lm -lz 
+X11_FLAGS = -lXext -lX11 -lm -lz -Lmlx_linux -lmlx_Linux
 
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror  -g  #-O3
+CFLAGS = -Wall -Wextra -Werror
 
 SRCS_PARSER = \
     src/parsing/check_map.c \
@@ -53,34 +50,20 @@ SRCS = src/main.c \
 OBJS = $(SRCS:.c=.o)
 OBJS += $(SRCS_PARSER:.c=.o)
 
-OS := $(shell uname)
-
 all: $(NAME)
 
-ifeq ($(OS),Darwin)
-MLX_LIB = $(MLX_DIR)/libmlx_Darwin.a
-FRAMEWORKS = -framework OpenGL -framework AppKit
-INCLUDES = -I$(MLX_DIR) -Iincludes
-MLX_FLAGS = -L$(MLX_DIR) -lmlx $(FRAMEWORKS)
-X11_FLAGS = -L/usr/X11/lib -lXext -lX11
-endif
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME):  $(MLX_LIB) $(OBJS)
-	$(CC) $(OBJS) $(MLX_LIB) $(X11_FLAGS) -o $(NAME)
-
-$(MLX_LIB):
-	# @make -C $(MLX_DIR)
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) $(X11_FLAGS) -o $(NAME)
 
 clean:
-	# @make -C $(MLX_DIR) clean
 	rm -f $(OBJS)
 
 fclean: clean
 	rm -f $(NAME)
-	# rm -f $(MLX_LIB)
 
 re: fclean all
 
