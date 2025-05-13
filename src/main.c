@@ -6,7 +6,7 @@
 /*   By: ael-moha <ael-moha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 23:09:35 by ael-moha          #+#    #+#             */
-/*   Updated: 2025/05/11 18:43:13 by ael-moha         ###   ########.fr       */
+/*   Updated: 2025/05/13 15:21:14 by ael-moha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ int	main(int ac, char **av)
 	t_cub			*cub;
 	t_wall_textures	*texture;
 
-	if (ac != 2)
+	if (ac != 2 || HEIGHT <= 0 || WIDTH <= 0)
 	{
-		printf("Error ARG\n");
+		printf("Error: Invalid arguments\n");
 		return (1);
-	}
+	}	
 	cub = malloc(sizeof(t_cub));
 	if (!cub)
 		return (1);
